@@ -126,14 +126,14 @@ export default function GameScreen() {
 
 function ResultBadge({ result }) {
   const labels = {
-    faction: `Reputacao: ${result.faction} ${result.delta > 0 ? '+' : ''}${result.delta}`,
-    xp: `+${result.amount} XP`,
-    item: `Item obtido: ${result.item?.name || '???'}`,
-    key_item: `Item chave: ${result.item?.name || '???'}`,
-    recruit: `${result.generalId} se juntou ao grupo!`,
-    region: `Nova regiao desbloqueada!`,
-    quest: `Nova quest: ${result.quest?.name || '???'}`,
-    quest_complete: `Quest concluida!`,
+    faction: `⚜ Reputacao: ${result.faction} ${result.delta > 0 ? '+' : ''}${result.delta}`,
+    xp: `✨ +${result.amount} XP`,
+    item: `📦 Item obtido: ${result.item?.name || '???'}`,
+    key_item: `🔑 Item chave: ${result.item?.name || '???'}`,
+    recruit: `⚔ ${result.name || result.generalId} se juntou ao grupo!${result.title ? ` (${result.title})` : ''}`,
+    region: `🗺 Nova regiao desbloqueada: ${result.region}`,
+    quest: `📜 Nova quest: ${result.quest?.name || '???'}`,
+    quest_complete: `✅ Quest concluida!`,
   };
   const text = labels[result.type] || '';
   if (!text) return null;

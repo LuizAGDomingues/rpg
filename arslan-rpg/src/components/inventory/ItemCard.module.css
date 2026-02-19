@@ -1,0 +1,68 @@
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-md);
+    transition: border-color 0.2s;
+}
+
+.card:hover {
+    border-color: var(--border-gold);
+}
+
+.equipped {
+    border-color: var(--gold);
+    background: rgba(201, 168, 76, 0.06);
+}
+
+.info {
+    flex: 1;
+}
+
+.name {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    color: var(--gold);
+    margin: 0 0 2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.equippedBadge {
+    font-size: 0.65rem;
+    background: var(--gold-dark);
+    color: var(--bg-dark);
+    padding: 1px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.type {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.stat {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-right: 10px;
+}
+
+.desc {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin: 4px 0 0;
+}
+
+.actions {
+    display: flex;
+    gap: var(--spacing-xs, 4px);
+    flex-shrink: 0;
+}

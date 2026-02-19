@@ -7,22 +7,52 @@ import { OrnamentDivider } from '../components/ui/Ornament';
 import warriorData from '../data/classes/warrior.json';
 import diplomatData from '../data/classes/diplomat.json';
 import strategistData from '../data/classes/strategist.json';
+import daryunData from '../data/characters/daryun.json';
 import styles from './ClassSelectScreen.module.css';
 
 const classes = [warriorData, diplomatData, strategistData];
 
+const STARTING_EQUIPMENT = {
+  warrior: {
+    weapon: { id: 'sword_iron', name: 'Espada de Ferro', type: 'weapon', damage: '1d8+1', bonus_atk: 1 },
+    armor: { id: 'armor_chain', name: 'Cota de Malha', type: 'armor', ca_bonus: 4 },
+    shield: { id: 'shield_wooden', name: 'Escudo de Madeira', type: 'shield', ca_bonus: 1 },
+  },
+  diplomat: {
+    weapon: { id: 'sword_light', name: 'Espada Leve', type: 'weapon', damage: '1d6+1', bonus_atk: 1 },
+    armor: { id: 'armor_leather', name: 'Armadura de Couro', type: 'armor', ca_bonus: 2 },
+    shield: null,
+  },
+  strategist: {
+    weapon: { id: 'sword_light', name: 'Espada Leve', type: 'weapon', damage: '1d6+1', bonus_atk: 1 },
+    armor: { id: 'armor_leather', name: 'Armadura de Couro', type: 'armor', ca_bonus: 2 },
+    shield: null,
+  },
+};
+
 export default function ClassSelectScreen() {
   const [selected, setSelected] = useState(null);
   const [confirming, setConfirming] = useState(false);
-  const setPlayerClass = useGameStore((s) => s.setPlayerClass);
-  const setGamePhase = useGameStore((s) => s.setGamePhase);
-  const setCurrentScene = useGameStore((s) => s.setCurrentScene);
+  const store = useGameStore();
 
   const handleConfirm = () => {
     if (!selected) return;
-    setPlayerClass(selected);
-    setCurrentScene('prologue_start');
-    setGamePhase('playing');
+    store.setPlayerClass(selected);
+
+    // Equip starting gear
+    const gear = STARTING_EQUIPMENT[selected.id];
+    if (gear) {
+      if (gear.weapon) store.equipItem('weapon', gear.weapon);
+      if (gear.armor) store.equipItem('armor', gear.armor);
+      if (gear.shield) store.equipItem('shield', gear.shield);
+    }
+
+    // Auto-recruit Daryun at the start (he's with Arslan from the beginning)
+    store.recruitGeneral({ ...daryunData, hp_base: daryunData.hp });
+    store.setNarrativeFlag('daryun_recruited', true);
+
+    store.setCurrentScene('prologue_start');
+    store.setGamePhase('playing');
   };
 
   return (

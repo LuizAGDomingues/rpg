@@ -16,13 +16,17 @@
           "id": "visit_narsus_house",
           "text": "Vamos encontrar Narsus.",
           "next_scene": "narsus_house",
-          "set_flags": { "arrived_dahman": true }
+          "set_flags": {
+            "arrived_dahman": true
+          }
         },
         {
           "id": "explore_dahman_first",
           "text": "Primeiro, vamos explorar o vilarejo.",
           "next_scene": "explore_dahman",
-          "set_flags": { "arrived_dahman": true }
+          "set_flags": {
+            "arrived_dahman": true
+          }
         }
       ]
     },
@@ -59,20 +63,28 @@
           "text": "Voce foi exilado por defender a liberdade. Ajude-me a construir um Pars melhor.",
           "next_scene": "narsus_considers",
           "condition": "class == diplomat",
-          "faction_effects": { "escravos_libertos": 5 },
-          "set_flags": { "appealed_to_ideals": true }
+          "faction_effects": {
+            "escravos_libertos": 5
+          },
+          "set_flags": {
+            "appealed_to_ideals": true
+          }
         },
         {
           "id": "strategic_appeal",
           "text": "Pars precisa de uma mente como a sua. Sem estrategia, nao temos chance.",
           "next_scene": "narsus_considers",
-          "set_flags": { "strategic_appeal": true }
+          "set_flags": {
+            "strategic_appeal": true
+          }
         },
         {
           "id": "direct_request",
           "text": "Nao vou implorar. Se acredita em Pars, venha. Se nao, ficaremos sem voce.",
           "next_scene": "narsus_impressed",
-          "set_flags": { "direct_with_narsus": true }
+          "set_flags": {
+            "direct_with_narsus": true
+          }
         }
       ]
     },
@@ -93,7 +105,9 @@
           "id": "welcome_narsus",
           "text": "Entao e oficial? Voce se junta a nos?",
           "next_scene": "narsus_joins",
-          "set_flags": { "narsus_recruited": true }
+          "set_flags": {
+            "narsus_recruited": true
+          }
         }
       ]
     },
@@ -113,7 +127,9 @@
           "id": "welcome_narsus_direct",
           "text": "Bem-vindo ao grupo, Narsus.",
           "next_scene": "narsus_joins",
-          "set_flags": { "narsus_recruited": true },
+          "set_flags": {
+            "narsus_recruited": true
+          },
           "xp_reward": 20
         }
       ]
@@ -132,9 +148,135 @@
         {
           "id": "to_camp",
           "text": "Vamos estabelecer nosso acampamento.",
-          "next_scene": "camp_established",
+          "next_scene": "road_ambush",
           "recruit": "narsus",
           "xp_reward": 50
+        }
+      ]
+    },
+    {
+      "id": "road_ambush",
+      "title": "Emboscada na Estrada",
+      "type": "narrative",
+      "text": [
+        "A marcha em direcao ao acampamento e interrompida abruptamente. Uma flecha crava-se na arvore ao lado de Arslan.",
+        "\"Emboscada!\" Daryun grita, puxando a lanca. Narsus calmamente avalia a situacao.",
+        "\"Cinco... nao, seis soldados lusitanos. Eles nos seguiram desde Dahman.\"",
+        "Elam ja tem seu arco em maos. \"Mestre, por onde ataco?\"",
+        "\"Pela esquerda, Elam. Daryun, centro. Arslan, siga minha lideranca.\""
+      ],
+      "choices": [
+        {
+          "id": "fight_ambush",
+          "text": "Seguir o plano de Narsus!",
+          "next_scene": "post_ambush",
+          "start_combat": {
+            "id": "road_ambush",
+            "name": "Emboscada Lusitana",
+            "enemies": [
+              {
+                "id": "lusitanian_soldier",
+                "name": "Soldado Lusitano",
+                "hp": 16,
+                "ca": 14,
+                "pa": 2,
+                "attributes": {
+                  "FOR": 14,
+                  "DES": 10,
+                  "CON": 13,
+                  "INT": 8,
+                  "SAB": 8,
+                  "CAR": 8
+                },
+                "weapon": {
+                  "name": "Espada Longa",
+                  "damage": "1d8+2"
+                },
+                "ai": "aggressive_simple"
+              },
+              {
+                "id": "lusitanian_soldier",
+                "name": "Soldado Lusitano",
+                "hp": 16,
+                "ca": 14,
+                "pa": 2,
+                "attributes": {
+                  "FOR": 14,
+                  "DES": 10,
+                  "CON": 13,
+                  "INT": 8,
+                  "SAB": 8,
+                  "CAR": 8
+                },
+                "weapon": {
+                  "name": "Espada Longa",
+                  "damage": "1d8+2"
+                },
+                "ai": "aggressive_simple"
+              },
+              {
+                "id": "lusitanian_archer",
+                "name": "Arqueiro Lusitano",
+                "hp": 12,
+                "ca": 12,
+                "pa": 2,
+                "attributes": {
+                  "FOR": 10,
+                  "DES": 14,
+                  "CON": 10,
+                  "INT": 8,
+                  "SAB": 10,
+                  "CAR": 8
+                },
+                "weapon": {
+                  "name": "Arco Longo",
+                  "damage": "1d8+1"
+                },
+                "ai": "aggressive_simple"
+              },
+              {
+                "id": "lusitanian_sergeant",
+                "name": "Sargento Lusitano",
+                "hp": 24,
+                "ca": 15,
+                "pa": 3,
+                "attributes": {
+                  "FOR": 15,
+                  "DES": 12,
+                  "CON": 14,
+                  "INT": 10,
+                  "SAB": 10,
+                  "CAR": 11
+                },
+                "weapon": {
+                  "name": "Espada Larga",
+                  "damage": "1d10+3"
+                },
+                "ai": "aggressive_simple"
+              }
+            ],
+            "xp_reward": 150,
+            "gold_reward": "5d6"
+          }
+        }
+      ]
+    },
+    {
+      "id": "post_ambush",
+      "title": null,
+      "type": "narrative",
+      "text": [
+        "A emboscada falhou — para os lusitanos. O plano de Narsus funcionou perfeitamente.",
+        "\"Voce e mais esperto do que eu esperava,\" Daryun admite relutantemente a Narsus.",
+        "\"Eu sei,\" Narsus responde com um sorriso irritante.",
+        "A emboscada confirmou algo preocupante: os lusitanos sabem que Arslan esta vivo e o estao cacando."
+      ],
+      "choices": [
+        {
+          "id": "continue_to_camp",
+          "text": "Precisamos nos mover rapido. Para o acampamento!",
+          "next_scene": "camp_established",
+          "xp_reward": 30
         }
       ]
     },
@@ -154,7 +296,9 @@
           "id": "whats_next",
           "text": "O que voce sugere, Narsus?",
           "next_scene": "narsus_plan",
-          "set_flags": { "camp_established": true }
+          "set_flags": {
+            "camp_established": true
+          }
         }
       ]
     },
@@ -172,22 +316,117 @@
         {
           "id": "go_kashan",
           "text": "Vamos a Kashan primeiro. Precisamos de soldados.",
-          "next_scene": "end_act2_preview",
-          "set_flags": { "plan_kashan_first": true },
+          "next_scene": "training_before_departure",
+          "set_flags": {
+            "plan_kashan_first": true
+          },
           "unlock_region": "kashan"
         },
         {
           "id": "free_slaves",
           "text": "Os escravos libertos. E hora de Pars mudar.",
-          "next_scene": "end_act2_preview",
-          "set_flags": { "plan_slaves_first": true },
-          "faction_effects": { "escravos_libertos": 15, "nobreza_pars": -5 }
+          "next_scene": "training_before_departure",
+          "set_flags": {
+            "plan_slaves_first": true
+          },
+          "faction_effects": {
+            "escravos_libertos": 15,
+            "nobreza_pars": -5
+          }
         },
         {
           "id": "train_first",
           "text": "Vou treinar primeiro. Preciso estar pronto.",
+          "next_scene": "training_session",
+          "set_flags": {
+            "plan_train_first": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "training_session",
+      "title": "Treino com Daryun",
+      "type": "narrative",
+      "text": [
+        "Daryun planta sua lanca no chao e cruza os bracos.",
+        "\"Muito bem, Alteza. Se quer treinar, vamos treinar a serio. Sem piedade.\"",
+        "Narsus observa do canto, fazendo anotacoes. Elam assiste com olhos curiosos.",
+        "\"Considere isto um combate real. Eu nao vou segurar.\""
+      ],
+      "choices": [
+        {
+          "id": "spar_daryun",
+          "text": "Estou pronto. Venha, Daryun!",
+          "next_scene": "post_training",
+          "start_combat": {
+            "id": "training_spar",
+            "name": "Treino com Daryun",
+            "enemies": [
+              {
+                "id": "daryun_training",
+                "name": "Daryun (Treino)",
+                "hp": 20,
+                "ca": 16,
+                "pa": 3,
+                "attributes": {
+                  "FOR": 16,
+                  "DES": 14,
+                  "CON": 14,
+                  "INT": 12,
+                  "SAB": 13,
+                  "CAR": 14
+                },
+                "weapon": {
+                  "name": "Lanca (Treino)",
+                  "damage": "1d6+1"
+                },
+                "ai": "defensive"
+              }
+            ],
+            "xp_reward": 80,
+            "gold_reward": "0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "post_training",
+      "title": null,
+      "type": "narrative",
+      "text": [
+        "Ofegante, voce cai de joelhos. Daryun estende a mao para ajuda-lo a levantar.",
+        "\"Nada mal, Alteza. Voce tem potencial. Ainda precisa de muito treino, mas o instinto esta la.\"",
+        "Narsus fecha seu caderno. \"Interessante. Suas habilidades melhoraram. Acho que ja podemos partir para nossa primeira missao.\""
+      ],
+      "choices": [
+        {
+          "id": "ready_to_go",
+          "text": "Estou pronto. Vamos para Kashan.",
           "next_scene": "end_act2_preview",
-          "set_flags": { "plan_train_first": true },
+          "set_flags": {
+            "training_complete": true
+          },
+          "xp_reward": 40,
+          "unlock_region": "kashan"
+        }
+      ]
+    },
+    {
+      "id": "training_before_departure",
+      "title": "Preparativos",
+      "type": "narrative",
+      "text": [
+        "Antes de partir, Daryun insiste em um treino rapido.",
+        "\"Se vamos enfrentar mais lusitanos, voce precisa estar afiado, Alteza.\"",
+        "Narsus concorda. \"Um dia de preparacao pode salvar uma semana de batalha.\"",
+        "Apos horas de treino intenso, voces estao prontos para a proxima etapa da jornada."
+      ],
+      "choices": [
+        {
+          "id": "depart",
+          "text": "Hora de partir.",
+          "next_scene": "end_act2_preview",
           "xp_reward": 30
         }
       ]
@@ -198,11 +437,22 @@
       "type": "chapter_end",
       "text": [
         "Com aliados ao seu lado e um plano em formacao, o Principe Arslan da os primeiros passos em sua campanha para retomar Pars.",
-        "O caminho sera longo. Batalhas, alianças, traicoes e escolhas dificeis esperam a frente.",
+        "Narsus prepara estrategias. Daryun afia suas armas. Elam verifica as flechas. E Arslan carrega a esperanca de todo um reino.",
+        "O caminho sera longo. Batalhas, aliancas, traicoes e escolhas dificeis esperam a frente.",
         "Mas pela primeira vez, Arslan nao esta sozinho.",
-        "A historia continua..."
+        "Fim do Ato II — O Exilio"
       ],
-      "choices": []
+      "choices": [
+        {
+          "id": "to_act3",
+          "text": "Continuar para o Ato III...",
+          "next_scene": "act3_kashan_approach",
+          "set_act": 3,
+          "set_flags": {
+            "act2_complete": true
+          }
+        }
+      ]
     }
   ]
 }

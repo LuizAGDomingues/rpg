@@ -9,21 +9,108 @@
       "text": [
         "O plano de Narsus e claro: antes de enfrentar os lusitanos, voces precisam de aliados. A Fortaleza de Kashan, governada por Lord Hodir, e o primeiro alvo.",
         "A jornada ate Kashan leva tres dias. Narsus usa o tempo para ensinar tatica a Arslan, enquanto Daryun treina Elam com a lanca.",
-        "Ao terceiro dia, as muralhas imponentes de Kashan surgem no horizonte. Bandeiras de Pars ainda tremulam — a fortaleza resiste."
+        "No segundo dia, batedores lusitanos sao avistados na estrada. Nao ha como evitar o confronto."
       ],
       "choices": [
         {
-          "id": "approach_openly",
-          "text": "Apresentar-se abertamente como o Principe Arslan.",
-          "next_scene": "kashan_gates",
-          "set_flags": { "open_approach": true }
-        },
+          "id": "fight_scouts",
+          "text": "Eliminar os batedores antes que alertem o exercito!",
+          "next_scene": "post_scout_fight",
+          "start_combat": {
+            "id": "kashan_road_scouts",
+            "name": "Batedores na Estrada",
+            "enemies": [
+              {
+                "id": "lusitanian_scout",
+                "name": "Batedor Lusitano",
+                "hp": 14,
+                "ca": 13,
+                "pa": 2,
+                "attributes": {
+                  "FOR": 12,
+                  "DES": 14,
+                  "CON": 11,
+                  "INT": 10,
+                  "SAB": 12,
+                  "CAR": 8
+                },
+                "weapon": {
+                  "name": "Arco Curto",
+                  "damage": "1d6+2"
+                },
+                "ai": "aggressive_simple"
+              },
+              {
+                "id": "lusitanian_scout",
+                "name": "Batedor Lusitano",
+                "hp": 14,
+                "ca": 13,
+                "pa": 2,
+                "attributes": {
+                  "FOR": 12,
+                  "DES": 14,
+                  "CON": 11,
+                  "INT": 10,
+                  "SAB": 12,
+                  "CAR": 8
+                },
+                "weapon": {
+                  "name": "Arco Curto",
+                  "damage": "1d6+2"
+                },
+                "ai": "aggressive_simple"
+              },
+              {
+                "id": "lusitanian_rider",
+                "name": "Cavaleiro Lusitano",
+                "hp": 20,
+                "ca": 15,
+                "pa": 2,
+                "attributes": {
+                  "FOR": 15,
+                  "DES": 12,
+                  "CON": 14,
+                  "INT": 9,
+                  "SAB": 9,
+                  "CAR": 10
+                },
+                "weapon": {
+                  "name": "Lanca de Cavalaria",
+                  "damage": "1d10+2"
+                },
+                "ai": "aggressive_simple"
+              }
+            ],
+            "xp_reward": 120,
+            "gold_reward": "4d6"
+          }
+        }
+      ]
+    },
+    {
+      "id": "post_scout_fight",
+      "title": null,
+      "type": "narrative",
+      "text": [
+        "Os batedores sao eliminados. Narsus examina os corpos e encontra documentos.",
+        "\"Relatórios para o comando lusitano. Eles sabem que Arslan esta se movendo — mas nao sabem nossa direcao exata. Isso nos da vantagem.\"",
+        "Ao terceiro dia, as muralhas imponentes de Kashan surgem no horizonte. Bandeiras de Pars ainda tremulam — a fortaleza resiste.",
+        "Porem, um acampamento lusitano circunda os muros. O cerco e real."
+      ],
+      "choices": [
         {
           "id": "send_scout",
           "text": "Enviar Elam para avaliar a situacao primeiro.",
           "next_scene": "kashan_scout",
           "condition": "narsus_recruited",
-          "set_flags": { "scouted_kashan": true }
+          "set_flags": {
+            "scouted_kashan": true
+          }
+        },
+        {
+          "id": "approach_directly",
+          "text": "Atacar o cerco diretamente!",
+          "next_scene": "kashan_battle"
         }
       ]
     },
@@ -34,45 +121,17 @@
       "text": [
         "Elam retorna apos algumas horas com informacoes valiosas.",
         "\"A fortaleza esta cercada por um pequeno contingente lusitano. Lord Hodir tem mantido os portoes fechados, mas seus suprimentos estao acabando.\"",
-        "Narsus sorri. \"Perfeito. Se eliminarmos o cerco, Hodir nos devera um favor. E favores sao a moeda da politica.\""
+        "Narsus sorri. \"Perfeito. Se eliminarmos o cerco, Hodir nos devera um favor. E favores sao a moeda da politica.\"",
+        "\"Atacaremos ao amanhecer. Elam, posicione-se na colina com o arco. Daryun, voce lidera a carga.\""
       ],
       "choices": [
         {
           "id": "attack_siege",
-          "text": "Atacar o acampamento lusitano de surpresa!",
+          "text": "Atacar o acampamento lusitano ao amanhecer!",
           "next_scene": "kashan_battle",
-          "set_flags": { "surprise_attack": true }
-        },
-        {
-          "id": "negotiate_entry",
-          "text": "Tentar negociar a entrada pela retaguarda.",
-          "next_scene": "kashan_gates",
-          "condition": "class == diplomat"
-        }
-      ]
-    },
-    {
-      "id": "kashan_gates",
-      "title": "Os Portoes de Kashan",
-      "type": "narrative",
-      "text": [
-        "Voces se apresentam nos portoes da fortaleza. Os guardas desconfiam, mas ao ouvir o nome 'Arslan', o capitao da guarda corre para chamar Lord Hodir.",
-        "O lord de Kashan e um homem robusto de meia-idade, com barba grisalha e olhos calculistas.",
-        "\"Principe Arslan... entao e verdade que sobreviveu.\" Hodir avalia voce da cabeca aos pes. \"Voce nao se parece com seu pai. Nada mesmo.\"",
-        "\"Mas se e realmente quem diz ser, temos muito a discutir. Entre.\""
-      ],
-      "choices": [
-        {
-          "id": "diplomatic_hodir",
-          "text": "Agradeco a hospitalidade, Lord Hodir. Pars precisa de nos dois.",
-          "next_scene": "hodir_negotiation",
-          "faction_effects": { "nobreza_pars": 10 }
-        },
-        {
-          "id": "firm_hodir",
-          "text": "Nao vim pedir. Vim propor uma alianca entre iguais.",
-          "next_scene": "hodir_negotiation",
-          "set_flags": { "firm_with_hodir": true }
+          "set_flags": {
+            "surprise_attack": true
+          }
         }
       ]
     },
@@ -81,7 +140,7 @@
       "title": "Batalha de Kashan",
       "type": "narrative",
       "text": [
-        "O plano de Narsus e executado com precisao. Daryun lidera o ataque frontal, enquanto voce e Elam flanqueiam pelo lado.",
+        "O plano e executado com precisao. Daryun lidera o ataque frontal, enquanto voce e Elam flanqueiam pelo lado.",
         "Os lusitanos, pegos de surpresa, lutam de forma desorganizada. Mas ainda sao guerreiros perigosos."
       ],
       "choices": [
@@ -93,9 +152,66 @@
             "id": "kashan_siege",
             "name": "Cerco de Kashan",
             "enemies": [
-              { "id": "lusitanian_soldier", "name": "Soldado Lusitano", "hp": 18, "ca": 14, "pa": 2, "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Longa", "damage": "1d8+2" }, "ai": "aggressive_simple" },
-              { "id": "lusitanian_soldier", "name": "Soldado Lusitano", "hp": 18, "ca": 14, "pa": 2, "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Longa", "damage": "1d8+2" }, "ai": "aggressive_simple" },
-              { "id": "lusitanian_captain", "name": "Capitao Lusitano", "hp": 30, "ca": 16, "pa": 3, "attributes": { "FOR": 16, "DES": 12, "CON": 15, "INT": 10, "SAB": 10, "CAR": 12 }, "weapon": { "name": "Espada Longa Fina", "damage": "1d10+3" }, "ai": "aggressive_simple" }
+              {
+                "id": "lusitanian_soldier",
+                "name": "Soldado Lusitano",
+                "hp": 18,
+                "ca": 14,
+                "pa": 2,
+                "attributes": {
+                  "FOR": 14,
+                  "DES": 10,
+                  "CON": 13,
+                  "INT": 8,
+                  "SAB": 8,
+                  "CAR": 8
+                },
+                "weapon": {
+                  "name": "Espada Longa",
+                  "damage": "1d8+2"
+                },
+                "ai": "aggressive_simple"
+              },
+              {
+                "id": "lusitanian_soldier",
+                "name": "Soldado Lusitano",
+                "hp": 18,
+                "ca": 14,
+                "pa": 2,
+                "attributes": {
+                  "FOR": 14,
+                  "DES": 10,
+                  "CON": 13,
+                  "INT": 8,
+                  "SAB": 8,
+                  "CAR": 8
+                },
+                "weapon": {
+                  "name": "Espada Longa",
+                  "damage": "1d8+2"
+                },
+                "ai": "aggressive_simple"
+              },
+              {
+                "id": "lusitanian_captain",
+                "name": "Capitao Lusitano",
+                "hp": 30,
+                "ca": 16,
+                "pa": 3,
+                "attributes": {
+                  "FOR": 16,
+                  "DES": 12,
+                  "CON": 15,
+                  "INT": 10,
+                  "SAB": 10,
+                  "CAR": 12
+                },
+                "weapon": {
+                  "name": "Espada Longa Fina",
+                  "damage": "1d10+3"
+                },
+                "ai": "aggressive_simple"
+              }
             ],
             "xp_reward": 250,
             "gold_reward": "5d6"
@@ -116,7 +232,9 @@
           "id": "enter_kashan_post",
           "text": "Aceitar e entrar em Kashan.",
           "next_scene": "hodir_negotiation",
-          "faction_effects": { "nobreza_pars": 15 },
+          "faction_effects": {
+            "nobreza_pars": 15
+          },
           "xp_reward": 50
         }
       ]
@@ -136,23 +254,38 @@
           "id": "accept_terms",
           "text": "Concordo. A nobreza tera seu lugar no novo Pars.",
           "next_scene": "hodir_alliance",
-          "faction_effects": { "nobreza_pars": 20, "escravos_libertos": -15 },
-          "set_flags": { "promised_nobility": true }
+          "faction_effects": {
+            "nobreza_pars": 20,
+            "escravos_libertos": -15
+          },
+          "set_flags": {
+            "promised_nobility": true
+          }
         },
         {
           "id": "counter_offer",
           "text": "Pars precisa mudar. Mas mudancas podem beneficiar a todos.",
           "next_scene": "hodir_alliance",
           "condition": "CAR >= 14",
-          "faction_effects": { "nobreza_pars": 10, "escravos_libertos": -5 },
-          "set_flags": { "diplomatic_promise": true }
+          "faction_effects": {
+            "nobreza_pars": 10,
+            "escravos_libertos": -5
+          },
+          "set_flags": {
+            "diplomatic_promise": true
+          }
         },
         {
           "id": "refuse_terms",
           "text": "Nao farei promessas que nao posso cumprir. Me apoie pelo bem de Pars.",
           "next_scene": "hodir_reluctant",
-          "faction_effects": { "nobreza_pars": -5, "escravos_libertos": 10 },
-          "set_flags": { "refused_hodir": true }
+          "faction_effects": {
+            "nobreza_pars": -5,
+            "escravos_libertos": 10
+          },
+          "set_flags": {
+            "refused_hodir": true
+          }
         }
       ]
     },
@@ -170,7 +303,9 @@
           "id": "accept_partial",
           "text": "200 soldados sao um comeco. Obrigado, Lord Hodir.",
           "next_scene": "gieve_encounter",
-          "set_flags": { "partial_kashan_alliance": true },
+          "set_flags": {
+            "partial_kashan_alliance": true
+          },
           "xp_reward": 100
         }
       ]
@@ -189,7 +324,9 @@
           "id": "continue_campaign",
           "text": "Uma alianca firmada. Vamos em frente.",
           "next_scene": "gieve_encounter",
-          "set_flags": { "full_kashan_alliance": true },
+          "set_flags": {
+            "full_kashan_alliance": true
+          },
           "xp_reward": 200
         }
       ]
@@ -203,59 +340,112 @@
         "Sentado numa rocha, um homem de cabelos escuros e sorriso galante toca sua flauta. Ao lado dele, uma mulher de armadura dourada e expressao seria observa voces com olhos penetrantes.",
         "\"Ora, ora,\" diz o homem, guardando a flauta. \"O Principe Arslan em pessoa. Ja ouvi falar de voce.\"",
         "A mulher se levanta. \"Eu sou Falangies, sacerdotisa de Mithra. Este e Gieve, um... musico.\"",
-        "\"Espadachim, poeta e amante das belas artes,\" Gieve corrige com um sorriso."
+        "\"Espadachim, poeta e amante das belas artes,\" Gieve corrige com um sorriso.",
+        "De repente, gritos e o barulho de espadas ecoam pela estrada. Bandidos emergem das arvores!"
       ],
       "choices": [
         {
-          "id": "welcome_both",
-          "text": "Bem-vindos. Toda ajuda e necessaria nestes tempos.",
-          "next_scene": "gieve_joins",
-          "set_flags": { "gieve_recruited": true, "falangies_recruited": true },
-          "faction_effects": { "clero_mithra": 10 }
-        },
-        {
-          "id": "question_motives",
-          "text": "Por que querem se juntar a nos?",
-          "next_scene": "gieve_explains",
-          "set_flags": { "questioned_gieve": true }
+          "id": "fight_together",
+          "text": "Lutem conosco! Mostrem do que sao capazes!",
+          "next_scene": "post_bandit_fight",
+          "set_flags": {
+            "gieve_recruited": true,
+            "falangies_recruited": true
+          },
+          "start_combat": {
+            "id": "road_bandits",
+            "name": "Bandidos na Estrada",
+            "enemies": [
+              {
+                "id": "bandit",
+                "name": "Bandido",
+                "hp": 14,
+                "ca": 12,
+                "pa": 2,
+                "attributes": {
+                  "FOR": 13,
+                  "DES": 14,
+                  "CON": 11,
+                  "INT": 8,
+                  "SAB": 8,
+                  "CAR": 8
+                },
+                "weapon": {
+                  "name": "Adaga Enferrujada",
+                  "damage": "1d4+2"
+                },
+                "ai": "aggressive_simple"
+              },
+              {
+                "id": "bandit",
+                "name": "Bandido",
+                "hp": 14,
+                "ca": 12,
+                "pa": 2,
+                "attributes": {
+                  "FOR": 13,
+                  "DES": 14,
+                  "CON": 11,
+                  "INT": 8,
+                  "SAB": 8,
+                  "CAR": 8
+                },
+                "weapon": {
+                  "name": "Clava",
+                  "damage": "1d6+1"
+                },
+                "ai": "aggressive_simple"
+              },
+              {
+                "id": "bandit_leader",
+                "name": "Lider dos Bandidos",
+                "hp": 22,
+                "ca": 14,
+                "pa": 3,
+                "attributes": {
+                  "FOR": 15,
+                  "DES": 13,
+                  "CON": 13,
+                  "INT": 10,
+                  "SAB": 9,
+                  "CAR": 12
+                },
+                "weapon": {
+                  "name": "Cimitarra",
+                  "damage": "1d8+3"
+                },
+                "ai": "aggressive_simple"
+              }
+            ],
+            "xp_reward": 150,
+            "gold_reward": "6d6"
+          }
         }
       ]
     },
     {
-      "id": "gieve_explains",
-      "title": null,
-      "type": "narrative",
-      "text": [
-        "Falangies responde primeiro: \"O Templo de Mithra em Ecbatana foi profanado pelos lusitanos. Eles impuseram seu deus — Yaldabaoth — sobre nosso povo. Nao posso permitir isso.\"",
-        "Gieve da de ombros. \"Eu? Estou entediado. E a sacerdotisa vai para onde a batalha esta, entao... eu vou tambem.\"",
-        "Falangies lanca um olhar gelido para Gieve. Ele sorri sem se afetar."
-      ],
-      "choices": [
-        {
-          "id": "accept_both",
-          "text": "Seus motivos sao seus. O que importa e que estamos do mesmo lado.",
-          "next_scene": "gieve_joins",
-          "set_flags": { "gieve_recruited": true, "falangies_recruited": true },
-          "faction_effects": { "clero_mithra": 10 }
-        }
-      ]
-    },
-    {
-      "id": "gieve_joins",
+      "id": "post_bandit_fight",
       "title": "Novos Companheiros",
       "type": "narrative",
       "text": [
+        "Os bandidos fogem ou caem. Gieve limpa sua espada com elegancia.",
+        "\"Nada mal, Principe. Voce luta quase tao bem quanto eu toco flauta.\"",
+        "Falangies guarda sua maca. \"O Templo de Mithra em Ecbatana foi profanado pelos lusitanos. Eles impuseram seu deus — Yaldabaoth — sobre nosso povo. Nao posso permitir isso.\"",
+        "\"E eu?\" Gieve da de ombros. \"Estou entediado. E a sacerdotisa vai para onde a batalha esta, entao... eu vou tambem.\"",
         "Gieve, o bardo espadachim, e Falangies, a sacerdotisa guerreira, juntam-se ao grupo.",
-        "O exercito de Arslan cresce. Mas os desafios tambem crescem.",
-        "Noticias chegam de que Silvermask — o misterioso guerreiro que reivindica o trono de Pars — esta reunindo seu proprio exercito. A corrida pela coroa se intensifica.",
-        "E no sul, o reino de Sindhura observa a crise de Pars com interesse. Aliado ou inimigo? So o tempo dira."
+        "O exercito de Arslan cresce. Mas os desafios tambem crescem."
       ],
       "choices": [
         {
           "id": "prepare_act4",
           "text": "E hora de planejar o ataque final.",
           "next_scene": "act3_end",
-          "set_flags": { "act3_complete": true },
+          "set_flags": {
+            "act3_complete": true
+          },
+          "faction_effects": {
+            "clero_mithra": 10
+          },
           "xp_reward": 150
         }
       ]
@@ -266,7 +456,7 @@
       "type": "chapter_end",
       "text": [
         "Aliancas foram firmadas. Companheiros leais se juntaram a causa. O exercito de Arslan, embora pequeno, e leal e determinado.",
-        "Mas Silvermask se aproxima. Os lusitanos reforçam Ecbatana. E segredos sobre o passado de Arslan começam a emergir.",
+        "Mas Silvermask se aproxima. Os lusitanos reforcam Ecbatana. E segredos sobre o passado de Arslan comecam a emergir.",
         "A batalha final se aproxima. O destino de Pars sera decidido.",
         "Fim do Ato III — A Alianca"
       ],

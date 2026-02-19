@@ -1,0 +1,41 @@
+.entry {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: flex-start;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.entry:hover {
+    border-color: var(--border-gold);
+}
+
+.completed {
+    opacity: 0.6;
+}
+
+.status {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.info {
+    flex: 1;
+}
+
+.name {
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    color: var(--gold);
+    margin: 0 0 2px;
+}
+
+.desc {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin: 0;
+}

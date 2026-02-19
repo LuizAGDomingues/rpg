@@ -1,0 +1,69 @@
+.panel {
+    position: relative;
+}
+
+.desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0 0 var(--spacing-md);
+    line-height: 1.5;
+}
+
+.section {
+    margin-bottom: var(--spacing-md);
+}
+
+.sectionTitle {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin: 0 0 var(--spacing-xs, 4px);
+}
+
+.objectives {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.objectives li {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    padding: 3px 0;
+}
+
+.objDone {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.objPending {
+    opacity: 1;
+}
+
+.rewards {
+    display: flex;
+    gap: var(--spacing-md);
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    color: var(--gold-light);
+}
+
+.closeBtn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 6px 16px;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    transition: border-color 0.2s;
+}
+
+.closeBtn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+}

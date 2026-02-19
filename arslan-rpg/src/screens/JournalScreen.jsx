@@ -1,13 +1,17 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useGameStore from '../store/useGameStore';
 import Button from '../components/ui/Button';
 import Panel from '../components/ui/Panel';
 import { OrnamentDivider } from '../components/ui/Ornament';
+import QuestEntry from '../components/journal/QuestEntry';
+import QuestDetail from '../components/journal/QuestDetail';
 import styles from './JournalScreen.module.css';
 
 export default function JournalScreen() {
   const navigate = useNavigate();
   const quests = useGameStore((s) => s.quests);
+  const [selectedQuest, setSelectedQuest] = useState(null);
 
   return (
     <div className={styles.container}>
@@ -17,27 +21,42 @@ export default function JournalScreen() {
       </div>
       <OrnamentDivider />
 
-      <Panel title="Quests Ativas">
-        {quests.active.length === 0 ? (
-          <p className={styles.empty}>Nenhuma quest ativa.</p>
-        ) : (
-          quests.active.map((q) => (
-            <div key={q.id} className={styles.quest}>
-              <h3 className={styles.questName}>{q.name}</h3>
-              <p className={styles.questDesc}>{q.description}</p>
-            </div>
-          ))
-        )}
-      </Panel>
+      {selectedQuest ? (
+        <QuestDetail quest={selectedQuest} onClose={() => setSelectedQuest(null)} />
+      ) : (
+        <>
+          <Panel title="Quests Ativas">
+            {quests.active.length === 0 ? (
+              <p className={styles.empty}>Nenhuma quest ativa.</p>
+            ) : (
+              <div className={styles.questList}>
+                {quests.active.map((q) => (
+                  <QuestEntry key={q.id} quest={q} active onClick={() => setSelectedQuest(q)} />
+                ))}
+              </div>
+            )}
+          </Panel>
 
-      {quests.completed.length > 0 && (
-        <Panel title="Concluidas">
-          {quests.completed.map((q) => (
-            <div key={q.id} className={styles.questCompleted}>
-              <h3 className={styles.questName}>{q.name}</h3>
-            </div>
-          ))}
-        </Panel>
+          {quests.completed.length > 0 && (
+            <Panel title="Concluidas">
+              <div className={styles.questList}>
+                {quests.completed.map((q) => (
+                  <QuestEntry key={q.id} quest={q} active={false} onClick={() => setSelectedQuest(q)} />
+                ))}
+              </div>
+            </Panel>
+          )}
+
+          {quests.failed.length > 0 && (
+            <Panel title="Falhadas">
+              <div className={styles.questList}>
+                {quests.failed.map((q) => (
+                  <QuestEntry key={q.id} quest={q} active={false} onClick={() => setSelectedQuest(q)} />
+                ))}
+              </div>
+            </Panel>
+          )}
+        </>
       )}
     </div>
   );

@@ -1,5 +1,20 @@
 import { checkCondition } from '../utils/conditions';
 
+// Character data imports for auto-recruitment
+import daryunData from '../data/characters/daryun.json';
+import narsusData from '../data/characters/narsus.json';
+import elamData from '../data/characters/elam.json';
+import gieveData from '../data/characters/gieve.json';
+import falangiesData from '../data/characters/falangies.json';
+
+const CHARACTER_DATA = {
+  daryun: daryunData,
+  narsus: narsusData,
+  elam: elamData,
+  gieve: gieveData,
+  falangies: falangiesData,
+};
+
 export const getScene = (sceneId, narrativeData) => {
   return narrativeData.scenes?.find((s) => s.id === sceneId) || null;
 };
@@ -25,6 +40,32 @@ export const processChoice = (choice, gameState, store) => {
   if (choice.set_flags) {
     Object.entries(choice.set_flags).forEach(([flag, value]) => {
       store.setNarrativeFlag(flag, value);
+
+      // Auto-recruit when a <generalId>_recruited flag is set
+      const recruitMatch = flag.match(/^(\w+)_recruited$/);
+      if (recruitMatch && value === true) {
+        const generalId = recruitMatch[1];
+        const charData = CHARACTER_DATA[generalId];
+        if (charData && !gameState.recruited_generals.some((g) => g.id === generalId)) {
+          store.recruitGeneral({
+            ...charData,
+            hp_base: charData.hp,
+          });
+          results.push({ type: 'recruit', generalId, name: charData.name, title: charData.title });
+
+          // Auto-recruit Elam when Narsus is recruited
+          if (generalId === 'narsus') {
+            const elamChar = CHARACTER_DATA.elam;
+            if (elamChar && !gameState.recruited_generals.some((g) => g.id === 'elam')) {
+              store.recruitGeneral({
+                ...elamChar,
+                hp_base: elamChar.hp,
+              });
+              results.push({ type: 'recruit', generalId: 'elam', name: elamChar.name, title: elamChar.title });
+            }
+          }
+        }
+      }
     });
   }
 
@@ -49,8 +90,17 @@ export const processChoice = (choice, gameState, store) => {
     results.push({ type: 'key_item', item: choice.add_key_item });
   }
 
+  // Explicit recruit field (in addition to flag-based auto-recruit above)
   if (choice.recruit) {
-    results.push({ type: 'recruit', generalId: choice.recruit });
+    const generalId = choice.recruit;
+    const charData = CHARACTER_DATA[generalId];
+    if (charData && !gameState.recruited_generals.some((g) => g.id === generalId)) {
+      store.recruitGeneral({
+        ...charData,
+        hp_base: charData.hp,
+      });
+      results.push({ type: 'recruit', generalId, name: charData.name, title: charData.title });
+    }
   }
 
   if (choice.unlock_region) {

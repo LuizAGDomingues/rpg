@@ -1,0 +1,63 @@
+.card {
+    position: relative;
+}
+
+.role {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    text-transform: capitalize;
+}
+
+.attrs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-xs, 4px);
+    margin: var(--spacing-sm) 0;
+}
+
+.details {
+    margin-top: var(--spacing-sm);
+}
+
+.detailRow {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    padding: 2px 0;
+}
+
+.detailRow span:last-child {
+    color: var(--gold-light);
+}
+
+.skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: var(--spacing-sm);
+}
+
+.skillTag {
+    font-size: 0.72rem;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 8px;
+    color: var(--text-muted);
+}
+
+.passive {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--border);
+}
+
+.passiveLabel {
+    color: var(--gold-dark);
+    font-family: var(--font-heading);
+}

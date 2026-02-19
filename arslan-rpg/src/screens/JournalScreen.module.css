@@ -1,9 +1,26 @@
-.container { max-width: 700px; margin: 0 auto; padding: var(--spacing-xl) var(--spacing-lg); min-height: 100vh; display: flex; flex-direction: column; gap: var(--spacing-md); }
-.header { display: flex; justify-content: space-between; align-items: center; }
-.empty { color: var(--text-dim); font-style: italic; }
-.quest { padding: var(--spacing-sm) 0; border-bottom: 1px solid var(--border); }
-.quest:last-child { border-bottom: none; }
-.questName { font-size: 1rem; color: var(--gold); margin-bottom: 2px; }
-.questDesc { color: var(--text-muted); font-size: 0.9rem; }
-.questCompleted { padding: var(--spacing-xs) 0; opacity: 0.6; }
-.questCompleted .questName { color: var(--text-dim); text-decoration: line-through; }
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.empty {
+    color: var(--text-dim);
+    font-style: italic;
+}
+
+.questList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}

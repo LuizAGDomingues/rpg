@@ -1,10 +1,13 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useGameStore from '../store/useGameStore';
 import Button from '../components/ui/Button';
 import { OrnamentDivider, PersianPattern } from '../components/ui/Ornament';
 import styles from './TitleScreen.module.css';
 
+
 export default function TitleScreen() {
+  const navigate = useNavigate();
   const setGamePhase = useGameStore((s) => s.setGamePhase);
   const resetGame = useGameStore((s) => s.resetGame);
   const playerClass = useGameStore((s) => s.player.class);
@@ -45,6 +48,9 @@ export default function TitleScreen() {
           )}
           <Button variant="primary" size="lg" fullWidth onClick={handleNewGame}>
             Novo Jogo
+          </Button>
+          <Button variant="secondary" size="md" fullWidth onClick={() => navigate('/settings')}>
+            ⚙ Configuracoes
           </Button>
           <Button variant="secondary" size="md" fullWidth onClick={() => setShowCredits(!showCredits)}>
             Creditos

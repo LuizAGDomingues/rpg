@@ -16,22 +16,28 @@
         {
           "id": "full_assault",
           "text": "Ataque frontal! Mostraremos aos lusitanos o poder de Pars!",
-          "next_scene": "march_to_ecbatana",
+          "next_scene": "kharlan_ambush",
           "condition": "FOR >= 14",
-          "set_flags": { "chose_assault": true }
+          "set_flags": {
+            "chose_assault": true
+          }
         },
         {
           "id": "strategic_siege",
           "text": "Narsus, apresente seu plano. Vamos usar a estrategia.",
           "next_scene": "narsus_strategy",
-          "set_flags": { "chose_strategy": true }
+          "set_flags": {
+            "chose_strategy": true
+          }
         },
         {
           "id": "diplomatic_approach",
           "text": "Antes de atacar, vamos tentar negociar com os lusitanos moderados.",
           "next_scene": "lusitano_negotiations",
           "condition": "class == diplomat",
-          "set_flags": { "chose_diplomacy": true }
+          "set_flags": {
+            "chose_diplomacy": true
+          }
         }
       ]
     },
@@ -49,9 +55,11 @@
         {
           "id": "approve_plan",
           "text": "Um plano digno do melhor estrategista de Pars. Vamos!",
-          "next_scene": "march_to_ecbatana",
+          "next_scene": "kharlan_ambush",
           "xp_reward": 50,
-          "set_flags": { "narsus_plan_approved": true }
+          "set_flags": {
+            "narsus_plan_approved": true
+          }
         }
       ]
     },
@@ -69,19 +77,133 @@
         {
           "id": "accept_neutrality",
           "text": "Neutralidade ja e uma grande vitoria. Obrigado, Etoile.",
-          "next_scene": "march_to_ecbatana",
-          "faction_effects": { "lusitanos_moderados": 30 },
-          "set_flags": { "lusitano_neutrality": true },
+          "next_scene": "kharlan_ambush",
+          "faction_effects": {
+            "lusitanos_moderados": 30
+          },
+          "set_flags": {
+            "lusitano_neutrality": true
+          },
           "xp_reward": 100
         },
         {
           "id": "push_alliance",
           "text": "Junte-se a nos. Juntos podemos construir um mundo melhor.",
-          "next_scene": "march_to_ecbatana",
+          "next_scene": "kharlan_ambush",
           "condition": "CAR >= 16",
-          "faction_effects": { "lusitanos_moderados": 50 },
-          "set_flags": { "lusitano_alliance": true },
+          "faction_effects": {
+            "lusitanos_moderados": 50
+          },
+          "set_flags": {
+            "lusitano_alliance": true
+          },
           "xp_reward": 200
+        }
+      ]
+    },
+    {
+      "id": "kharlan_ambush",
+      "title": "A Emboscada de Kharlan",
+      "type": "narrative",
+      "text": [
+        "Na estrada para Ecbatana, os batedores retornam com urgencia.",
+        "\"Alteza! Um exercito bloqueia a passagem no Desfiladeiro de Kharlan! E liderado pelo proprio General Kharlan!\"",
+        "Kharlan — o traidor que abriu os portoes de Atropatene para os lusitanos. O homem que jurou lealdade ao Rei Andragoras e depois o apunhalou pelas costas.",
+        "Daryun aperta o punho. \"Eu cobrico os lados. O centro e seu, Alteza. Kharlan precisa pagar por sua traicao.\"",
+        "O exercito de Kharlan avanca. Nao ha escapatoria — e lutar ou morrer."
+      ],
+      "choices": [
+        {
+          "id": "fight_kharlan",
+          "text": "Por Pars e por justica — enfrentar Kharlan!",
+          "next_scene": "march_to_ecbatana",
+          "start_combat": {
+            "id": "kharlan_boss",
+            "name": "Confronto com Kharlan, o Traidor",
+            "enemies": [
+              {
+                "id": "kharlan",
+                "name": "General Kharlan",
+                "hp": 80,
+                "ca": 18,
+                "pa": 4,
+                "attributes": {
+                  "FOR": 17,
+                  "DES": 14,
+                  "CON": 16,
+                  "INT": 13,
+                  "SAB": 12,
+                  "CAR": 14
+                },
+                "weapon": {
+                  "name": "Lanca do Traidor",
+                  "damage": "1d10+4",
+                  "bonus_atk": 3
+                },
+                "on_hit_effect": {
+                  "name": "bleed",
+                  "label": "Sangramento",
+                  "duration": 3
+                },
+                "on_hit_chance": 0.3,
+                "xp": 200,
+                "gold": 30,
+                "ai": "aggressive_simple"
+              },
+              {
+                "id": "kharlan_guard",
+                "name": "Guarda de Kharlan",
+                "hp": 20,
+                "ca": 15,
+                "pa": 2,
+                "attributes": {
+                  "FOR": 14,
+                  "DES": 12,
+                  "CON": 14,
+                  "INT": 10,
+                  "SAB": 10,
+                  "CAR": 10
+                },
+                "weapon": {
+                  "name": "Espada Longa",
+                  "damage": "1d8+2"
+                },
+                "xp": 30,
+                "gold": 5,
+                "ai": "aggressive_simple"
+              },
+              {
+                "id": "kharlan_guard",
+                "name": "Guarda de Kharlan",
+                "hp": 20,
+                "ca": 15,
+                "pa": 2,
+                "attributes": {
+                  "FOR": 14,
+                  "DES": 12,
+                  "CON": 14,
+                  "INT": 10,
+                  "SAB": 10,
+                  "CAR": 10
+                },
+                "weapon": {
+                  "name": "Espada Longa",
+                  "damage": "1d8+2"
+                },
+                "xp": 30,
+                "gold": 5,
+                "ai": "aggressive_simple"
+              }
+            ],
+            "xp_reward": 400,
+            "gold_reward": "6d6"
+          },
+          "set_flags": {
+            "kharlan_defeated": true
+          },
+          "faction_effects": {
+            "nobreza_pars": 15
+          }
         }
       ]
     },
@@ -90,6 +212,7 @@
       "title": "A Marcha sobre Ecbatana",
       "type": "narrative",
       "text": [
+        "Com Kharlan derrotado, o caminho para Ecbatana esta aberto.",
         "O exercito de Arslan marcha. E pequeno comparado aos exercitos de outrora, mas cada guerreiro carrega a chama da determinacao.",
         "Daryun cavalga ao seu lado, lanca erguida. Narsus estuda o terreno. Elam observa o horizonte com olhos de aguia.",
         "Quando as torres de Ecbatana surgem contra o ceu do entardecer, um silencio solene toma conta do exercito.",
@@ -100,8 +223,95 @@
         {
           "id": "begin_battle",
           "text": "Pela gloria de Pars — AVANCAR!",
+          "next_scene": "wall_battle",
+          "set_flags": {
+            "final_battle_begun": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "wall_battle",
+      "title": "As Muralhas de Ecbatana",
+      "type": "narrative",
+      "text": [
+        "O ataque comeca! Os soldados de Arslan avancarao contra as muralhas de Ecbatana.",
+        "Os lusitanos respondem com flechas e oleo fervente, mas a determinacao dos parsenses e inabalavel.",
+        "Voces rompem uma das portas laterais e se deparam com um contingente de elite lusitano que guarda a passagem ao palacio."
+      ],
+      "choices": [
+        {
+          "id": "fight_walls",
+          "text": "Abrir caminho pela forca!",
           "next_scene": "ecbatana_battle",
-          "set_flags": { "final_battle_begun": true }
+          "start_combat": {
+            "id": "wall_breach",
+            "name": "Invasao das Muralhas",
+            "enemies": [
+              {
+                "id": "lusitanian_elite",
+                "name": "Elite Lusitano",
+                "hp": 24,
+                "ca": 16,
+                "pa": 3,
+                "attributes": {
+                  "FOR": 16,
+                  "DES": 12,
+                  "CON": 15,
+                  "INT": 10,
+                  "SAB": 10,
+                  "CAR": 10
+                },
+                "weapon": {
+                  "name": "Espada Langa Fina",
+                  "damage": "1d10+3"
+                },
+                "ai": "aggressive_simple"
+              },
+              {
+                "id": "lusitanian_elite",
+                "name": "Elite Lusitano",
+                "hp": 24,
+                "ca": 16,
+                "pa": 3,
+                "attributes": {
+                  "FOR": 16,
+                  "DES": 12,
+                  "CON": 15,
+                  "INT": 10,
+                  "SAB": 10,
+                  "CAR": 10
+                },
+                "weapon": {
+                  "name": "Espada Langa Fina",
+                  "damage": "1d10+3"
+                },
+                "ai": "aggressive_simple"
+              },
+              {
+                "id": "lusitanian_champion",
+                "name": "Campeao Lusitano",
+                "hp": 35,
+                "ca": 17,
+                "pa": 3,
+                "attributes": {
+                  "FOR": 17,
+                  "DES": 13,
+                  "CON": 16,
+                  "INT": 11,
+                  "SAB": 11,
+                  "CAR": 12
+                },
+                "weapon": {
+                  "name": "Machado de Guerra",
+                  "damage": "1d12+4"
+                },
+                "ai": "aggressive_simple"
+              }
+            ],
+            "xp_reward": 300,
+            "gold_reward": "8d6"
+          }
         }
       ]
     },
@@ -110,7 +320,7 @@
       "title": "A Batalha de Ecbatana",
       "type": "narrative",
       "text": [
-        "A batalha e feroz! Os lusitanos resistem com fanatismo, mas o plano de Narsus funciona — os ataques coordenados rompem as defesas inimigas.",
+        "O caminho ate o palacio esta aberto! A batalha e feroz em todos os lados.",
         "Daryun abre caminho com sua lanca, derrubando soldados como um furacao negro.",
         "Mas entao — uma figura emerge dos portoes do palacio. Armadura escura, mascara de prata brilhando ao luar.",
         "\"ARSLAN!\" a voz ecoa pelo campo de batalha. \"Voce nao e digno deste trono! EU sou o verdadeiro herdeiro de Pars!\"",
@@ -120,8 +330,7 @@
         {
           "id": "face_silvermask",
           "text": "Eu aceito seu desafio, Silvermask!",
-          "next_scene": "silvermask_fight",
-          "set_flags": { "faced_silvermask": true }
+          "next_scene": "silvermask_fight"
         }
       ]
     },
@@ -133,30 +342,98 @@
         "O campo de batalha se abre. Soldados de ambos os lados param para assistir o confronto entre os dois pretendentes ao trono.",
         "Silvermask gira sua lamina prateada. Seus olhos, visiveis atras da mascara, ardem com raiva e algo mais — dor.",
         "\"Voce nao sabe nada sobre seu proprio sangue, Arslan. Nada sobre quem voce realmente e.\"",
-        "Nao ha mais tempo para palavras. A lâmina de Silvermask desce."
+        "Nao ha mais tempo para palavras. A lamina de Silvermask desce."
       ],
       "choices": [
         {
           "id": "boss_fight",
           "text": "Erguer a espada e lutar!",
-          "next_scene": "post_silvermask",
+          "next_scene": "silvermask_phase2",
           "start_combat": {
-            "id": "final_boss",
-            "name": "Duelo Final — Silvermask",
+            "id": "final_boss_p1",
+            "name": "Duelo Final — Silvermask (Fase 1)",
             "enemies": [
               {
                 "id": "silvermask",
                 "name": "Silvermask",
-                "hp": 80,
-                "ca": 20,
+                "hp": 90,
+                "ca": 19,
                 "pa": 4,
-                "attributes": { "FOR": 18, "DES": 18, "CON": 16, "INT": 16, "SAB": 14, "CAR": 16 },
-                "weapon": { "name": "Lamina de Prata", "damage": "2d8+4" },
+                "attributes": {
+                  "FOR": 18,
+                  "DES": 18,
+                  "CON": 16,
+                  "INT": 16,
+                  "SAB": 14,
+                  "CAR": 16
+                },
+                "weapon": {
+                  "name": "Lamina de Prata",
+                  "damage": "2d8+4",
+                  "bonus_atk": 3
+                },
+                "on_hit_effect": {
+                  "name": "bleed",
+                  "label": "Sangramento",
+                  "duration": 2
+                },
+                "on_hit_chance": 0.2,
                 "ai": "tactical_boss"
               }
             ],
-            "xp_reward": 1000,
-            "gold_reward": "10d6"
+            "xp_reward": 500
+          }
+        }
+      ]
+    },
+    {
+      "id": "silvermask_phase2",
+      "title": "Silvermask se Levanta!",
+      "type": "narrative",
+      "text": [
+        "Silvermask cai por um momento, mas algo muda. Uma aura sombria emana de seu corpo.",
+        "\"Voce... nao entende...\" ele rosna, se levantando com dificuldade. Sua mascara esta rachada, revelando um olho cheio de furia.",
+        "\"EU NAO VOU PERDER!\" Uma explosao de energia o envolve. Seus ferimentos parecem se fechar parcialmente.",
+        "Silvermask avanca novamente, mais rapido e mais perigoso do que antes."
+      ],
+      "choices": [
+        {
+          "id": "boss_phase2",
+          "text": "Nao importa quantas vezes voce se levante — eu nao vou ceder!",
+          "next_scene": "post_silvermask",
+          "start_combat": {
+            "id": "final_boss_p2",
+            "name": "Duelo Final — Silvermask (Fase 2 — Despertar)",
+            "enemies": [
+              {
+                "id": "silvermask_awakened",
+                "name": "Silvermask Desperto",
+                "hp": 60,
+                "ca": 18,
+                "pa": 5,
+                "attributes": {
+                  "FOR": 20,
+                  "DES": 19,
+                  "CON": 16,
+                  "INT": 16,
+                  "SAB": 14,
+                  "CAR": 16
+                },
+                "weapon": {
+                  "name": "Lamina de Prata (Desperta)",
+                  "damage": "2d10+5",
+                  "bonus_atk": 4
+                },
+                "on_hit_effect": {
+                  "name": "stunned",
+                  "label": "Atordoamento",
+                  "duration": 1
+                },
+                "on_hit_chance": 0.15,
+                "ai": "berserk"
+              }
+            ],
+            "xp_reward": 500
           }
         }
       ]
@@ -177,16 +454,29 @@
           "id": "show_mercy",
           "text": "Poupe-o. Ja houve derramamento de sangue demais.",
           "next_scene": "epilogue",
-          "faction_effects": { "escravos_libertos": 10, "clero_mithra": 10, "lusitanos_moderados": 15 },
-          "set_flags": { "spared_silvermask": true, "merciful_king": true },
+          "faction_effects": {
+            "escravos_libertos": 10,
+            "clero_mithra": 10,
+            "lusitanos_moderados": 15
+          },
+          "set_flags": {
+            "spared_silvermask": true,
+            "merciful_king": true
+          },
           "xp_reward": 300
         },
         {
           "id": "demand_justice",
           "text": "Voce causou sofrimento demais. A justica deve ser feita.",
           "next_scene": "epilogue",
-          "faction_effects": { "nobreza_pars": 15, "escravos_libertos": -5 },
-          "set_flags": { "punished_silvermask": true, "just_king": true },
+          "faction_effects": {
+            "nobreza_pars": 15,
+            "escravos_libertos": -5
+          },
+          "set_flags": {
+            "punished_silvermask": true,
+            "just_king": true
+          },
           "xp_reward": 300
         },
         {
@@ -194,8 +484,15 @@
           "text": "Pars precisa de cura, nao de vinganca. Junte-se a mim para reconstruir.",
           "next_scene": "epilogue",
           "condition": "CAR >= 16",
-          "faction_effects": { "nobreza_pars": 5, "escravos_libertos": 15, "clero_mithra": 15 },
-          "set_flags": { "redeemed_silvermask": true, "wise_king": true },
+          "faction_effects": {
+            "nobreza_pars": 5,
+            "escravos_libertos": 15,
+            "clero_mithra": 15
+          },
+          "set_flags": {
+            "redeemed_silvermask": true,
+            "wise_king": true
+          },
           "xp_reward": 500
         }
       ]

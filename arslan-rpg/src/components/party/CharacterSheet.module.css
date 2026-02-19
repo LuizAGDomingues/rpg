@@ -1,0 +1,85 @@
+.sheet {
+    position: relative;
+}
+
+.meta {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.classLabel {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    color: var(--gold-light);
+}
+
+.level {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.attrs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-xs, 4px);
+    margin: var(--spacing-md) 0;
+}
+
+.sectionTitle {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin: var(--spacing-sm) 0 4px;
+}
+
+.equipment {
+    margin-top: var(--spacing-sm);
+}
+
+.equipRow {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    padding: 2px 0;
+}
+
+.equipRow span:last-child {
+    color: var(--gold-light);
+}
+
+.skills {
+    margin-top: var(--spacing-sm);
+}
+
+.skillList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.skillTag {
+    font-size: 0.75rem;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 8px;
+    color: var(--text-muted);
+}
+
+.combatStats {
+    display: flex;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--border);
+}
+
+.combatStat {
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    color: var(--mp-blue);
+}

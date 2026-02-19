@@ -1,0 +1,59 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.slot {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    text-align: center;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    cursor: default;
+}
+
+.filled {
+    border-color: var(--gold-dark);
+    cursor: pointer;
+}
+
+.filled:hover {
+    border-color: var(--gold);
+    box-shadow: 0 0 8px rgba(201, 168, 76, 0.2);
+}
+
+.empty {
+    opacity: 0.5;
+}
+
+.slotIcon {
+    font-size: 1.3rem;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.slotLabel {
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: block;
+}
+
+.slotValue {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    color: var(--gold-light);
+    display: block;
+    margin-top: 4px;
+}
+
+.slotStat {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    display: block;
+}
