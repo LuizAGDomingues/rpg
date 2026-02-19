@@ -1,0 +1,8 @@
+.container { max-width: 700px; margin: 0 auto; padding: var(--spacing-xl) var(--spacing-lg); min-height: 100vh; }
+.header { display: flex; justify-content: space-between; align-items: center; }
+.list { display: flex; flex-direction: column; gap: var(--spacing-md); }
+.factionRow { display: flex; flex-direction: column; gap: var(--spacing-sm); }
+.factionInfo { display: flex; justify-content: space-between; align-items: center; }
+.factionName { font-size: 1rem; }
+.factionStatus { font-family: var(--font-heading); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.repValue { font-family: var(--font-heading); font-size: 1rem; font-weight: 600; text-align: right; }

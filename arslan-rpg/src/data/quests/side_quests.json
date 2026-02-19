@@ -1,0 +1,85 @@
+[
+  {
+    "id": "sq_battlefield_loot",
+    "name": "Despojos de Guerra",
+    "description": "Vasculhe o campo de Atropatene em busca de suprimentos.",
+    "act": 1,
+    "objectives": [
+      { "id": "obj_search_field", "text": "Explorar o campo de batalha", "type": "exploration" },
+      { "id": "obj_find_supplies", "text": "Encontrar suprimentos", "type": "loot" }
+    ],
+    "rewards": { "xp": 50, "gold": 30, "items": ["potion_minor"] },
+    "start_condition": null,
+    "completion_flag": "looted_battlefield"
+  },
+  {
+    "id": "sq_save_soldier",
+    "name": "Soldado Caido",
+    "description": "Encontre e salve um soldado de Pars ferido no campo de batalha.",
+    "act": 1,
+    "objectives": [
+      { "id": "obj_find_soldier", "text": "Encontrar o soldado ferido", "type": "exploration" },
+      { "id": "obj_heal_soldier", "text": "Tratar seus ferimentos", "type": "skill_check" }
+    ],
+    "rewards": { "xp": 75, "gold": 0 },
+    "start_condition": "SAB >= 12",
+    "completion_flag": "saved_soldier"
+  },
+  {
+    "id": "sq_narsus_painting",
+    "name": "A Obra-Prima de Narsus",
+    "description": "Narsus insiste que voce veja sua mais recente pintura. E... indescritivel.",
+    "act": 2,
+    "objectives": [
+      { "id": "obj_view_painting", "text": "Ver a pintura de Narsus", "type": "dialogue" },
+      { "id": "obj_react", "text": "Dar sua opiniao honesta", "type": "dialogue" }
+    ],
+    "rewards": { "xp": 30, "gold": 0 },
+    "start_condition": "narsus_recruited",
+    "completion_flag": "saw_painting",
+    "humor": true
+  },
+  {
+    "id": "sq_elam_training",
+    "name": "Treino de Elam",
+    "description": "Ajude Elam a melhorar suas habilidades com o arco.",
+    "act": 2,
+    "objectives": [
+      { "id": "obj_train_elam", "text": "Treinar com Elam na area de treino", "type": "training" },
+      { "id": "obj_complete_training", "text": "Completar 3 sessoes de treino", "type": "repeatable" }
+    ],
+    "rewards": { "xp": 100, "gold": 0 },
+    "start_condition": "narsus_recruited",
+    "completion_flag": "elam_trained"
+  },
+  {
+    "id": "sq_free_slaves",
+    "name": "Correntes Partidas",
+    "description": "Liberte um grupo de escravos sendo transportados pelos lusitanos.",
+    "act": 2,
+    "objectives": [
+      { "id": "obj_find_caravan", "text": "Encontrar a caravana de escravos", "type": "exploration" },
+      { "id": "obj_plan_rescue", "text": "Planejar o resgate", "type": "skill_check" },
+      { "id": "obj_free_slaves", "text": "Libertar os escravos", "type": "combat" }
+    ],
+    "rewards": { "xp": 200, "gold": 50 },
+    "start_condition": "camp_established",
+    "completion_flag": "freed_slaves",
+    "faction_effects": { "escravos_libertos": 20, "nobreza_pars": -10 }
+  },
+  {
+    "id": "sq_gieve_recruitment",
+    "name": "O Bardo e a Sacerdotisa",
+    "description": "Encontre Gieve e Falangies e convença-os a se juntar a causa.",
+    "act": 3,
+    "objectives": [
+      { "id": "obj_hear_music", "text": "Seguir o som da musica", "type": "exploration" },
+      { "id": "obj_meet_gieve", "text": "Conhecer Gieve", "type": "dialogue" },
+      { "id": "obj_meet_falangies", "text": "Conhecer Falangies", "type": "dialogue" },
+      { "id": "obj_recruit_both", "text": "Convencer ambos a se juntar", "type": "dialogue" }
+    ],
+    "rewards": { "xp": 250, "gold": 0 },
+    "start_condition": "act3_started",
+    "completion_flag": "gieve_falangies_recruited"
+  }
+]

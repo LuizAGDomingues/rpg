@@ -1,0 +1,11 @@
+[
+  { "id": "iron_sword", "name": "Espada de Ferro", "type": "weapon", "slot": "main_hand", "damage": "1d8+1", "description": "Uma espada simples mas confiavel.", "value": 50, "proficiency": "espadas" },
+  { "id": "steel_sword", "name": "Espada de Aco", "type": "weapon", "slot": "main_hand", "damage": "1d8+3", "description": "Espada forjada com aco de qualidade.", "value": 150, "proficiency": "espadas" },
+  { "id": "royal_blade", "name": "Lamina Real", "type": "weapon", "slot": "main_hand", "damage": "1d10+4", "description": "Uma espada digna da realeza de Pars.", "value": 500, "proficiency": "espadas" },
+  { "id": "short_bow", "name": "Arco Curto", "type": "weapon", "slot": "main_hand", "damage": "1d6+2", "description": "Arco leve e rapido.", "value": 40, "proficiency": "arcos" },
+  { "id": "composite_bow", "name": "Arco Composto", "type": "weapon", "slot": "main_hand", "damage": "1d8+3", "description": "Arco poderoso usado pelos cavaleiros de Pars.", "value": 200, "proficiency": "arcos" },
+  { "id": "iron_spear", "name": "Lanca de Ferro", "type": "weapon", "slot": "main_hand", "damage": "1d10+1", "description": "Lanca de infantaria padrao.", "value": 60, "proficiency": "lancas" },
+  { "id": "war_lance", "name": "Lanca de Guerra", "type": "weapon", "slot": "main_hand", "damage": "1d10+3", "description": "Lanca pesada para combate montado.", "value": 250, "proficiency": "lancas" },
+  { "id": "kharlan_sword", "name": "Espada de Kharlan", "type": "weapon", "slot": "main_hand", "damage": "1d10+3", "description": "A espada do general traidor. Forte, mas amaldicoada.", "value": 300, "proficiency": "espadas" },
+  { "id": "dagger", "name": "Adaga", "type": "weapon", "slot": "main_hand", "damage": "1d4+2", "description": "Pequena e rapida. Ideal para ataques furtivos.", "value": 25, "proficiency": "espadas_leves" }
+]

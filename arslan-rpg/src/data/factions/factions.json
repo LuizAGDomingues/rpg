@@ -1,0 +1,80 @@
+[
+  {
+    "id": "nobreza_pars",
+    "name": "Nobreza de Pars",
+    "description": "Os lordes e senhores feudais de Pars. Conservadores e poderosos.",
+    "leader": "Lord Hodir de Kashan",
+    "starting_rep": 10,
+    "allies": [],
+    "enemies": ["escravos_libertos"],
+    "bonuses": [
+      { "threshold": 50, "effect": "Desconto em lojas de Pars (20%)" },
+      { "threshold": 80, "effect": "Acesso a tropas de elite para batalhas" }
+    ]
+  },
+  {
+    "id": "clero_mithra",
+    "name": "Clero de Mithra",
+    "description": "Os sacerdotes do deus Mithra. Influentes e respeitados pelo povo.",
+    "leader": "Alto Sacerdote",
+    "starting_rep": 5,
+    "allies": [],
+    "enemies": ["lusitanos_moderados"],
+    "bonuses": [
+      { "threshold": 50, "effect": "Cura gratuita em templos" },
+      { "threshold": 80, "effect": "Bencao de Mithra: +1 em todos os testes por 24h" }
+    ]
+  },
+  {
+    "id": "escravos_libertos",
+    "name": "Escravos Libertos",
+    "description": "Ex-escravos que buscam liberdade e igualdade em Pars.",
+    "leader": "Conselho dos Libertos",
+    "starting_rep": 0,
+    "allies": [],
+    "enemies": ["nobreza_pars"],
+    "bonuses": [
+      { "threshold": 50, "effect": "Informantes nas cidades (acesso a quests secretas)" },
+      { "threshold": 80, "effect": "Exercito de voluntarios para batalha final" }
+    ]
+  },
+  {
+    "id": "lusitanos_moderados",
+    "name": "Lusitanos Moderados",
+    "description": "Facção lusitana que questiona a brutalidade da invasao.",
+    "leader": "Etoile",
+    "starting_rep": -20,
+    "allies": [],
+    "enemies": ["clero_mithra"],
+    "bonuses": [
+      { "threshold": 0, "effect": "Cessam ataques de patrulhas lusitanas" },
+      { "threshold": 50, "effect": "Informacoes sobre movimentos do exercito lusitano" }
+    ]
+  },
+  {
+    "id": "turan",
+    "name": "Reino de Turan",
+    "description": "Reino nomade ao norte. Guerreiros ferozes e independentes.",
+    "leader": "Rei Tokhtamysh",
+    "starting_rep": -10,
+    "allies": [],
+    "enemies": [],
+    "bonuses": [
+      { "threshold": 50, "effect": "Acesso a cavalaria turca para batalhas" },
+      { "threshold": 80, "effect": "Alianca militar completa" }
+    ]
+  },
+  {
+    "id": "sindhura",
+    "name": "Reino de Sindhura",
+    "description": "O poderoso reino ao sul de Pars.",
+    "leader": "Principe Rajendra",
+    "starting_rep": 0,
+    "allies": [],
+    "enemies": [],
+    "bonuses": [
+      { "threshold": 50, "effect": "Comercio de itens exoticos" },
+      { "threshold": 80, "effect": "Exercito de Sindhura como aliado na batalha final" }
+    ]
+  }
+]

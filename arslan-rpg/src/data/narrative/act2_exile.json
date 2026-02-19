@@ -1,0 +1,208 @@
+{
+  "act": 2,
+  "title": "O Exilio",
+  "scenes": [
+    {
+      "id": "act2_arrival_dahman",
+      "title": "Vilarejo de Dahman",
+      "type": "narrative",
+      "text": [
+        "O vilarejo de Dahman e modesto — um punhado de casas de pedra ao redor de uma praca central. Mas apos dias de fuga, parece um oasis.",
+        "Daryun aponta para uma casa afastada no topo da colina.",
+        "\"Ali. Aquela e a casa de Narsus. Preparado, Alteza? Ele e... peculiar.\""
+      ],
+      "choices": [
+        {
+          "id": "visit_narsus_house",
+          "text": "Vamos encontrar Narsus.",
+          "next_scene": "narsus_house",
+          "set_flags": { "arrived_dahman": true }
+        },
+        {
+          "id": "explore_dahman_first",
+          "text": "Primeiro, vamos explorar o vilarejo.",
+          "next_scene": "explore_dahman",
+          "set_flags": { "arrived_dahman": true }
+        }
+      ]
+    },
+    {
+      "id": "explore_dahman",
+      "title": null,
+      "type": "narrative",
+      "text": [
+        "O vilarejo e tranquilo. Alguns moradores observam voces com curiosidade — dois guerreiros sujos e cansados nao sao visao comum aqui.",
+        "Na taberna, o dono oferece agua e pao em troca de algumas moedas. Ele murmura que 'o pintor da colina' raramente recebe visitas.",
+        "\"Se querem falar com ele, boa sorte. Ele vai tentar vender uma pintura para voces. Nao comprem.\""
+      ],
+      "choices": [
+        {
+          "id": "go_to_narsus",
+          "text": "Ir ate a casa de Narsus.",
+          "next_scene": "narsus_house"
+        }
+      ]
+    },
+    {
+      "id": "narsus_house",
+      "title": "O Estrategista Exilado",
+      "type": "narrative",
+      "text": [
+        "A porta se abre antes que voces batam. Um homem alto e elegante, com cabelos louros e olhos afiados, observa voces com uma mistura de tedio e curiosidade.",
+        "\"Daryun. Que surpresa desagradavel.\" Ele olha para voce. \"E esse deve ser o Principe Arslan. Pars caiu tao baixo assim?\"",
+        "Atras dele, um jovem de cabelos escuros aparece — seu servo, Elam. Os olhos de Elam se arregalam ao ver Daryun.",
+        "Narsus cruza os bracos. \"Deixe-me adivinhar. O reino caiu, todos os generais sao traidores ou covardes, e agora voces vieram pedir ajuda ao pintor exilado.\""
+      ],
+      "choices": [
+        {
+          "id": "appeal_to_ideals",
+          "text": "Voce foi exilado por defender a liberdade. Ajude-me a construir um Pars melhor.",
+          "next_scene": "narsus_considers",
+          "condition": "class == diplomat",
+          "faction_effects": { "escravos_libertos": 5 },
+          "set_flags": { "appealed_to_ideals": true }
+        },
+        {
+          "id": "strategic_appeal",
+          "text": "Pars precisa de uma mente como a sua. Sem estrategia, nao temos chance.",
+          "next_scene": "narsus_considers",
+          "set_flags": { "strategic_appeal": true }
+        },
+        {
+          "id": "direct_request",
+          "text": "Nao vou implorar. Se acredita em Pars, venha. Se nao, ficaremos sem voce.",
+          "next_scene": "narsus_impressed",
+          "set_flags": { "direct_with_narsus": true }
+        }
+      ]
+    },
+    {
+      "id": "narsus_considers",
+      "title": null,
+      "type": "narrative",
+      "text": [
+        "Narsus fica em silencio por um momento. Seus olhos avaliam voce como se fosse um tabuleiro de xadrez.",
+        "\"Interessante. O principe nao e tao simples quanto eu esperava.\"",
+        "Ele se vira para dentro da casa e pega algo — um mapa detalhado de Pars, repleto de anotacoes.",
+        "\"Eu ja estava rastreando os movimentos lusitanos. Puro habito, claro. Nao que eu planejasse fazer algo a respeito.\"",
+        "Elam suspira. \"Mestre Narsus, o senhor ja fez as malas ontem a noite.\"",
+        "Narsus lanca um olhar irritado ao aprendiz. \"Elam, sua honestidade desnecessaria vai ser um problema.\""
+      ],
+      "choices": [
+        {
+          "id": "welcome_narsus",
+          "text": "Entao e oficial? Voce se junta a nos?",
+          "next_scene": "narsus_joins",
+          "set_flags": { "narsus_recruited": true }
+        }
+      ]
+    },
+    {
+      "id": "narsus_impressed",
+      "title": null,
+      "type": "narrative",
+      "text": [
+        "Narsus ergue uma sobrancelha. Por um segundo, algo como respeito cruza seu rosto.",
+        "\"Hm. Coragem e franqueza. Raro em um principe de Pars.\"",
+        "Ele se vira para Elam. \"Prepare nossas coisas.\"",
+        "Elam sorri. \"Ja estao prontas, mestre.\"",
+        "\"Claro que estao,\" Narsus murmura. \"Voce me conhece bem demais, garoto.\""
+      ],
+      "choices": [
+        {
+          "id": "welcome_narsus_direct",
+          "text": "Bem-vindo ao grupo, Narsus.",
+          "next_scene": "narsus_joins",
+          "set_flags": { "narsus_recruited": true },
+          "xp_reward": 20
+        }
+      ]
+    },
+    {
+      "id": "narsus_joins",
+      "title": "Novos Aliados",
+      "type": "narrative",
+      "text": [
+        "Narsus, o estrategista exilado, e Elam, seu leal servo, juntam-se a sua causa.",
+        "\"Primeiro, precisamos de uma base,\" Narsus anuncia, ja assumindo o papel de estrategista. \"Conheco um local ao sul — protegido, com acesso a agua e rotas de fuga. Perfeito para um acampamento.\"",
+        "\"Enquanto nos movemos, vou analisar a situacao. Os lusitanos podem ter tomado a capital, mas sua posicao e fragil. Eles nao conhecem esta terra como nos.\"",
+        "Pela primeira vez desde a queda de Ecbatana, voce sente algo que quase tinha esquecido: esperanca."
+      ],
+      "choices": [
+        {
+          "id": "to_camp",
+          "text": "Vamos estabelecer nosso acampamento.",
+          "next_scene": "camp_established",
+          "recruit": "narsus",
+          "xp_reward": 50
+        }
+      ]
+    },
+    {
+      "id": "camp_established",
+      "title": "Acampamento dos Exilados",
+      "type": "narrative",
+      "text": [
+        "Apos um dia de marcha, voces chegam ao local que Narsus escolheu — um vale protegido entre colinas, com um riacho e cobertura natural das arvores.",
+        "O Acampamento dos Exilados esta fundado. E modesto, mas e um inicio.",
+        "\"Daqui, podemos planejar nossos proximos passos,\" diz Narsus, desdobrando seu mapa. \"Temos varias opcoes...\"",
+        "Daryun limpa suas armas. Elam prepara as racoes. E voce, Principe Arslan, olha para o horizonte.",
+        "A jornada para retomar Pars comecou de verdade."
+      ],
+      "choices": [
+        {
+          "id": "whats_next",
+          "text": "O que voce sugere, Narsus?",
+          "next_scene": "narsus_plan",
+          "set_flags": { "camp_established": true }
+        }
+      ]
+    },
+    {
+      "id": "narsus_plan",
+      "title": "Conselho de Guerra",
+      "type": "narrative",
+      "text": [
+        "Narsus aponta para o mapa com precisao meticulosa.",
+        "\"Temos tres prioridades. Primeiro: a Fortaleza de Kashan. O senhor de Kashan, Lord Hodir, ainda resiste contra os lusitanos. Se o convencermos a se aliar a nos, ganhamos soldados e uma posicao estrategica.\"",
+        "\"Segundo: os escravos libertos. A invasao lusitana desestabilizou o sistema de escravatura de Pars. Ha grupos organizados que podem se tornar aliados — se Arslan se posicionar a favor da liberdade deles.\"",
+        "\"Terceiro: treino. Voce precisa se tornar mais forte, Alteza. O campo de treino aqui no acampamento sera util.\""
+      ],
+      "choices": [
+        {
+          "id": "go_kashan",
+          "text": "Vamos a Kashan primeiro. Precisamos de soldados.",
+          "next_scene": "end_act2_preview",
+          "set_flags": { "plan_kashan_first": true },
+          "unlock_region": "kashan"
+        },
+        {
+          "id": "free_slaves",
+          "text": "Os escravos libertos. E hora de Pars mudar.",
+          "next_scene": "end_act2_preview",
+          "set_flags": { "plan_slaves_first": true },
+          "faction_effects": { "escravos_libertos": 15, "nobreza_pars": -5 }
+        },
+        {
+          "id": "train_first",
+          "text": "Vou treinar primeiro. Preciso estar pronto.",
+          "next_scene": "end_act2_preview",
+          "set_flags": { "plan_train_first": true },
+          "xp_reward": 30
+        }
+      ]
+    },
+    {
+      "id": "end_act2_preview",
+      "title": "A Jornada Continua",
+      "type": "chapter_end",
+      "text": [
+        "Com aliados ao seu lado e um plano em formacao, o Principe Arslan da os primeiros passos em sua campanha para retomar Pars.",
+        "O caminho sera longo. Batalhas, alianças, traicoes e escolhas dificeis esperam a frente.",
+        "Mas pela primeira vez, Arslan nao esta sozinho.",
+        "A historia continua..."
+      ],
+      "choices": []
+    }
+  ]
+}

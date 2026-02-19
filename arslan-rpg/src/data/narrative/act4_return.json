@@ -1,0 +1,220 @@
+{
+  "act": 4,
+  "title": "O Retorno do Principe",
+  "scenes": [
+    {
+      "id": "act4_preparations",
+      "title": "Preparativos para a Batalha",
+      "type": "narrative",
+      "text": [
+        "O acampamento fervilha de atividade. Soldados treinam, ferreiros forjam armas, e Narsus estuda seus mapas obsessivamente.",
+        "\"Chegou a hora,\" Narsus anuncia ao conselho reunido. \"Ecbatana esta vulneravel. Os lusitanos sofrem com problemas de suprimento, e a populacao resiste em silencio.\"",
+        "Daryun limpa sua lanca. Gieve afina sua flauta. Falangies ora a Mithra. Elam verifica suas flechas.",
+        "Todos olham para voce, Principe Arslan. A decisao e sua."
+      ],
+      "choices": [
+        {
+          "id": "full_assault",
+          "text": "Ataque frontal! Mostraremos aos lusitanos o poder de Pars!",
+          "next_scene": "march_to_ecbatana",
+          "condition": "FOR >= 14",
+          "set_flags": { "chose_assault": true }
+        },
+        {
+          "id": "strategic_siege",
+          "text": "Narsus, apresente seu plano. Vamos usar a estrategia.",
+          "next_scene": "narsus_strategy",
+          "set_flags": { "chose_strategy": true }
+        },
+        {
+          "id": "diplomatic_approach",
+          "text": "Antes de atacar, vamos tentar negociar com os lusitanos moderados.",
+          "next_scene": "lusitano_negotiations",
+          "condition": "class == diplomat",
+          "set_flags": { "chose_diplomacy": true }
+        }
+      ]
+    },
+    {
+      "id": "narsus_strategy",
+      "title": "O Plano de Narsus",
+      "type": "narrative",
+      "text": [
+        "Narsus desdobra seu mapa detalhado de Ecbatana sobre a mesa.",
+        "\"Tres fases. Primeiro: Gieve e Falangies liderarao uma distracao no portao leste. Segundo: Elam guiara um grupo pela passagem secreta dos aquedutos. Terceiro: Daryun e Arslan liderarao o ataque principal quando os lusitanos estiverem divididos.\"",
+        "\"E o mais importante — a populacao de Ecbatana esta do nosso lado. Quando virem nossas bandeiras, eles se levantarao.\"",
+        "Narsus olha para voce. \"E um bom plano. Mas planos sobrevivem apenas ate o primeiro contato com o inimigo. Esteja preparado para improvisar, Alteza.\""
+      ],
+      "choices": [
+        {
+          "id": "approve_plan",
+          "text": "Um plano digno do melhor estrategista de Pars. Vamos!",
+          "next_scene": "march_to_ecbatana",
+          "xp_reward": 50,
+          "set_flags": { "narsus_plan_approved": true }
+        }
+      ]
+    },
+    {
+      "id": "lusitano_negotiations",
+      "title": "Negociacao com os Moderados",
+      "type": "narrative",
+      "text": [
+        "Voce envia uma mensagem a Etoile, a jovem lusitana que questiona os metodos de seu proprio exercito.",
+        "O encontro acontece numa clareira neutra. Etoile chega acompanhada de dois guardas.",
+        "\"Principe Arslan. Voce e diferente dos outros nobres de Pars. Os escravos que voce libertou... isso me faz acreditar que talvez possamos coexistir.\"",
+        "\"Nao posso trair meu povo. Mas posso garantir que os moderados nao lutarao contra voce na batalha. Isso e o maximo que posso oferecer.\""
+      ],
+      "choices": [
+        {
+          "id": "accept_neutrality",
+          "text": "Neutralidade ja e uma grande vitoria. Obrigado, Etoile.",
+          "next_scene": "march_to_ecbatana",
+          "faction_effects": { "lusitanos_moderados": 30 },
+          "set_flags": { "lusitano_neutrality": true },
+          "xp_reward": 100
+        },
+        {
+          "id": "push_alliance",
+          "text": "Junte-se a nos. Juntos podemos construir um mundo melhor.",
+          "next_scene": "march_to_ecbatana",
+          "condition": "CAR >= 16",
+          "faction_effects": { "lusitanos_moderados": 50 },
+          "set_flags": { "lusitano_alliance": true },
+          "xp_reward": 200
+        }
+      ]
+    },
+    {
+      "id": "march_to_ecbatana",
+      "title": "A Marcha sobre Ecbatana",
+      "type": "narrative",
+      "text": [
+        "O exercito de Arslan marcha. E pequeno comparado aos exercitos de outrora, mas cada guerreiro carrega a chama da determinacao.",
+        "Daryun cavalga ao seu lado, lanca erguida. Narsus estuda o terreno. Elam observa o horizonte com olhos de aguia.",
+        "Quando as torres de Ecbatana surgem contra o ceu do entardecer, um silencio solene toma conta do exercito.",
+        "\"La esta,\" voce murmura. \"Meu lar.\"",
+        "Daryun responde: \"E hora de toma-lo de volta, Alteza.\""
+      ],
+      "choices": [
+        {
+          "id": "begin_battle",
+          "text": "Pela gloria de Pars — AVANCAR!",
+          "next_scene": "ecbatana_battle",
+          "set_flags": { "final_battle_begun": true }
+        }
+      ]
+    },
+    {
+      "id": "ecbatana_battle",
+      "title": "A Batalha de Ecbatana",
+      "type": "narrative",
+      "text": [
+        "A batalha e feroz! Os lusitanos resistem com fanatismo, mas o plano de Narsus funciona — os ataques coordenados rompem as defesas inimigas.",
+        "Daryun abre caminho com sua lanca, derrubando soldados como um furacao negro.",
+        "Mas entao — uma figura emerge dos portoes do palacio. Armadura escura, mascara de prata brilhando ao luar.",
+        "\"ARSLAN!\" a voz ecoa pelo campo de batalha. \"Voce nao e digno deste trono! EU sou o verdadeiro herdeiro de Pars!\"",
+        "Silvermask avanca diretamente na sua direcao."
+      ],
+      "choices": [
+        {
+          "id": "face_silvermask",
+          "text": "Eu aceito seu desafio, Silvermask!",
+          "next_scene": "silvermask_fight",
+          "set_flags": { "faced_silvermask": true }
+        }
+      ]
+    },
+    {
+      "id": "silvermask_fight",
+      "title": "Duelo Final — Silvermask",
+      "type": "narrative",
+      "text": [
+        "O campo de batalha se abre. Soldados de ambos os lados param para assistir o confronto entre os dois pretendentes ao trono.",
+        "Silvermask gira sua lamina prateada. Seus olhos, visiveis atras da mascara, ardem com raiva e algo mais — dor.",
+        "\"Voce nao sabe nada sobre seu proprio sangue, Arslan. Nada sobre quem voce realmente e.\"",
+        "Nao ha mais tempo para palavras. A lâmina de Silvermask desce."
+      ],
+      "choices": [
+        {
+          "id": "boss_fight",
+          "text": "Erguer a espada e lutar!",
+          "next_scene": "post_silvermask",
+          "start_combat": {
+            "id": "final_boss",
+            "name": "Duelo Final — Silvermask",
+            "enemies": [
+              {
+                "id": "silvermask",
+                "name": "Silvermask",
+                "hp": 80,
+                "ca": 20,
+                "pa": 4,
+                "attributes": { "FOR": 18, "DES": 18, "CON": 16, "INT": 16, "SAB": 14, "CAR": 16 },
+                "weapon": { "name": "Lamina de Prata", "damage": "2d8+4" },
+                "ai": "tactical_boss"
+              }
+            ],
+            "xp_reward": 1000,
+            "gold_reward": "10d6"
+          }
+        }
+      ]
+    },
+    {
+      "id": "post_silvermask",
+      "title": "A Mascara Cai",
+      "type": "narrative",
+      "text": [
+        "Silvermask cai de joelhos. Sua mascara se parte ao meio e cai no chao com um tinido metalico.",
+        "O rosto revelado e... familiar. Jovem, marcado por cicatrizes, mas com tracos que lembram a realeza de Pars.",
+        "\"Meu nome e Hermes,\" ele diz, sem forcas. \"Eu era... o verdadeiro principe herdeiro. Antes que Andragoras roubasse o trono do meu pai.\"",
+        "A verdade e como um raio. O trono de Pars, as mentiras da corte, a identidade de Arslan — tudo e mais complexo do que parecia.",
+        "Mas neste momento, uma escolha se apresenta."
+      ],
+      "choices": [
+        {
+          "id": "show_mercy",
+          "text": "Poupe-o. Ja houve derramamento de sangue demais.",
+          "next_scene": "epilogue",
+          "faction_effects": { "escravos_libertos": 10, "clero_mithra": 10, "lusitanos_moderados": 15 },
+          "set_flags": { "spared_silvermask": true, "merciful_king": true },
+          "xp_reward": 300
+        },
+        {
+          "id": "demand_justice",
+          "text": "Voce causou sofrimento demais. A justica deve ser feita.",
+          "next_scene": "epilogue",
+          "faction_effects": { "nobreza_pars": 15, "escravos_libertos": -5 },
+          "set_flags": { "punished_silvermask": true, "just_king": true },
+          "xp_reward": 300
+        },
+        {
+          "id": "offer_redemption",
+          "text": "Pars precisa de cura, nao de vinganca. Junte-se a mim para reconstruir.",
+          "next_scene": "epilogue",
+          "condition": "CAR >= 16",
+          "faction_effects": { "nobreza_pars": 5, "escravos_libertos": 15, "clero_mithra": 15 },
+          "set_flags": { "redeemed_silvermask": true, "wise_king": true },
+          "xp_reward": 500
+        }
+      ]
+    },
+    {
+      "id": "epilogue",
+      "title": "O Novo Amanhecer de Pars",
+      "type": "chapter_end",
+      "text": [
+        "Ecbatana esta livre. O trono de Pars e restaurado.",
+        "O povo celebra nas ruas. Bandeiras de Pars tremulam novamente sobre o palacio. Os lusitanos restantes se rendem ou fogem.",
+        "No salao do trono, com seus companheiros ao redor, Arslan sobe os degraus que levam a coroa.",
+        "Daryun, firme como sempre. Narsus, com um sorriso satisfeito. Elam, contendo a emocao. Gieve dedilhando uma melodia suave. Falangies, de cabeca erguida em oracao silenciosa.",
+        "O Principe Arslan olha para seu povo. A jornada foi longa. As cicatrizes sao muitas. Mas o futuro de Pars finalmente brilha.",
+        "\"Nao serei o rei que meu pai foi,\" voce declara. \"Serei o rei que Pars merece.\"",
+        "E assim termina a lenda do Principe Heroico de Pars.",
+        "FIM"
+      ],
+      "choices": []
+    }
+  ]
+}

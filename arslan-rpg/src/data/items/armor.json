@@ -1,0 +1,9 @@
+[
+  { "id": "leather_armor", "name": "Armadura de Couro", "type": "armor", "slot": "body", "ca_bonus": 2, "description": "Armadura leve de couro curtido.", "value": 40, "proficiency": "armadura_leve" },
+  { "id": "chain_mail", "name": "Cota de Malha", "type": "armor", "slot": "body", "ca_bonus": 4, "description": "Malha de aneis de metal entrelaçados.", "value": 150, "proficiency": "armadura_media" },
+  { "id": "plate_armor", "name": "Armadura de Placas", "type": "armor", "slot": "body", "ca_bonus": 6, "description": "Armadura pesada de placas de aco.", "value": 400, "proficiency": "armadura_pesada" },
+  { "id": "royal_armor", "name": "Armadura Real de Pars", "type": "armor", "slot": "body", "ca_bonus": 7, "description": "A armadura cerimonial da guarda real.", "value": 800, "proficiency": "armadura_pesada" },
+  { "id": "wooden_shield", "name": "Escudo de Madeira", "type": "armor", "slot": "off_hand", "ca_bonus": 1, "description": "Escudo simples de madeira reforcada.", "value": 20, "proficiency": "escudos" },
+  { "id": "iron_shield", "name": "Escudo de Ferro", "type": "armor", "slot": "off_hand", "ca_bonus": 2, "description": "Escudo solido de ferro.", "value": 80, "proficiency": "escudos" },
+  { "id": "travel_cloak", "name": "Capa de Viagem", "type": "armor", "slot": "accessory", "ca_bonus": 1, "description": "Capa resistente que oferece leve protecao.", "value": 30, "proficiency": null }
+]

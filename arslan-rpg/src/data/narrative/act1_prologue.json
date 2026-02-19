@@ -1,0 +1,433 @@
+{
+  "act": 1,
+  "title": "A Queda de Ecbatana",
+  "scenes": [
+    {
+      "id": "prologue_start",
+      "title": "O Campo de Atropatene",
+      "type": "narrative",
+      "text": [
+        "O sol se poe sobre o campo de Atropatene, tingindo o ceu de carmesim e dourado. Onde antes marchava o orgulho de Pars — o maior exercito do continente — agora restam apenas cinzas e silencio.",
+        "Voce e Arslan, principe herdeiro de Pars. Ha apenas algumas horas, tudo parecia seguro. O exercito de seu pai, o Rei Andragoras III, avancava com confianca contra os invasores lusitanos.",
+        "Entao veio a traicao. O General Kharlan, um dos mais confiados comandantes de Pars, voltou suas armas contra o proprio rei. A linha de frente desmoronou. O caos se espalhou como fogo em palha seca.",
+        "Agora, enquanto o campo de batalha arde ao longe, voce se encontra fugindo. Ao seu lado, apenas um homem permanece leal..."
+      ],
+      "choices": [
+        {
+          "id": "ask_daryun",
+          "text": "Quem e voce? Por que me ajuda?",
+          "next_scene": "meet_daryun",
+          "set_flags": { "asked_daryun_identity": true }
+        },
+        {
+          "id": "run_silent",
+          "text": "Seguir em silencio, focando na fuga.",
+          "next_scene": "silent_escape",
+          "set_flags": { "chose_silence_prologue": true }
+        },
+        {
+          "id": "look_back",
+          "text": "Olhar para tras, para a capital em chamas.",
+          "next_scene": "look_back_scene",
+          "set_flags": { "looked_back": true }
+        }
+      ]
+    },
+    {
+      "id": "meet_daryun",
+      "title": null,
+      "type": "narrative",
+      "text": [
+        "O guerreiro ao seu lado e imponente — armadura negra, lanca firme, olhos que ja viram mil batalhas. Ele responde sem diminuir o passo:",
+        "\"Meu nome e Daryun. Fui cavaleiro da guarda pessoal de Vahriz, o Marzban do exercito real. Vahriz... caiu em batalha protegendo a retirada. Antes de morrer, ele me deu uma unica ordem.\"",
+        "Daryun olha diretamente para voce. Sua voz e firme como aco.",
+        "\"Proteger o Principe Arslan com minha vida. E e isso que pretendo fazer, Alteza. Mesmo que o mundo inteiro se volte contra nos.\""
+      ],
+      "choices": [
+        {
+          "id": "thank_daryun",
+          "text": "Obrigado, Daryun. Nao esquecerei isso.",
+          "next_scene": "escape_path",
+          "faction_effects": { "nobreza_pars": 5 },
+          "set_flags": { "thanked_daryun": true, "daryun_recruited": true }
+        },
+        {
+          "id": "question_loyalty",
+          "text": "Como posso confiar em voce? Kharlan tambem era leal.",
+          "next_scene": "daryun_proves_loyalty",
+          "set_flags": { "questioned_daryun": true, "daryun_recruited": true }
+        }
+      ]
+    },
+    {
+      "id": "silent_escape",
+      "title": null,
+      "type": "narrative",
+      "text": [
+        "Voce avanca em silencio, cada passo calculado. O homem ao seu lado — um guerreiro de armadura negra — respeita seu silencio.",
+        "Apos longos minutos, ele finalmente fala:",
+        "\"Alteza, meu nome e Daryun. Fui designado por Vahriz, o Marzban, para protege-lo. Ele deu sua vida para garantir nossa fuga.\"",
+        "Daryun mantem o olhar a frente, vigilante.",
+        "\"Nao precisa confiar em mim agora. Mas saiba que minha lanca e sua enquanto eu respirar.\""
+      ],
+      "choices": [
+        {
+          "id": "accept_daryun_silent",
+          "text": "Acenar em silencio, aceitando sua companhia.",
+          "next_scene": "escape_path",
+          "set_flags": { "daryun_recruited": true, "stoic_prince": true }
+        },
+        {
+          "id": "finally_speak",
+          "text": "Para onde estamos indo?",
+          "next_scene": "escape_path",
+          "set_flags": { "daryun_recruited": true }
+        }
+      ]
+    },
+    {
+      "id": "look_back_scene",
+      "title": null,
+      "type": "narrative",
+      "text": [
+        "Voce para por um instante e olha para tras. No horizonte, Ecbatana — a grande capital de Pars — arde. Colunas de fumaca negra sobem como serpentes no ceu crepuscular.",
+        "O guerreiro de armadura negra ao seu lado para tambem. Sua voz e grave:",
+        "\"Eu sei o que sente, Alteza. Eu sou Daryun, cavaleiro de Pars. Vahriz, meu comandante, morreu para nos dar esta chance de fuga.\"",
+        "Ele coloca a mao em seu ombro.",
+        "\"Ecbatana caiu hoje. Mas Pars nao morreu. Nao enquanto voce viver, Principe Arslan.\""
+      ],
+      "choices": [
+        {
+          "id": "vow_return",
+          "text": "Eu voltarei. E quando voltar, retomar o que e nosso.",
+          "next_scene": "escape_path",
+          "faction_effects": { "nobreza_pars": 5 },
+          "set_flags": { "vowed_return": true, "daryun_recruited": true }
+        },
+        {
+          "id": "despair_moment",
+          "text": "...como isso pode ter acontecido?",
+          "next_scene": "daryun_explains",
+          "set_flags": { "daryun_recruited": true }
+        }
+      ]
+    },
+    {
+      "id": "daryun_proves_loyalty",
+      "title": null,
+      "type": "narrative",
+      "text": [
+        "Daryun para. Seus olhos ardem, mas nao com raiva — com determinacao.",
+        "\"Tem razao em desconfiar. Kharlan era meu superior. Ele me ensinou a montar e a lutar. E mesmo assim, ele nos traiu.\"",
+        "Daryun crava a lanca no chao e se ajoelha diante de voce.",
+        "\"Nao tenho palavras que provem minha lealdade. So tenho minha lanca e minha vida. Ambas sao suas, Principe Arslan. Hoje, amanha e ate o fim.\""
+      ],
+      "choices": [
+        {
+          "id": "accept_oath",
+          "text": "Levante-se, Daryun. Aceito seu juramento.",
+          "next_scene": "escape_path",
+          "faction_effects": { "nobreza_pars": 3 },
+          "set_flags": { "accepted_daryun_oath": true }
+        },
+        {
+          "id": "prove_actions",
+          "text": "Palavras sao vento. Me mostre com acoes.",
+          "next_scene": "escape_path",
+          "set_flags": { "demanded_proof": true }
+        }
+      ]
+    },
+    {
+      "id": "daryun_explains",
+      "title": null,
+      "type": "narrative",
+      "text": [
+        "Daryun suspira pesadamente.",
+        "\"Traicao, Alteza. Kharlan fez um acordo com os lusitanos. Abriu as portas da fortaleza interna e desviou as tropas da ala esquerda. Quando percebemos, era tarde demais.\"",
+        "\"Seu pai, o Rei Andragoras, foi capturado. A rainha Tahamine tambem. Vahriz me ordenou que protegesse voce e fugisse.\"",
+        "Ele olha para voce com uma mistura de pesar e resolucao.",
+        "\"Voce e a unica esperanca de Pars agora, Alteza.\""
+      ],
+      "choices": [
+        {
+          "id": "accept_burden",
+          "text": "Entao serei o que Pars precisa que eu seja.",
+          "next_scene": "escape_path",
+          "faction_effects": { "nobreza_pars": 5, "clero_mithra": 3 },
+          "set_flags": { "accepted_burden": true }
+        },
+        {
+          "id": "doubt_self",
+          "text": "Eu... nao sei se estou preparado para isso.",
+          "next_scene": "escape_path",
+          "set_flags": { "self_doubt": true }
+        }
+      ]
+    },
+    {
+      "id": "escape_path",
+      "title": "A Fuga",
+      "type": "narrative",
+      "text": [
+        "Voces avancam pela floresta ao sul de Atropatene. A escuridao da noite e sua aliada agora — os lusitanos ainda estao ocupados saqueando o campo de batalha.",
+        "Daryun guia o caminho com a seguranca de quem conhece cada trilha desta regiao. De tempos em tempos, ele para, escuta, e sinaliza para continuar.",
+        "Apos horas de caminhada, voces chegam a uma clareira oculta entre rochas. Um pequeno riacho corre ao lado."
+      ],
+      "choices": [
+        {
+          "id": "rest_here",
+          "text": "Vamos descansar aqui. Precisamos de forcas.",
+          "next_scene": "camp_rest"
+        },
+        {
+          "id": "keep_moving",
+          "text": "Nao podemos parar. Eles podem nos rastrear.",
+          "next_scene": "keep_moving_scene"
+        },
+        {
+          "id": "plan_ahead",
+          "text": "Daryun, para onde devemos ir agora?",
+          "next_scene": "discuss_plan",
+          "condition": "class == strategist"
+        }
+      ]
+    },
+    {
+      "id": "camp_rest",
+      "title": null,
+      "type": "narrative",
+      "text": [
+        "Voces acampam na clareira. Nao ha fogueira — o risco de ser avistado e grande demais. Daryun divide as racoes que trouxe: pao seco e agua.",
+        "\"Descanse, Alteza. Eu farei a vigia. Amanha precisamos decidir nosso proximo passo.\"",
+        "Na quietude da noite, entre o som do riacho e o vento nas arvores, voce reflete sobre tudo que aconteceu. Seu pai capturado. Seu reino perdido. Sua vida mudou em um unico dia.",
+        "Mas algo dentro de voce se fortalece. Uma determinacao que voce nao sabia que existia."
+      ],
+      "choices": [
+        {
+          "id": "to_morning",
+          "text": "Dormir e enfrentar o amanhecer.",
+          "next_scene": "morning_after"
+        }
+      ]
+    },
+    {
+      "id": "keep_moving_scene",
+      "title": null,
+      "type": "narrative",
+      "text": [
+        "\"Concordo,\" diz Daryun. \"Quanto mais longe estivermos ao amanhecer, melhor.\"",
+        "Voces continuam pela floresta por mais algumas horas. O cansaco pesa, mas o medo de ser capturado e maior. Finalmente, quando suas pernas mal aguentam mais, encontram uma caverna rasa ao pe de uma colina.",
+        "\"Aqui serve,\" Daryun diz. \"Descanse, Alteza. Pelo menos algumas horas. Eu vigio.\""
+      ],
+      "choices": [
+        {
+          "id": "to_morning",
+          "text": "Aceitar e descansar.",
+          "next_scene": "morning_after"
+        }
+      ]
+    },
+    {
+      "id": "discuss_plan",
+      "title": null,
+      "type": "narrative",
+      "text": [
+        "Daryun parece surpreso — e impressionado — pela pergunta tatica.",
+        "\"Ha um homem que pode nos ajudar. Narsus, o estrategista. Ele foi exilado da corte anos atras por defender a abolicao da escravatura. Vive num vilarejo chamado Dahman, ao norte.\"",
+        "\"Se alguem pode criar um plano para retomar Pars, e ele. Mas...\" Daryun hesita. \"Ele e... peculiar. Vai precisar de um bom argumento para convence-lo a sair do exilio.\"",
+        "\"Alem disso, os lordes de Pars — a nobreza — controla fortalezas e soldados. Precisaremos do apoio deles em algum momento. A questao e se eles vao apoiar um principe que muitos consideram... ilegitimo.\""
+      ],
+      "choices": [
+        {
+          "id": "go_narsus",
+          "text": "Narsus parece ser nossa melhor opcao. Vamos.",
+          "next_scene": "morning_after",
+          "set_flags": { "plan_narsus_first": true },
+          "xp_reward": 10
+        },
+        {
+          "id": "rest_first",
+          "text": "Bom saber. Mas primeiro, descansemos.",
+          "next_scene": "morning_after"
+        }
+      ]
+    },
+    {
+      "id": "morning_after",
+      "title": "O Amanhecer",
+      "type": "narrative",
+      "text": [
+        "O primeiro raio de sol atravessa as copas das arvores. Voce acorda com o corpo dolorido, mas vivo. Daryun ja esta de pe, vigilante como sempre.",
+        "\"Alteza, descansou bem?\" Ele oferece agua e o ultimo pedaco de pao. \"Precisamos decidir nosso destino.\"",
+        "Ao norte, o vilarejo de Dahman — onde vive Narsus, o estrategista exilado. Ao oeste, a floresta se estende para as terras dos lordes de Pars. Ao sul, as rotas comerciais que levam a Sindhura.",
+        "O futuro de Pars — e o seu — depende do proximo passo."
+      ],
+      "choices": [
+        {
+          "id": "head_north",
+          "text": "Vamos ao norte, buscar Narsus.",
+          "next_scene": "journey_to_narsus",
+          "set_flags": { "heading_to_narsus": true },
+          "unlock_region": "exilio_narsus"
+        },
+        {
+          "id": "explore_ruins",
+          "text": "Primeiro, vamos explorar o campo de batalha. Pode haver sobreviventes.",
+          "next_scene": "explore_atropatene",
+          "set_flags": { "explored_battlefield": true }
+        }
+      ]
+    },
+    {
+      "id": "explore_atropatene",
+      "title": "O Campo dos Mortos",
+      "type": "narrative",
+      "text": [
+        "Contra o bom senso de Daryun, voces retornam ao campo de Atropatene. O cenario e devastador — tendas destruidas, armas partidas, e corpos. Muitos corpos.",
+        "\"Alteza, nao deveriamos ficar aqui,\" Daryun alerta, com a mao na lanca. \"Os lusitanos devem ter patrulhas.\"",
+        "Entre os destrocos, voce encontra um bau de suprimentos parcialmente intacto. Dentro, ha vendas, uma pocao de cura e algumas moedas de ouro."
+      ],
+      "choices": [
+        {
+          "id": "take_supplies",
+          "text": "Pegar os suprimentos. Vamos precisar.",
+          "next_scene": "atropatene_encounter",
+          "add_item": { "id": "potion_minor", "name": "Pocao Menor de Cura", "type": "consumable", "effect": "heal", "value_range": "2d4+2" },
+          "xp_reward": 15,
+          "set_flags": { "looted_battlefield": true }
+        },
+        {
+          "id": "search_survivors",
+          "text": "Procurar sobreviventes entre os feridos.",
+          "next_scene": "find_survivor",
+          "condition": "SAB >= 12",
+          "set_flags": { "searched_survivors": true }
+        },
+        {
+          "id": "leave_quickly",
+          "text": "Daryun tem razao. Vamos sair daqui.",
+          "next_scene": "journey_to_narsus",
+          "unlock_region": "exilio_narsus",
+          "set_flags": { "heading_to_narsus": true }
+        }
+      ]
+    },
+    {
+      "id": "find_survivor",
+      "title": null,
+      "type": "narrative",
+      "text": [
+        "Sua intuicao guia seus passos. Entre os destrocos, voce ouve um gemido fraco. Sob uma tenda caida, um soldado de Pars ainda respira.",
+        "\"A-alteza...\" ele murmura ao reconhecer voce. \"Voce esta vivo... gracas a Mithra...\"",
+        "O soldado esta ferido, mas sobrevivera. Ele revela que outros sobreviventes fugiram para o sul e que os lusitanos estao consolidando posicoes ao redor da capital.",
+        "\"Os lordes... alguns ainda resistem em suas fortalezas. Kashan... Kashan ainda nao caiu.\""
+      ],
+      "choices": [
+        {
+          "id": "help_soldier",
+          "text": "Cuidar do soldado e leva-lo conosco.",
+          "next_scene": "atropatene_encounter",
+          "faction_effects": { "nobreza_pars": 5, "clero_mithra": 5 },
+          "set_flags": { "saved_soldier": true, "kashan_info": true },
+          "xp_reward": 25
+        },
+        {
+          "id": "gather_intel",
+          "text": "Perguntar mais sobre a situacao das fortalezas.",
+          "next_scene": "atropatene_encounter",
+          "set_flags": { "kashan_info": true, "intel_gathered": true },
+          "xp_reward": 15
+        }
+      ]
+    },
+    {
+      "id": "atropatene_encounter",
+      "title": "Emboscada!",
+      "type": "narrative",
+      "text": [
+        "Um grito corta o ar. \"Ali! E alguem de Pars!\"",
+        "Tres soldados lusitanos emergem dos destrocos, espadas em punho. Eles avistaram voces.",
+        "Daryun ergue sua lanca imediatamente. \"Fique atras de mim, Alteza.\"",
+        "Os soldados avancam. Nao ha como evitar o confronto."
+      ],
+      "choices": [
+        {
+          "id": "fight_first_combat",
+          "text": "Preparar para o combate!",
+          "next_scene": "post_first_combat",
+          "start_combat": {
+            "id": "atropatene_ambush",
+            "name": "Emboscada em Atropatene",
+            "enemies": [
+              { "id": "lusitanian_soldier", "name": "Soldado Lusitano", "hp": 18, "ca": 14, "pa": 2, "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Longa", "damage": "1d8+2" }, "ai": "aggressive_simple" },
+              { "id": "lusitanian_soldier", "name": "Soldado Lusitano", "hp": 18, "ca": 14, "pa": 2, "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Longa", "damage": "1d8+2" }, "ai": "aggressive_simple" },
+              { "id": "lusitanian_soldier", "name": "Soldado Lusitano", "hp": 18, "ca": 14, "pa": 2, "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Longa", "damage": "1d8+2" }, "ai": "aggressive_simple" }
+            ],
+            "xp_reward": 150,
+            "gold_reward": "3d6"
+          }
+        }
+      ]
+    },
+    {
+      "id": "post_first_combat",
+      "title": "Apos a Batalha",
+      "type": "narrative",
+      "text": [
+        "Os soldados lusitanos jazem derrotados. Daryun limpa sua lanca com um gesto praticado.",
+        "\"Bom trabalho, Alteza. Mas onde ha tres, havera mais. Precisamos partir agora.\"",
+        "Voce olha uma ultima vez para o campo de Atropatene. Um dia, voce voltara aqui — nao como fugitivo, mas como libertador.",
+        "Daryun aponta para o norte. \"Conhego um homem. Narsus, o estrategista exilado. Vive num vilarejo chamado Dahman. Se alguem pode nos ajudar a planejar a retomada de Pars, e ele.\""
+      ],
+      "choices": [
+        {
+          "id": "to_narsus_arc",
+          "text": "Vamos encontrar Narsus.",
+          "next_scene": "journey_to_narsus",
+          "unlock_region": "exilio_narsus",
+          "set_flags": { "heading_to_narsus": true, "act1_combat_complete": true }
+        }
+      ]
+    },
+    {
+      "id": "journey_to_narsus",
+      "title": "Rumo ao Norte",
+      "type": "narrative",
+      "text": [
+        "A jornada ate Dahman leva dois dias. Voces viajam por trilhas secundarias, evitando estradas principais onde patrulhas lusitanas poderiam estar.",
+        "Durante a viagem, Daryun conta historias sobre Narsus — um genio estrategico que caiu em desgraca na corte por defender ideais que a nobreza considerava perigosos.",
+        "\"Ele queria abolir a escravatura em Pars. O rei o exilou por isso. Mas sua mente... nunca vi ninguem pensar como ele. Se aceitamos suas excentricidades, ele pode mudar o rumo desta guerra.\"",
+        "Finalmente, ao entardecer do segundo dia, um pequeno vilarejo surge no horizonte. Dahman."
+      ],
+      "choices": [
+        {
+          "id": "enter_dahman",
+          "text": "Entrar no vilarejo.",
+          "next_scene": "act1_end",
+          "set_flags": { "reached_dahman": true },
+          "set_act": 2
+        }
+      ]
+    },
+    {
+      "id": "act1_end",
+      "title": "Fim do Ato I",
+      "type": "chapter_end",
+      "text": [
+        "Voce chegou ao vilarejo de Dahman. A primeira etapa de sua jornada esta completa.",
+        "O principe fugitivo agora busca aliados. O estrategista exilado pode ser a chave para retomar o trono de Pars.",
+        "Mas os desafios apenas comecaram. A traicao de Kharlan, o misterio de Silvermask, as faccoes que disputam o poder — tudo isso ainda espera por voce.",
+        "Fim do Ato I — A Queda de Ecbatana"
+      ],
+      "choices": [
+        {
+          "id": "continue_act2",
+          "text": "Continuar para o Ato II...",
+          "next_scene": "act2_arrival_dahman",
+          "unlock_region": "acampamento_base"
+        }
+      ]
+    }
+  ]
+}

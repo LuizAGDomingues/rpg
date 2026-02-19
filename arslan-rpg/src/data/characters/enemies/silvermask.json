@@ -1,0 +1,22 @@
+{
+  "id": "silvermask",
+  "name": "Silvermask",
+  "description": "O misterioso guerreiro mascarado que reivindica o trono de Pars.",
+  "hp": 80,
+  "ca": 20,
+  "pa": 4,
+  "attributes": { "FOR": 18, "DES": 18, "CON": 16, "INT": 16, "SAB": 14, "CAR": 16 },
+  "weapon": { "name": "Lâmina de Prata", "damage": "2d8+4" },
+  "ai": "tactical_boss",
+  "skills": ["Furia Mascarada", "Investida Sombria", "Postura Imbativel"],
+  "boss": true,
+  "phases": 3,
+  "phase_thresholds": [0.66, 0.33],
+  "phase_buffs": [
+    { "description": "Silvermask remove parte da mascara. Seus ataques ficam mais rapidos.", "pa_bonus": 1, "attack_bonus": 2 },
+    { "description": "Silvermask entra em furia! Dano aumentado drasticamente.", "damage_bonus": "1d6", "ca_penalty": -2 }
+  ],
+  "xp_reward": 1000,
+  "gold_reward": "10d6",
+  "loot": [{ "id": "silver_mask_fragment", "name": "Fragmento da Mascara de Prata", "chance": 1.0 }]
+}

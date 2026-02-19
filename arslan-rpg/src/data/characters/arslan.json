@@ -1,0 +1,13 @@
+{
+  "id": "arslan",
+  "name": "Arslan",
+  "title": "Principe de Pars",
+  "description": "Jovem principe herdeiro do trono de Pars. Bondoso e determinado, busca retomar seu reino.",
+  "role": "protagonist",
+  "base_attributes": { "FOR": 12, "DES": 12, "CON": 12, "INT": 12, "SAB": 12, "CAR": 14 },
+  "portrait_color": "#c9a84c",
+  "quotes": [
+    "Eu voltarei. E quando voltar, construirei um Pars melhor.",
+    "Nao posso ser um rei que ignora o sofrimento de seu povo."
+  ]
+}

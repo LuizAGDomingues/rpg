@@ -1,0 +1,13 @@
+{
+  "id": "diplomat",
+  "name": "Diplomata",
+  "description": "Arslan abraca o humanismo. Conquista aliados com palavras e visao.",
+  "attributes": { "FOR": 10, "DES": 12, "CON": 10, "INT": 14, "SAB": 15, "CAR": 18 },
+  "hp_base": 16,
+  "pa_base": 3,
+  "proficiencies": ["espadas_leves", "arcos", "armadura_leve"],
+  "starting_skills": ["Persuasao Nobre", "Leitura de Pessoas", "Discurso Inspirador"],
+  "faction_bonus": { "escravos_libertos": 20, "sindhura": 10, "lusitanos_moderados": 15 },
+  "dialogue_tags": ["diplomat"],
+  "flavor": "Desbloqueia opcoes de dialogo exclusivas. Pode resolver conflitos sem combate."
+}

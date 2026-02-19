@@ -1,0 +1,19 @@
+{
+  "id": "falangies",
+  "name": "Falangies",
+  "title": "Sacerdotisa de Mithra",
+  "description": "Guerreira sacerdotisa devota ao deus Mithra. Forte, justa e implacavel.",
+  "role": "general",
+  "attributes": { "FOR": 15, "DES": 13, "CON": 14, "INT": 12, "SAB": 18, "CAR": 14 },
+  "hp": 24,
+  "ca": 17,
+  "weapon": { "name": "Maca Sagrada", "damage": "1d8+2", "type": "maca" },
+  "skills": ["Cura Divina", "Golpe Sagrado", "Benção de Mithra"],
+  "passive": "Benção: Cura 1d4 HP de um aliado por turno",
+  "portrait_color": "#f0e68c",
+  "recruit_condition": "act3_started",
+  "quotes": [
+    "Mithra guia minha maca. E ela nao erra.",
+    "A justica nao espera. Nem eu."
+  ]
+}

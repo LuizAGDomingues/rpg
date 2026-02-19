@@ -1,0 +1,13 @@
+{
+  "id": "strategist",
+  "name": "Estrategista",
+  "description": "Arslan como discipulo de Narsus. A mente e sua arma mais afiada.",
+  "attributes": { "FOR": 10, "DES": 14, "CON": 10, "INT": 18, "SAB": 14, "CAR": 12 },
+  "hp_base": 16,
+  "pa_base": 4,
+  "proficiencies": ["espadas_leves", "arcos", "armadura_leve"],
+  "starting_skills": ["Analise Tatica", "Antecipar Movimento", "Plano de Batalha"],
+  "faction_bonus": { "nobreza_pars": 5, "turan": 10 },
+  "dialogue_tags": ["strategist"],
+  "flavor": "Bonus em combates em grupo. Revela fraquezas inimigas. PA extra por turno."
+}

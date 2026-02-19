@@ -1,0 +1,15 @@
+.container { max-width: 700px; margin: 0 auto; padding: var(--spacing-xl) var(--spacing-lg); min-height: 100vh; display: flex; flex-direction: column; gap: var(--spacing-md); }
+.header { display: flex; justify-content: space-between; align-items: center; }
+.goldBar { display: flex; align-items: center; gap: var(--spacing-sm); padding: var(--spacing-sm); background: var(--bg-card); border-radius: var(--radius-sm); border: 1px solid var(--border-gold); }
+.goldLabel { font-family: var(--font-heading); font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; }
+.goldValue { font-family: var(--font-heading); font-size: 1.2rem; color: var(--gold); font-weight: 600; }
+.equipSlots { display: flex; flex-direction: column; gap: var(--spacing-sm); }
+.slot { display: flex; justify-content: space-between; padding: var(--spacing-xs) 0; border-bottom: 1px solid var(--border); }
+.slot:last-child { border-bottom: none; }
+.slotLabel { font-family: var(--font-heading); font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; }
+.slotValue { color: var(--text-light); font-size: 0.95rem; }
+.empty { color: var(--text-dim); font-style: italic; }
+.itemList { display: flex; flex-direction: column; gap: 4px; }
+.item { display: flex; justify-content: space-between; align-items: center; padding: var(--spacing-xs) var(--spacing-sm); background: var(--bg-dark); border-radius: var(--radius-sm); }
+.itemName { color: var(--text-light); font-size: 0.95rem; }
+.itemType { font-family: var(--font-heading); font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; }

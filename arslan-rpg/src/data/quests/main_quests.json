@@ -1,0 +1,74 @@
+[
+  {
+    "id": "mq_escape_ecbatana",
+    "name": "A Fuga de Ecbatana",
+    "description": "Escape do campo de batalha de Atropatene com a ajuda de Daryun.",
+    "act": 1,
+    "objectives": [
+      { "id": "obj_survive_prologue", "text": "Sobreviver ao prologo", "type": "narrative" },
+      { "id": "obj_meet_daryun", "text": "Conhecer Daryun", "type": "narrative" },
+      { "id": "obj_escape", "text": "Fugir de Atropatene", "type": "narrative" }
+    ],
+    "rewards": { "xp": 100, "gold": 0 },
+    "start_condition": null,
+    "completion_flag": "act1_complete"
+  },
+  {
+    "id": "mq_find_narsus",
+    "name": "O Estrategista Exilado",
+    "description": "Encontre Narsus em Dahman e convença-o a se juntar a sua causa.",
+    "act": 2,
+    "objectives": [
+      { "id": "obj_reach_dahman", "text": "Chegar ao vilarejo de Dahman", "type": "narrative" },
+      { "id": "obj_meet_narsus", "text": "Encontrar Narsus", "type": "narrative" },
+      { "id": "obj_recruit_narsus", "text": "Convencer Narsus a se juntar", "type": "narrative" }
+    ],
+    "rewards": { "xp": 200, "gold": 50 },
+    "start_condition": "act2_started",
+    "completion_flag": "narsus_recruited"
+  },
+  {
+    "id": "mq_establish_camp",
+    "name": "Acampamento dos Exilados",
+    "description": "Estabeleça uma base de operacoes para iniciar a reconquista de Pars.",
+    "act": 2,
+    "objectives": [
+      { "id": "obj_find_location", "text": "Encontrar local para o acampamento", "type": "narrative" },
+      { "id": "obj_establish", "text": "Estabelecer o acampamento", "type": "narrative" }
+    ],
+    "rewards": { "xp": 150, "gold": 0 },
+    "start_condition": "narsus_recruited",
+    "completion_flag": "camp_established"
+  },
+  {
+    "id": "mq_kashan_alliance",
+    "name": "A Fortaleza de Kashan",
+    "description": "Viaje ate Kashan e conquiste a alianca de Lord Hodir.",
+    "act": 3,
+    "objectives": [
+      { "id": "obj_travel_kashan", "text": "Viajar ate Kashan", "type": "travel" },
+      { "id": "obj_meet_hodir", "text": "Falar com Lord Hodir", "type": "dialogue" },
+      { "id": "obj_prove_worth", "text": "Provar seu valor", "type": "combat" },
+      { "id": "obj_secure_alliance", "text": "Garantir a alianca", "type": "narrative" }
+    ],
+    "rewards": { "xp": 400, "gold": 200 },
+    "start_condition": "camp_established",
+    "completion_flag": "kashan_alliance"
+  },
+  {
+    "id": "mq_retake_ecbatana",
+    "name": "A Reconquista",
+    "description": "Lidere o assalto final para retomar Ecbatana dos lusitanos.",
+    "act": 4,
+    "objectives": [
+      { "id": "obj_rally_allies", "text": "Reunir todos os aliados", "type": "narrative" },
+      { "id": "obj_battle_plan", "text": "Criar plano de batalha com Narsus", "type": "narrative" },
+      { "id": "obj_breach_walls", "text": "Romper as muralhas de Ecbatana", "type": "combat" },
+      { "id": "obj_defeat_silvermask", "text": "Derrotar Silvermask", "type": "combat" },
+      { "id": "obj_reclaim_throne", "text": "Retomar o trono", "type": "narrative" }
+    ],
+    "rewards": { "xp": 1000, "gold": 500 },
+    "start_condition": "act4_started",
+    "completion_flag": "game_complete"
+  }
+]

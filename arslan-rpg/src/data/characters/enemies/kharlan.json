@@ -1,0 +1,17 @@
+{
+  "id": "kharlan",
+  "name": "Kharlan",
+  "description": "General traidor de Pars. Vendeu seu rei e seu pais aos lusitanos.",
+  "hp": 45,
+  "ca": 18,
+  "pa": 3,
+  "attributes": { "FOR": 17, "DES": 14, "CON": 16, "INT": 13, "SAB": 12, "CAR": 10 },
+  "weapon": { "name": "Espada do Traidor", "damage": "1d10+3" },
+  "ai": "tactical_boss",
+  "skills": ["Golpe Traicoeiro", "Postura de Comando"],
+  "boss": true,
+  "phases": 1,
+  "xp_reward": 300,
+  "gold_reward": "5d6",
+  "loot": [{ "id": "kharlan_sword", "name": "Espada de Kharlan", "chance": 1.0 }]
+}

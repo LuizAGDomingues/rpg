@@ -1,0 +1,10 @@
+[
+  { "id": "potion_minor", "name": "Pocao Menor de Cura", "type": "consumable", "effect": "heal", "value_range": "2d4+2", "description": "Restaura uma pequena quantidade de HP.", "price": 25 },
+  { "id": "potion_major", "name": "Pocao Maior de Cura", "type": "consumable", "effect": "heal", "value_range": "4d4+4", "description": "Restaura uma quantidade generosa de HP.", "price": 75 },
+  { "id": "potion_full", "name": "Pocao de Cura Suprema", "type": "consumable", "effect": "heal_full", "value_range": null, "description": "Restaura todo o HP.", "price": 200 },
+  { "id": "antidote", "name": "Antidoto", "type": "consumable", "effect": "cure_poison", "value_range": null, "description": "Remove efeitos de veneno.", "price": 30 },
+  { "id": "ration", "name": "Racoes de Viagem", "type": "consumable", "effect": "heal", "value_range": "1d4", "description": "Comida simples. Restaura um pouco de HP.", "price": 5 },
+  { "id": "bomb_fire", "name": "Bomba Incendiaria", "type": "consumable", "effect": "damage_all", "value_range": "3d6", "description": "Causa dano de fogo a todos os inimigos.", "price": 100 },
+  { "id": "smoke_bomb", "name": "Bomba de Fumaca", "type": "consumable", "effect": "escape", "value_range": null, "description": "Permite fugir de combate automaticamente.", "price": 60 },
+  { "id": "elixir_strength", "name": "Elixir de Forca", "type": "consumable", "effect": "buff_for", "value_range": "2", "description": "+2 FOR por 3 turnos.", "price": 80 }
+]

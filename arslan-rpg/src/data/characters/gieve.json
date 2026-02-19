@@ -1,0 +1,19 @@
+{
+  "id": "gieve",
+  "name": "Gieve",
+  "title": "Bardo Errante",
+  "description": "Musico viajante e espadachim habilidoso. Galante e imprevisivel.",
+  "role": "general",
+  "attributes": { "FOR": 13, "DES": 17, "CON": 11, "INT": 14, "SAB": 12, "CAR": 18 },
+  "hp": 20,
+  "ca": 16,
+  "weapon": { "name": "Espada Elegante", "damage": "1d8+3", "type": "espada" },
+  "skills": ["Melodia Inspiradora", "Golpe Acrobatico", "Charme"],
+  "passive": "Inspiracao: Aliados ganham +1 em testes de CAR em combate",
+  "portrait_color": "#9370db",
+  "recruit_condition": "act3_started",
+  "quotes": [
+    "Luto pela beleza. E pela bela sacerdotisa, e claro.",
+    "Uma boa cancao vale mais que mil espadas. Mas a espada ajuda."
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "elam",
+  "name": "Elam",
+  "title": "Servo de Narsus",
+  "description": "Jovem servo leal de Narsus. Habilidoso com arco e dedicado a causa.",
+  "role": "general",
+  "attributes": { "FOR": 10, "DES": 16, "CON": 12, "INT": 13, "SAB": 14, "CAR": 11 },
+  "hp": 16,
+  "ca": 15,
+  "weapon": { "name": "Arco Curto", "damage": "1d6+3", "type": "arco" },
+  "skills": ["Tiro Preciso", "Olhos de Aguia", "Primeiros Socorros"],
+  "passive": "Apoio Tatico: +1 PA para Narsus quando em combate juntos",
+  "portrait_color": "#8fbc8f",
+  "recruit_condition": "narsus_recruited",
+  "quotes": [
+    "Mestre Narsus confia no Principe. Entao eu tambem confio.",
+    "Meu arco esta a seu servico, Alteza."
+  ]
+}
