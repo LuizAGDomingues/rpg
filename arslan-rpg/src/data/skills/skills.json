@@ -1,0 +1,264 @@
+{
+  "class_skills": {
+    "warrior": ["golpe_poderoso", "postura_defensiva", "grito_de_guerra"],
+    "diplomat": ["persuasao_nobre", "leitura_de_pessoas", "discurso_inspirador"],
+    "strategist": ["analise_tatica", "antecipar_movimento", "plano_de_batalha"]
+  },
+  "general_skills": {
+    "daryun": ["guardia_do_principe", "carga_de_cavalaria"],
+    "narsus": ["criar_abertura", "instrucao_de_combate"],
+    "elam": ["tiro_preciso", "primeiros_socorros"],
+    "gieve": ["golpe_duplo", "cancao_de_batalha"],
+    "falangies": ["chuva_de_flechas", "marcar_alvo"]
+  },
+  "legendary_skills": {
+    "lanca_dos_mil_exercitos": { "equippable_by": "daryun", "class": "warrior" },
+    "estrategia_perfeita": { "equippable_by": "narsus", "class": "strategist" }
+  },
+  "skills": {
+    "golpe_poderoso": {
+      "id": "golpe_poderoso",
+      "name": "Golpe Poderoso",
+      "pa_cost": 2,
+      "description": "Ataque com +2d6 de dano extra. Chance de derrubar o alvo (CON DC 14).",
+      "target_type": "single_enemy",
+      "effect": "bonus_damage",
+      "bonus_dice": "2d6",
+      "side_effect": { "name": "derrubado", "chance": 0.4, "save": { "attribute": "CON", "dc": 14 } },
+      "cooldown": 0,
+      "legendary": false
+    },
+    "postura_defensiva": {
+      "id": "postura_defensiva",
+      "name": "Postura Defensiva",
+      "pa_cost": 1,
+      "description": "+3 CA ate inicio do proximo turno. Proximo ataque contra voce tem desvantagem.",
+      "target_type": "self",
+      "effect": "temp_ca_buff",
+      "buff_value": 3,
+      "duration": 1,
+      "cooldown": 0,
+      "legendary": false
+    },
+    "grito_de_guerra": {
+      "id": "grito_de_guerra",
+      "name": "Grito de Guerra",
+      "pa_cost": 1,
+      "description": "Aliados ganham +2 em ataques no proximo turno. Inimigos testam SAB DC 12 ou ficam intimidados.",
+      "target_type": "all_allies",
+      "effect": "ally_buff_enemy_debuff",
+      "ally_buff": { "attack_bonus": 2, "duration": 1 },
+      "enemy_effect": { "name": "intimidated", "save": { "attribute": "SAB", "dc": 12 } },
+      "cooldown": 3,
+      "legendary": false
+    },
+    "lanca_dos_mil_exercitos": {
+      "id": "lanca_dos_mil_exercitos",
+      "name": "Lanca dos Mil Exercitos",
+      "pa_cost": 3,
+      "description": "LENDARIA — Atinge todos os inimigos. Dano: 3d10+5. Forca CON DC 16 ou ficam derrubados.",
+      "target_type": "all_enemies",
+      "effect": "aoe_damage",
+      "damage": "3d10+5",
+      "side_effect": { "name": "derrubado", "save": { "attribute": "CON", "dc": 16 } },
+      "uses_per_combat": 1,
+      "cooldown": 0,
+      "legendary": true,
+      "equippable_by": ["daryun"]
+    },
+    "persuasao_nobre": {
+      "id": "persuasao_nobre",
+      "name": "Persuasao Nobre",
+      "pa_cost": 1,
+      "description": "Em combate: tenta intimidar um inimigo (CAR vs SAB DC 14). Fora: +4 em testes de CAR.",
+      "target_type": "single_enemy",
+      "effect": "intimidate",
+      "save": { "attribute": "SAB", "dc": 14, "caster_attribute": "CAR" },
+      "cooldown": 2,
+      "legendary": false
+    },
+    "leitura_de_pessoas": {
+      "id": "leitura_de_pessoas",
+      "name": "Leitura de Pessoas",
+      "pa_cost": 1,
+      "description": "Revela HP atual, condicoes e principal fraqueza de um inimigo.",
+      "target_type": "single_enemy",
+      "effect": "reveal_stats",
+      "cooldown": 0,
+      "legendary": false
+    },
+    "discurso_inspirador": {
+      "id": "discurso_inspirador",
+      "name": "Discurso Inspirador",
+      "pa_cost": 2,
+      "description": "Restaura 1d8+CAR mod HP para cada aliado. Aliados ganham +1 em todas as rolagens por 2 turnos.",
+      "target_type": "all_allies",
+      "effect": "ally_heal_and_buff",
+      "heal": "1d8",
+      "buff": { "all_rolls": 1, "duration": 2 },
+      "cooldown": 4,
+      "legendary": false
+    },
+    "analise_tatica": {
+      "id": "analise_tatica",
+      "name": "Analise Tatica",
+      "pa_cost": 1,
+      "description": "Revela a ordem de iniciativa. Um aliado a escolha pode agir imediatamente (1 uso por combate).",
+      "target_type": "single_ally",
+      "effect": "reveal_initiative_and_bonus_action",
+      "uses_per_combat": 1,
+      "cooldown": 0,
+      "legendary": false
+    },
+    "antecipar_movimento": {
+      "id": "antecipar_movimento",
+      "name": "Antecipar Movimento",
+      "pa_cost": 1,
+      "description": "O proximo ataque de um inimigo escolhido automaticamente erra. Cooldown 3 turnos.",
+      "target_type": "single_enemy",
+      "effect": "negate_next_enemy_attack",
+      "cooldown": 3,
+      "legendary": false
+    },
+    "plano_de_batalha": {
+      "id": "plano_de_batalha",
+      "name": "Plano de Batalha",
+      "pa_cost": 2,
+      "description": "Todos os aliados ganham +2 em ataque no primeiro turno. Mais eficaz no inicio do combate.",
+      "target_type": "all_allies",
+      "effect": "pre_combat_buff",
+      "ally_buff": { "attack_bonus": 2, "duration": 1 },
+      "cooldown": 0,
+      "uses_per_combat": 1,
+      "legendary": false
+    },
+    "estrategia_perfeita": {
+      "id": "estrategia_perfeita",
+      "name": "Estrategia Perfeita",
+      "pa_cost": 3,
+      "description": "LENDARIA — Todos os aliados ganham +3 em ataques e +2 CA por 2 turnos. Um aliado age antes de todos.",
+      "target_type": "all_allies",
+      "effect": "ultimate_strategy",
+      "ally_buff": { "attack_bonus": 3, "ca_bonus": 2, "duration": 2 },
+      "uses_per_combat": 1,
+      "cooldown": 0,
+      "legendary": true,
+      "equippable_by": ["narsus"]
+    },
+    "guardia_do_principe": {
+      "id": "guardia_do_principe",
+      "name": "Guardiao do Principe",
+      "pa_cost": 0,
+      "description": "PASSIVA — Se Arslan for atacado, Daryun intercepta gastando 1 PA de reacao e recebe o dano.",
+      "target_type": "self",
+      "effect": "intercept_damage",
+      "trigger": "ally_attacked",
+      "trigger_target": "arslan",
+      "cooldown": 0,
+      "legendary": false,
+      "passive": true
+    },
+    "carga_de_cavalaria": {
+      "id": "carga_de_cavalaria",
+      "name": "Carga de Cavalaria",
+      "pa_cost": 3,
+      "description": "Ataque massivo: 2d10+5 em um alvo. Se o alvo tiver menos de 50% HP, atordoa por 1 turno.",
+      "target_type": "single_enemy",
+      "effect": "heavy_attack_stun",
+      "damage": "2d10+5",
+      "stun_condition": "target_hp_below_50",
+      "cooldown": 3,
+      "legendary": false
+    },
+    "criar_abertura": {
+      "id": "criar_abertura",
+      "name": "Criar Abertura",
+      "pa_cost": 1,
+      "description": "Aponta uma fraqueza: proximo ataque aliado contra o alvo tem vantagem.",
+      "target_type": "single_enemy",
+      "effect": "mark_target",
+      "status_applied": { "name": "marked", "duration": 1 },
+      "cooldown": 0,
+      "legendary": false
+    },
+    "instrucao_de_combate": {
+      "id": "instrucao_de_combate",
+      "name": "Instrucao de Combate",
+      "pa_cost": 2,
+      "description": "Um aliado a escolha ganha +1 PA extra neste turno.",
+      "target_type": "single_ally",
+      "effect": "give_ally_extra_pa",
+      "bonus_pa": 1,
+      "cooldown": 2,
+      "legendary": false
+    },
+    "tiro_preciso": {
+      "id": "tiro_preciso",
+      "name": "Tiro Preciso",
+      "pa_cost": 2,
+      "description": "Ataque de arco com +3 de bonus de ataque. Ignora cobertura.",
+      "target_type": "single_enemy",
+      "effect": "precision_shot",
+      "attack_bonus": 3,
+      "cooldown": 0,
+      "legendary": false
+    },
+    "primeiros_socorros": {
+      "id": "primeiros_socorros",
+      "name": "Primeiros Socorros",
+      "pa_cost": 1,
+      "description": "Estabiliza aliado inconsciente a 1 HP. Ou remove sangramento de aliado.",
+      "target_type": "single_ally",
+      "effect": "stabilize_or_cure_bleed",
+      "cooldown": 0,
+      "legendary": false
+    },
+    "golpe_duplo": {
+      "id": "golpe_duplo",
+      "name": "Golpe Duplo",
+      "pa_cost": 2,
+      "description": "Dois ataques em uma acao. Cada um com o modificador normal. Pode atingir alvos diferentes.",
+      "target_type": "single_enemy",
+      "effect": "double_attack",
+      "cooldown": 0,
+      "legendary": false
+    },
+    "cancao_de_batalha": {
+      "id": "cancao_de_batalha",
+      "name": "Cancao de Batalha",
+      "pa_cost": 2,
+      "description": "Todos os aliados recuperam 1d6 HP e ficam imunes a intimidacao por 3 turnos.",
+      "target_type": "all_allies",
+      "effect": "ally_heal_and_morale",
+      "heal": "1d6",
+      "immunity": "intimidated",
+      "immunity_duration": 3,
+      "cooldown": 4,
+      "legendary": false
+    },
+    "chuva_de_flechas": {
+      "id": "chuva_de_flechas",
+      "name": "Chuva de Flechas",
+      "pa_cost": 2,
+      "description": "Atinge 3 inimigos aleatorios com 1d6+3 cada. Atingidos testam CON DC 12 ou ficam lentificados.",
+      "target_type": "random_enemies",
+      "effect": "multi_target",
+      "targets": 3,
+      "damage": "1d6+3",
+      "side_effect": { "name": "slowed", "duration": 1, "save": { "attribute": "CON", "dc": 12 } },
+      "cooldown": 2,
+      "legendary": false
+    },
+    "marcar_alvo": {
+      "id": "marcar_alvo",
+      "name": "Marcar Alvo",
+      "pa_cost": 1,
+      "description": "Marca um inimigo: todos os ataques contra ele tem vantagem pelo proximo turno.",
+      "target_type": "single_enemy",
+      "effect": "mark_target",
+      "status_applied": { "name": "marked", "duration": 1 },
+      "cooldown": 0,
+      "legendary": false
+    }
+  }
+}

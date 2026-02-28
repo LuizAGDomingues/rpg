@@ -1,0 +1,68 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.portrait {
+  width: 120px;
+  height: 140px;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--gold-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.portrait::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.4));
+  pointer-events: none;
+}
+
+.svgWrap {
+  width: 80%;
+  height: 80%;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.svgWrap svg {
+  width: 100%;
+  height: 100%;
+}
+
+.moodIndicator {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+}
+
+.moodDots {
+  display: flex;
+  gap: 3px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dotActive {
+  background: currentColor;
+  border-color: currentColor;
+}
+
+.moodText {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}

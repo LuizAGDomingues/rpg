@@ -1,0 +1,149 @@
+{
+  "act": 5,
+  "title": "Os Primeiros Dias",
+  "scenes": [
+    {
+      "id": "act5_morning_after",
+      "title": "A Manha Depois",
+      "type": "narrative",
+      "text": [
+        "Ecbatana esta quieta. O tipo de silencio depois de muito barulho.",
+        "Voce esta no salao do trono as quatro da manha. Sozinho, pela primeira vez em semanas.",
+        "O trono parece menor do que voce lembrava da infancia. Ou voce ficou maior.",
+        "Narsus entra sem bater. Coloca um pergaminho na mesa.",
+        "\"Lista de pendencias. Reconstrucao, tributacao, os nobres que precisam de resposta, a questao dos prisioneiros lusitanos —\"",
+        "\"Narsus.\"",
+        "\"Hm?\"",
+        "\"Amanha.\"",
+        "Uma pausa. Rara nele.",
+        "\"Certo.\" Ele recolhe o pergaminho. \"Mas eu fico aqui.\""
+      ],
+      "choices": [
+        {
+          "id": "silence_with_narsus",
+          "text": "Ficar em silencio com Narsus.",
+          "xp_reward": 20,
+          "character_score": 2,
+          "next_scene": "act5_first_decisions"
+        },
+        {
+          "id": "ask_narsus",
+          "text": "\"Narsus. Voce acha que vai dar certo?\"",
+          "next_scene": "act5_narsus_answer"
+        }
+      ]
+    },
+    {
+      "id": "act5_narsus_answer",
+      "title": "A Manha Depois",
+      "type": "narrative",
+      "text": [
+        "\"Define 'dar certo'.\"",
+        "\"Pars. O reino. Tudo isso.\"",
+        "Silencio. Ele olha para a janela.",
+        "\"Nao sei. Provavelmente nao da forma que voce imagina agora.\" Uma pausa. \"Mas vai dar de alguma forma. Isso e diferente.\"",
+        "\"Voce acredita nisso?\"",
+        "\"Acredito que voce acredita.\" Ele te olha. \"Por enquanto, isso e suficiente para mim.\""
+      ],
+      "choices": [
+        {
+          "id": "proceed",
+          "text": "Continuar.",
+          "character_score": 3,
+          "next_scene": "act5_first_decisions"
+        }
+      ]
+    },
+    {
+      "id": "act5_first_decisions",
+      "title": "Tres Mensageiros",
+      "type": "narrative",
+      "text": [
+        "Tres mensageiros chegam ao mesmo tempo na manha seguinte.",
+        "Lord Hodir quer confirmacao dos privilegios prometidos.",
+        "O representante dos libertos quer saber quando a proclamacao se estende a todo Pars.",
+        "Um grupo de sacerdotes de Yaldabaoth capturados pede audiencia.",
+        "Narsus observa de longe. \"Bem-vindo ao governo, Arslan.\""
+      ],
+      "choices": [
+        {
+          "id": "hodir_first",
+          "text": "Receber Hodir primeiro.",
+          "character_score": -3,
+          "faction_effects": { "nobreza_pars": 10, "escravos_libertos": -5 },
+          "next_scene": "act5_daryun_farewell"
+        },
+        {
+          "id": "libertos_first",
+          "text": "Receber os representantes dos libertos.",
+          "character_score": 5,
+          "faction_effects": { "escravos_libertos": 10, "nobreza_pars": -5 },
+          "next_scene": "act5_daryun_farewell"
+        },
+        {
+          "id": "yaldabaoth_first",
+          "text": "Receber os sacerdotes de Yaldabaoth.",
+          "character_score": 3,
+          "faction_effects": { "lusitanos_moderados": 15 },
+          "next_scene": "act5_daryun_farewell"
+        },
+        {
+          "id": "all_together",
+          "text": "[Diplomata] Chamar todos ao mesmo tempo.",
+          "condition": "class == diplomat",
+          "character_score": 8,
+          "next_scene": "act5_daryun_farewell"
+        }
+      ]
+    },
+    {
+      "id": "act5_daryun_farewell",
+      "title": "O Cavaleiro e Seu Proposito",
+      "type": "narrative",
+      "text": [
+        "Daryun pede audiencia privada.",
+        "\"Eu jurei proteger voce ate o trono.\" Formal. \"Voce esta no trono.\"",
+        "Voce entende onde vai antes de ele terminar.",
+        "\"Nao preciso que voce va, Daryun.\"",
+        "\"Nao e sobre precisar.\" Ele olha para voce. \"Ha uma fronteira ao norte instavel. Ha pessoas sem voz aqui.\"",
+        "\"O que voce esta dizendo e que eu nao preciso mais de protecao.\"",
+        "Uma pausa longa. \"Estou dizendo que voce me ensinou que protecao tem formas diferentes.\""
+      ],
+      "choices": [
+        {
+          "id": "let_daryun_go",
+          "text": "\"Va. E volte quando a fronteira estiver segura.\"",
+          "character_score": 5,
+          "world_flag": "daryun_on_mission",
+          "next_scene": "act5_final_moment"
+        },
+        {
+          "id": "ask_daryun_stay",
+          "text": "\"Ainda preciso de voce aqui. Mais um tempo.\"",
+          "character_score": 2,
+          "next_scene": "act5_final_moment"
+        }
+      ]
+    },
+    {
+      "id": "act5_final_moment",
+      "title": "O Jardim do Palacio",
+      "type": "chapter_end",
+      "text": [
+        "Tarde da noite. Voce encontra Elam no jardim, sentado na beira da fonte.",
+        "Ele esta desenhando. Mal — irmao espiritual das pinturas de Narsus.",
+        "\"O que e isso?\"",
+        "\"O acampamento.\" Ele mostra sem vergonha. \"Quero lembrar como era.\"",
+        "Voce olha o desenho por um momento.",
+        "\"Era melhor do que parecia na epoca.\"",
+        "\"Era.\" Elam dobra o papel. \"Mas daqui tambem vai ficar bom na memoria. Voce vai ver.\"",
+        "",
+        "Voce fica no jardim depois que Elam vai dormir.",
+        "Ecbatana respira ao redor de voce — mercadores fechando lojas, familias jantando, um sino de Mithra soando la longe.",
+        "Nao e o fim. E o comeco do que vem depois do fim.",
+        "Que tipo de comeco — isso voce ja decidiu."
+      ],
+      "choices": []
+    }
+  ]
+}

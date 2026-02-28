@@ -8,7 +8,7 @@
   "hp": 32,
   "ca": 18,
   "weapon": { "name": "Lanca de Daryun", "damage": "1d10+4", "type": "lanca" },
-  "skills": ["Investida Devastadora", "Parede de Aco", "Contra-Ataque"],
+  "skills": ["guardia_do_principe", "carga_de_cavalaria"],
   "passive": "Protetor: Pode interceptar ataques direcionados a Arslan",
   "portrait_color": "#2a2a3a",
   "recruit_condition": null,

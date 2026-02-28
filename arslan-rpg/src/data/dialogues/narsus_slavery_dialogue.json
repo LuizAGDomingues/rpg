@@ -1,0 +1,75 @@
+{
+  "id": "narsus_slavery_dialogue",
+  "npc": "narsus",
+  "trigger_condition": "camp_established AND NOT narsus_slavery_talk_seen",
+  "nodes": [
+    {
+      "id": "start",
+      "text": "Narsus nao esta trabalhando quando voce entra. Esta sentado, olhando uma folha em branco. \"Arslan. Sente-se. Voce vai precisar do apoio da nobreza para retomar o trono.\" Ele finalmente olha para voce. \"E a nobreza vai querer que a escravatura continue.\"",
+      "set_flag": "narsus_slavery_talk_seen",
+      "options": [
+        {
+          "id": "abolish",
+          "text": "\"Pars vai abolir a escravatura. Mesmo que custe apoio da nobreza.\"",
+          "character_score": 15,
+          "leads_to": "narsus_abolish_response"
+        },
+        {
+          "id": "gradual",
+          "text": "\"A escravatura precisa acabar. Mas gradualmente.\"",
+          "character_score": 3,
+          "set_flag": "arslan_gradualist",
+          "leads_to": "narsus_gradual_response"
+        },
+        {
+          "id": "maintain",
+          "text": "\"Precisamos da nobreza. A escravatura continua por agora.\"",
+          "character_score": -15,
+          "set_flag": "arslan_kept_slavery",
+          "faction_effects": { "escravos_libertos": -25, "nobreza_pars": 15 },
+          "leads_to": "narsus_maintain_response"
+        }
+      ]
+    },
+    {
+      "id": "narsus_abolish_response",
+      "text": "Narsus te olha por um longo momento. \"Eu fui exilado por dizer exatamente isso.\" Ele dobra a folha. \"Saiba o que significa: alguns nobres vao te abandonar. Outros vao financiar seu oponente.\" Uma pausa. \"Ainda assim?\"",
+      "options": [
+        {
+          "id": "still_yes",
+          "text": "\"Ainda assim.\"",
+          "character_score": 10,
+          "set_flag": "arslan_committed_to_abolition",
+          "faction_effects": { "escravos_libertos": 20, "nobreza_pars": -15 },
+          "leads_to": "narsus_impressed"
+        }
+      ]
+    },
+    {
+      "id": "narsus_impressed",
+      "text": "Narsus abre um sorriso raro. \"Entao vou precisar de mapas melhores. Porque este plano vai precisar de estrategia excepcional.\"",
+      "options": [
+        { "id": "exit", "text": "Continuar.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "narsus_gradual_response",
+      "text": "\"Gradualmente.\" Ele examina a palavra. \"E o que todo rei progressista diz. Depois vira 'eventualmente'. Depois vira nunca.\" Uma pausa. \"Mas entendo a posicao. So quero que voce ouca o que esta dizendo quando usa essa palavra.\"",
+      "options": [
+        { "id": "exit", "text": "Continuar.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "narsus_maintain_response",
+      "text": "Silencio longo. \"Certo.\" Narsus dobra a folha. \"Vou continuar trabalhando nos mapas.\" Nada mais. A conversa acabou.",
+      "options": [
+        { "id": "exit", "text": "Sair.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "exit",
+      "text": "",
+      "options": []
+    }
+  ]
+}

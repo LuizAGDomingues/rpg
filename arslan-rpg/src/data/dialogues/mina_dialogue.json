@@ -1,0 +1,80 @@
+{
+  "id": "mina_dialogue",
+  "npc": "mina_refugee",
+  "nodes": [
+    {
+      "id": "start",
+      "text": "Por favor... nao nos machuque. So queremos um lugar seguro.",
+      "mood_check": true,
+      "branches": {
+        "fearful": { "text": "Por favor... nao nos machuque. So queremos um lugar seguro." },
+        "neutral": { "text": "Principe? Voce veio aqui?" },
+        "friendly": { "text": "Principe Arslan! As criancas estavam perguntando quando voce voltaria." }
+      },
+      "options": [
+        { "id": "reassure", "text": "Estao seguros aqui. Ninguem vai machucar voces.", "leads_to": "mina_reassured", "faction_effect": { "escravos_libertos": 2 } },
+        { "id": "ask_husband", "text": "Ouvi que esta procurando seu marido.", "leads_to": "mina_husband" },
+        { "id": "ask_ecbatana", "text": "Como esta a situacao em Ecbatana?", "leads_to": "mina_ecbatana_info" },
+        { "id": "exit", "text": "Tenho que ir.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "mina_reassured",
+      "text": "Obrigada, principe. Minha filha Shirin... ela tem pesadelos todas as noites. Mas quando ouve seu nome, sorri. Voce e a esperanca dela.",
+      "set_flags": { "helped_mina_refugee": true },
+      "options": [
+        { "id": "ask_husband", "text": "E seu marido? Tem noticias?", "leads_to": "mina_husband" },
+        { "id": "exit", "text": "Cuidarei de voces.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "mina_husband",
+      "text": "Rostam... ele era soldado da guarda do palacio. Na noite da queda, me mandou fugir com Shirin. Disse que voltaria. Mas... ja faz tanto tempo.",
+      "options": [
+        { "id": "search", "text": "Posso tentar descobrir o que aconteceu com Rostam.", "leads_to": "mina_quest_offer" },
+        { "id": "honest", "text": "Muitos soldados cairam em Atropatene. Prepare-se para o pior.", "leads_to": "mina_sad" },
+        { "id": "back", "text": "Sinto muito.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "mina_quest_offer",
+      "text": "Voce faria isso? Rostam usava um anel de ouro com uma safira azul. Era de familia. Se puder encontrar qualquer vestigo...",
+      "options": [
+        { "id": "accept", "text": "Procurarei Rostam ou seu anel.", "leads_to": "mina_quest_accepted", "start_quest": { "id": "sq_mina_husband", "name": "O Destino de Rostam", "description": "Descobrir o que aconteceu com Rostam, marido de Mina, apos a queda de Ecbatana.", "objectives": [{ "id": "obj_find_rostam", "text": "Investigar o paradeiro de Rostam" }], "rewards": { "xp": 100, "gold": 0 } } },
+        { "id": "decline", "text": "Nao posso prometer nada.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "mina_quest_accepted",
+      "text": "Obrigada... obrigada. Que Mithra o proteja, principe.",
+      "options": [
+        { "id": "exit", "text": "Farei o possivel.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "mina_sad",
+      "text": "Eu sei. Eu sei que ele provavelmente... Mas enquanto nao tiver certeza, vou esperar. E o minimo que posso fazer por ele.",
+      "options": [
+        { "id": "search_anyway", "text": "Deixe-me ao menos investigar.", "leads_to": "mina_quest_offer" },
+        { "id": "exit", "text": "Forca, Mina.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "mina_ecbatana_info",
+      "text": "Terrivel. Os lusitanos queimam os templos de Mithra. Escravizam quem resiste. Vi soldados arrastando familias para a praca central... e o cheiro de fumo por toda parte.",
+      "set_flags": { "mina_ecbatana_report": true },
+      "options": [
+        { "id": "listen", "text": "Conte mais. Preciso saber o que esperar.", "leads_to": "mina_ecbatana_detail" },
+        { "id": "back", "text": "Obrigado. Lamento muito.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "mina_ecbatana_detail",
+      "text": "O comandante lusitano... dizem que um mascarado de prata lidera tudo. Ninguem sabe quem e. Mas os proprios lusitanos tem medo dele.",
+      "set_flags": { "heard_of_silvermask": true },
+      "options": [
+        { "id": "exit", "text": "Mascarado de prata... Obrigado, Mina. Isso e importante.", "leads_to": "exit", "xp_reward": 20 }
+      ]
+    }
+  ]
+}

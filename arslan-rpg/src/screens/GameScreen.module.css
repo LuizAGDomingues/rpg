@@ -106,6 +106,37 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+.troopCount {
+  font-family: var(--font-heading);
+  color: var(--gold-light);
+  font-size: 0.65rem;
+}
+
+.actProgressBar {
+  height: 2px;
+  background: rgba(201, 168, 76, 0.12);
+  margin: 0;
+}
+
+.actProgressFill {
+  height: 100%;
+  background: var(--gold-dark);
+  transition: width 0.8s ease;
+}
+
+.milestoneBanner {
+  background: rgba(201, 168, 76, 0.1);
+  border: 1px solid var(--gold-dark);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  text-align: center;
+  font-family: var(--font-heading);
+  color: var(--gold);
+  font-size: 0.9rem;
+  animation: fadeIn 0.4s ease-out;
+  margin: var(--spacing-sm) 0 0;
+}
+
 @media (max-width: 600px) {
   .topBar {
     flex-direction: column;

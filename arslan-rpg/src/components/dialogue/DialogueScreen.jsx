@@ -1,0 +1,234 @@
+import { useState, useCallback, useMemo, useEffect } from 'react';
+import useGameStore from '../../store/useGameStore';
+import {
+  getDialogueNode,
+  getDialogueOptions,
+  getNodeText,
+  getNPCMood,
+  processDialogueChoice,
+  applyNodeEffects,
+} from '../../engine/dialogueEngine';
+import NPCPortrait from './NPCPortrait';
+import DialogueBox from './DialogueBox';
+import Button from '../ui/Button';
+import { OrnamentDivider } from '../ui/Ornament';
+import styles from './DialogueScreen.module.css';
+
+// Import all NPC data
+import npcsData from '../../data/npcs/npcs.json';
+
+// Dynamic dialogue imports
+const dialogueModules = import.meta.glob('../../data/dialogues/*.json', { eager: true });
+
+const loadDialogueTree = (dialogueTreeId) => {
+  for (const [path, mod] of Object.entries(dialogueModules)) {
+    const data = mod.default || mod;
+    if (data.id === dialogueTreeId) return data;
+  }
+  return null;
+};
+
+export default function DialogueScreen() {
+  const dialogue = useGameStore((s) => s.dialogue);
+  const gameState = useGameStore();
+  const store = useGameStore();
+
+  const [results, setResults] = useState([]);
+  const [skillResult, setSkillResult] = useState(null);
+  const [nodeEffectsApplied, setNodeEffectsApplied] = useState(new Set());
+
+  // Load NPC data
+  const npcData = useMemo(() => {
+    if (!dialogue?.npcId) return null;
+    return npcsData.find((n) => n.id === dialogue.npcId) || null;
+  }, [dialogue?.npcId]);
+
+  // Load dialogue tree
+  const dialogueTree = useMemo(() => {
+    if (!npcData?.dialogue_tree) return null;
+    return loadDialogueTree(npcData.dialogue_tree);
+  }, [npcData?.dialogue_tree]);
+
+  // Current node
+  const currentNodeId = dialogue?.currentNodeId || 'start';
+  const node = useMemo(
+    () => dialogueTree ? getDialogueNode(dialogueTree, currentNodeId) : null,
+    [dialogueTree, currentNodeId]
+  );
+
+  // NPC mood
+  const mood = useMemo(
+    () => npcData ? getNPCMood(npcData, gameState) : 'neutral',
+    [npcData, gameState]
+  );
+
+  // Node text (mood-aware)
+  const displayText = useMemo(
+    () => node ? getNodeText(node, mood) : '',
+    [node, mood]
+  );
+
+  // Available options (filtered by conditions)
+  const options = useMemo(
+    () => node ? getDialogueOptions(node, gameState) : [],
+    [node, gameState]
+  );
+
+  // Apply node-level effects (set_flags, faction_effect) once per node visit
+  useEffect(() => {
+    if (node && !nodeEffectsApplied.has(currentNodeId)) {
+      const nodeResults = applyNodeEffects(node, store);
+      if (nodeResults.length > 0) {
+        setResults((prev) => [...prev, ...nodeResults]);
+      }
+      setNodeEffectsApplied((prev) => new Set(prev).add(currentNodeId));
+    }
+  }, [node, currentNodeId, store, nodeEffectsApplied]);
+
+  // Handle option selection
+  const handleOption = useCallback((option) => {
+    // Clear previous skill result
+    setSkillResult(null);
+
+    // Exit dialogue
+    if (option.leads_to === 'exit') {
+      store.endDialogue();
+      return;
+    }
+
+    // Shop node
+    if (option.leads_to === 'shop') {
+      // For now, navigate to shop node (shop modal is a future feature)
+      store.updateDialogueNode('shop');
+      return;
+    }
+
+    // Process the choice (skill checks, effects, etc.)
+    const { results: choiceResults, nextNodeId, skillCheckResult } = processDialogueChoice(
+      option, gameState, store
+    );
+
+    if (skillCheckResult) {
+      setSkillResult(skillCheckResult);
+    }
+
+    setResults(choiceResults);
+
+    // Handle scene transition
+    const sceneResult = choiceResults.find((r) => r.type === 'scene');
+    if (sceneResult) {
+      store.setCurrentScene(sceneResult.sceneId);
+      store.endDialogue();
+      return;
+    }
+
+    // Navigate to next dialogue node
+    if (nextNodeId && nextNodeId !== 'exit') {
+      store.updateDialogueNode(nextNodeId);
+    } else if (nextNodeId === 'exit') {
+      store.endDialogue();
+    }
+  }, [gameState, store]);
+
+  // Handle close
+  const handleClose = useCallback(() => {
+    store.endDialogue();
+  }, [store]);
+
+  // Guards
+  if (!dialogue || !npcData) {
+    return (
+      <div className={styles.container}>
+        <p>Nenhum dialogo ativo.</p>
+        <Button variant="secondary" onClick={handleClose}>Voltar</Button>
+      </div>
+    );
+  }
+
+  if (!dialogueTree || !node) {
+    return (
+      <div className={styles.container}>
+        <p>Dialogo nao encontrado: {npcData.dialogue_tree}</p>
+        <Button variant="secondary" onClick={handleClose}>Voltar</Button>
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <NPCPortrait portraitType={npcData.portrait_type} mood={mood} />
+        <p className={styles.description}>{npcData.description}</p>
+      </div>
+
+      <OrnamentDivider />
+
+      <DialogueBox npcName={npcData.name} npcTitle={npcData.title} text={displayText}>
+        {/* Skill check result */}
+        {skillResult && (
+          <div className={`${styles.skillCheck} ${skillResult.success ? styles.skillSuccess : styles.skillFail}`}>
+            <span className={styles.skillDice}>
+              d20: {skillResult.roll} + {skillResult.modifier} = {skillResult.total}
+            </span>
+            <span className={styles.skillDC}>DC {skillResult.dc}</span>
+            <span className={styles.skillOutcome}>
+              {skillResult.isCrit ? '💥 CRITICO! ' : ''}
+              {skillResult.isFumble ? '❌ FALHA CRITICA! ' : ''}
+              {skillResult.success ? '✓ Sucesso!' : '✗ Falha!'}
+            </span>
+          </div>
+        )}
+
+        {/* Results badges */}
+        {results.length > 0 && (
+          <div className={styles.results}>
+            {results.map((r, i) => (
+              <DialogueResult key={i} result={r} />
+            ))}
+          </div>
+        )}
+      </DialogueBox>
+
+      {/* Dialogue options */}
+      <div className={styles.options}>
+        {options.map((opt) => (
+          <button
+            key={opt.id}
+            className={styles.optionBtn}
+            onClick={() => handleOption(opt)}
+          >
+            <span className={styles.optionArrow}>▸</span>
+            <span className={styles.optionText}>{opt.text}</span>
+            {opt.roll && (
+              <span className={styles.optionBadge}>
+                {opt.roll.attribute} {opt.roll.dc}
+              </span>
+            )}
+            {opt.start_quest && (
+              <span className={styles.optionQuestBadge}>Quest</span>
+            )}
+          </button>
+        ))}
+
+        {options.length === 0 && (
+          <Button variant="secondary" onClick={handleClose}>
+            Encerrar conversa
+          </Button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function DialogueResult({ result }) {
+  const labels = {
+    faction: `⚜ ${result.faction}: ${result.delta > 0 ? '+' : ''}${result.delta}`,
+    xp: `✨ +${result.amount} XP`,
+    quest: `📜 Nova quest: ${result.quest?.name || '???'}`,
+    quest_complete: `✅ Quest concluida!`,
+    flag: null, // flags are invisible to player
+  };
+  const text = labels[result.type];
+  if (!text) return null;
+  return <span className={styles.resultBadge}>{text}</span>;
+}

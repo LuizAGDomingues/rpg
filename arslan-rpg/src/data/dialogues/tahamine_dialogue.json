@@ -1,0 +1,126 @@
+{
+  "id": "tahamine_dialogue",
+  "npc": "tahamine",
+  "unlock_condition": "act4_started",
+  "nodes": [
+    {
+      "id": "start",
+      "text": "Tahamine esta sentada junto a janela, olhando o incendio la fora com a expressao de quem esperou por isso ha muito tempo. \"Arslan.\" Nao e saudacao. E reconhecimento. Como se estivesse checando um calculo feito anos atras.",
+      "options": [
+        {
+          "id": "ask_truth",
+          "text": "\"Mae. Preciso saber a verdade sobre minha origem.\"",
+          "leads_to": "tahamine_truth_response"
+        },
+        {
+          "id": "ask_andragoras",
+          "text": "\"Onde esta Andragoras?\"",
+          "leads_to": "tahamine_andragoras"
+        }
+      ]
+    },
+    {
+      "id": "tahamine_truth_response",
+      "text": "\"Eu me perguntei se voce chegaria ate esta pergunta.\" Uma pausa longa. \"Andragoras achava que voce nunca descobriria. Ou que nao sobreviveria para descobrir.\"",
+      "options": [
+        {
+          "id": "let_her_speak",
+          "text": "Ficar em silencio. Deixa-la falar.",
+          "character_score": 5,
+          "leads_to": "tahamine_full_truth"
+        },
+        {
+          "id": "angry",
+          "text": "\"Toda minha vida foi construida sobre uma mentira.\"",
+          "character_score": -3,
+          "leads_to": "tahamine_truth_angry"
+        }
+      ]
+    },
+    {
+      "id": "tahamine_full_truth",
+      "text": "\"Andragoras e eu nao tivemos filhos. Os anos passaram. A pressao da corte aumentou.\" Ela olha para voce. \"Havia um prisioneiro politico no calabouco. Um homem de sangue nobre, inimigo de Andragoras. Voce tem os olhos dele.\" Uma pausa. \"Andragoras nunca soube. Ou nunca quis saber. As duas opcoes eram convenientes.\" Ela vira o rosto. \"O que voce e, Arslan — o que voce escolheu ser — nao tem nada a ver com esse sangue. Mas voce merecia saber.\"",
+      "set_flag": "tahamine_truth_revealed",
+      "options": [
+        {
+          "id": "ask_love",
+          "text": "\"Voce me amou? Como filho, quero dizer.\"",
+          "leads_to": "tahamine_love_response"
+        },
+        {
+          "id": "ask_andragoras_now",
+          "text": "\"E Andragoras?\"",
+          "leads_to": "tahamine_andragoras"
+        }
+      ]
+    },
+    {
+      "id": "tahamine_truth_angry",
+      "text": "Tahamine nao se defende. \"Sim.\" So isso. \"E voce cresceu e se tornou alguem que nenhuma das mentiras conseguiu conter. Isso e seu. Nao foi planejado.\"",
+      "set_flag": "tahamine_truth_revealed",
+      "options": [
+        {
+          "id": "ask_love_angry",
+          "text": "\"Voce me amou? Como filho, quero dizer.\"",
+          "condition": "tahamine_truth_revealed",
+          "leads_to": "tahamine_love_response"
+        },
+        { "id": "exit_angry", "text": "Sair.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "tahamine_love_response",
+      "text": "Ela fica completamente imóvel. Depois: \"Quando voce era pequeno, voce chorava e eu ficava acordada. Nao por obrigacao. Por nao conseguir dormir enquanto voce chorava.\" Ela vai para a janela. \"Faca o que tem que fazer, Arslan.\"",
+      "character_score": 5,
+      "options": [
+        { "id": "exit", "text": "Partir.", "leads_to": "tahamine_exit_line" }
+      ]
+    },
+    {
+      "id": "tahamine_andragoras",
+      "text": "\"Vivo.\" Sem emocao. \"Os lusitanos o mantem como simbolo. Ele nao vai agradecer o resgate.\"",
+      "options": [
+        {
+          "id": "will_rescue",
+          "text": "\"Ainda assim. Ele e o rei de Pars.\"",
+          "character_score": 8,
+          "set_flag": "will_rescue_andragoras",
+          "leads_to": "tahamine_rescue_response"
+        },
+        {
+          "id": "leave_him",
+          "text": "\"Pars ja tem um principe.\"",
+          "character_score": -5,
+          "set_flag": "abandoned_andragoras",
+          "leads_to": "tahamine_warning"
+        }
+      ]
+    },
+    {
+      "id": "tahamine_rescue_response",
+      "text": "\"Voce e mais generoso do que ele merece.\" Uma pausa. \"Do que nos merecemos.\"",
+      "options": [
+        { "id": "exit", "text": "Partir.", "leads_to": "tahamine_exit_line" }
+      ]
+    },
+    {
+      "id": "tahamine_warning",
+      "text": "\"Cuidado com isso, Arslan.\" A voz muda — nao julgamento, aviso. \"Reis que comecam pragmaticos costumam terminar como Andragoras.\"",
+      "options": [
+        { "id": "exit", "text": "Partir.", "leads_to": "tahamine_exit_line" }
+      ]
+    },
+    {
+      "id": "tahamine_exit_line",
+      "text": "Voce esta saindo quando ela fala de novo, de costas. \"Arslan. Cuide-se. Nao porque Pars precisa de voce.\" Uma pausa. \"Porque eu prefiro.\"",
+      "options": [
+        { "id": "exit", "text": "Sair.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "exit",
+      "text": "",
+      "options": []
+    }
+  ]
+}

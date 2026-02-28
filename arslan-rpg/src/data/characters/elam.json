@@ -8,7 +8,7 @@
   "hp": 16,
   "ca": 15,
   "weapon": { "name": "Arco Curto", "damage": "1d6+3", "type": "arco" },
-  "skills": ["Tiro Preciso", "Olhos de Aguia", "Primeiros Socorros"],
+  "skills": ["tiro_preciso", "primeiros_socorros"],
   "passive": "Apoio Tatico: +1 PA para Narsus quando em combate juntos",
   "portrait_color": "#8fbc8f",
   "recruit_condition": "narsus_recruited",

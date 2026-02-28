@@ -6,7 +6,7 @@
   "hp_base": 24,
   "pa_base": 3,
   "proficiencies": ["espadas", "lancas", "armadura_pesada", "escudos"],
-  "starting_skills": ["Golpe Poderoso", "Postura Defensiva", "Grito de Guerra"],
+  "starting_skills": ["golpe_poderoso", "postura_defensiva", "grito_de_guerra"],
   "faction_bonus": { "nobreza_pars": 10, "clero_mithra": 5 },
   "dialogue_tags": ["warrior"],
   "flavor": "Maior HP e dano fisico. Pode usar armaduras pesadas e escudos. Bonus em testes de FOR."

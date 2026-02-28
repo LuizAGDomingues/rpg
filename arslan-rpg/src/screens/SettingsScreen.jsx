@@ -11,11 +11,33 @@ export default function SettingsScreen() {
     const navigate = useNavigate();
     const resetGame = useGameStore((s) => s.resetGame);
     const setGamePhase = useGameStore((s) => s.setGamePhase);
+    const store = useGameStore();
 
     const [textSpeed, setTextSpeed] = useState(
         () => localStorage.getItem('arslan_text_speed') || 'normal'
     );
     const [showResetModal, setShowResetModal] = useState(false);
+    const [saveMsg, setSaveMsg] = useState('');
+
+    const saveInfo = store.getSaveInfo();
+
+    const handleSaveSlot = (slot) => {
+        store.saveToSlot(slot);
+        setSaveMsg(`Salvo no Slot ${slot}.`);
+        setTimeout(() => setSaveMsg(''), 2500);
+    };
+
+    const handleLoadSlot = (slot) => {
+        const ok = store.loadFromSlot(slot);
+        setSaveMsg(ok ? `Slot ${slot} carregado.` : `Slot ${slot} vazio.`);
+        if (ok) { setTimeout(() => { navigate('/'); }, 800); }
+        else setTimeout(() => setSaveMsg(''), 2500);
+    };
+
+    const formatTime = (ts) => {
+        if (!ts) return '';
+        return new Date(ts).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+    };
 
     const handleTextSpeed = (speed) => {
         setTextSpeed(speed);
@@ -54,6 +76,33 @@ export default function SettingsScreen() {
                         </button>
                     ))}
                 </div>
+            </Panel>
+
+            <Panel title="Saves">
+                {saveMsg && <p className={styles.saveMsg}>{saveMsg}</p>}
+                <div className={styles.slotsGrid}>
+                    {['1', '2', '3'].map((slot) => (
+                        <div key={slot} className={styles.slotRow}>
+                            <div className={styles.slotInfo}>
+                                <span className={styles.slotLabel}>Slot {slot}</span>
+                                {saveInfo[slot]
+                                    ? <span className={styles.slotMeta}>Ato {saveInfo[slot].act} · Nv.{saveInfo[slot].playerLevel} · {formatTime(saveInfo[slot].timestamp)}</span>
+                                    : <span className={styles.slotEmpty}>Vazio</span>
+                                }
+                            </div>
+                            <div className={styles.slotActions}>
+                                <Button variant="gold" size="sm" onClick={() => handleSaveSlot(slot)}>Salvar</Button>
+                                <Button variant="secondary" size="sm" onClick={() => handleLoadSlot(slot)} disabled={!saveInfo[slot]}>Carregar</Button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                {saveInfo.auto && (
+                    <div className={styles.autosaveRow}>
+                        <span className={styles.slotMeta}>Autosave: Ato {saveInfo.auto.act} · {formatTime(saveInfo.auto.timestamp)}</span>
+                        <Button variant="secondary" size="sm" onClick={() => handleLoadSlot('auto')}>Carregar</Button>
+                    </div>
+                )}
             </Panel>
 
             <Panel title="Dados do Jogo">

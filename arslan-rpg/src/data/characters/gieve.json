@@ -8,7 +8,7 @@
   "hp": 20,
   "ca": 16,
   "weapon": { "name": "Espada Elegante", "damage": "1d8+3", "type": "espada" },
-  "skills": ["Melodia Inspiradora", "Golpe Acrobatico", "Charme"],
+  "skills": ["golpe_duplo", "cancao_de_batalha"],
   "passive": "Inspiracao: Aliados ganham +1 em testes de CAR em combate",
   "portrait_color": "#9370db",
   "recruit_condition": "act3_started",

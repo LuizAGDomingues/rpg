@@ -1,10 +1,25 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import useGameStore from '../../store/useGameStore';
-import { rollInitiative, rollAttack, rollDamage, processEnemyTurn, checkCombatEnd, calculateXPReward, calculateGoldReward } from '../../engine/combatEngine';
+import {
+  rollInitiative, rollAttack, rollDamage, processEnemyTurn,
+  checkCombatEnd, calculateXPReward, calculateGoldReward,
+  processStatusEffects, getSlowedPenalty, hasStatusEffect,
+} from '../../engine/combatEngine';
+import {
+  getSkillsForCombatant, canUseSkill, needsTargetSelection,
+  resolveSkill, tickCooldowns,
+} from '../../engine/skillEngine';
 import Button from '../ui/Button';
 import ProgressBar from '../ui/ProgressBar';
 import { OrnamentDivider } from '../ui/Ornament';
 import styles from './CombatScreen.module.css';
+
+const STATUS_ICONS = {
+  bleed: '🩸', poison: '☠', stunned: '💫', derrubado: '⬇',
+  intimidated: '😨', slowed: '🐌', marked: '🎯', morale: '💪',
+  attack_buff: '⬆', strategy_buff: '⚡', defensive_stance: '🛡',
+  movement_anticipated: '👁', intimidation_immunity: '🎵',
+};
 
 export default function CombatScreen() {
   const combat = useGameStore((s) => s.combat);
@@ -22,20 +37,57 @@ export default function CombatScreen() {
   const [combatState, setCombatState] = useState('init');
   const [result, setResult] = useState(null);
   const [showItemMenu, setShowItemMenu] = useState(false);
+  const [showSkillMenu, setShowSkillMenu] = useState(false);
+  const [targetingSkill, setTargetingSkill] = useState(null);
+  const [roundNumber, setRoundNumber] = useState(1);
+  const [midCombatEvent, setMidCombatEvent] = useState(null);
+  const [triggeredEventIds, setTriggeredEventIds] = useState(new Set());
+  const [damagedIds, setDamagedIds] = useState(new Set());
   const logRef = useRef(null);
 
-  // --- Stable log helper ---
   const addLog = useCallback((msg) => {
-    setLog((prev) => [...prev.slice(-30), msg]);
+    setLog((prev) => [...prev.slice(-50), msg]);
   }, []);
 
-  // --- Initialize combat (runs once) ---
+  const flashDamage = useCallback((id) => {
+    setDamagedIds((prev) => new Set([...prev, id]));
+    setTimeout(() => setDamagedIds((prev) => { const n = new Set(prev); n.delete(id); return n; }), 450);
+  }, []);
+
+  // --- Mid-combat event check ---
+  const checkMidCombatEvents = useCallback((currentEnemies, currentRound) => {
+    const events = combat?.mid_combat_events;
+    if (!events || events.length === 0) return false;
+    const boss = currentEnemies.find((e) => e.hp > 0);
+    if (!boss) return false;
+    const bossPct = boss.hp_max > 0 ? Math.round((boss.hp / boss.hp_max) * 100) : 0;
+
+    for (const evt of events) {
+      if (triggeredEventIds.has(evt.id)) continue;
+      let triggered = false;
+      if (evt.trigger === `boss_hp_pct_${bossPct}` || (
+        evt.trigger.startsWith('boss_hp_pct_') &&
+        bossPct <= parseInt(evt.trigger.replace('boss_hp_pct_', ''))
+      )) triggered = true;
+      if (evt.trigger === `turn_${currentRound}`) triggered = true;
+
+      if (triggered) {
+        setTriggeredEventIds((prev) => new Set([...prev, evt.id]));
+        setMidCombatEvent(evt);
+        return true;
+      }
+    }
+    return false;
+  }, [combat, triggeredEventIds]);
+
+  // --- Initialize combat ---
   useEffect(() => {
     if (!combat || combatState !== 'init') return;
 
     const playerWeapon = player.equipment?.weapon || { name: 'Punhos', damage: '1d4', bonus_atk: 0 };
     const armorBonus = player.equipment?.armor?.ca_bonus || 0;
     const shieldBonus = player.equipment?.shield?.ca_bonus || 0;
+    const legendarySkills = player.legendary_skills || [];
 
     const playerCombatant = {
       id: 'arslan', name: 'Arslan', isPlayer: true, isAlly: false,
@@ -45,25 +97,28 @@ export default function CombatScreen() {
       pa: player.pa, pa_max: player.pa,
       weapon: playerWeapon,
       skills: [...(player.skills || [])],
+      skillCooldowns: {}, skillUsesThisCombat: {}, status_effects: [],
     };
 
-    const generalAllies = (recruitedGenerals || []).slice(0, 3).map((gen) => ({
-      id: gen.id, name: gen.name, isPlayer: false, isAlly: true,
-      attributes: { ...gen.attributes },
-      hp: gen.current_hp ?? gen.hp, hp_max: gen.hp_max ?? gen.hp,
-      ca: gen.ca, pa: 3, pa_max: 3,
-      weapon: gen.weapon || { name: 'Arma', damage: '1d6', bonus_atk: 0 },
-      skills: gen.skills ? [...gen.skills] : [],
-      title: gen.title,
-    }));
+    const generalAllies = (recruitedGenerals || []).slice(0, 3).map((gen) => {
+      const genSkills = gen.skills ? [...gen.skills] : [];
+      legendarySkills.forEach((ls) => {
+        if (ls.character === gen.id && !genSkills.includes(ls.skillId)) genSkills.push(ls.skillId);
+      });
+      return {
+        id: gen.id, name: gen.name, isPlayer: false, isAlly: true,
+        attributes: { ...gen.attributes },
+        hp: gen.current_hp ?? gen.hp, hp_max: gen.hp_max ?? gen.hp,
+        ca: gen.ca, pa: 3, pa_max: 3,
+        weapon: gen.weapon || { name: 'Arma', damage: '1d6', bonus_atk: 0 },
+        skills: genSkills, title: gen.title,
+        skillCooldowns: {}, skillUsesThisCombat: {}, status_effects: [],
+      };
+    });
 
     const allAllies = [playerCombatant, ...generalAllies];
-
     const enemyCombatants = combat.enemies.map((e, i) => ({
-      ...e,
-      id: `${e.id}_${i}`,
-      hp_max: e.hp,
-      pa_max: e.pa || 2,
+      ...e, id: `${e.id}_${i}`, hp_max: e.hp, pa_max: e.pa || 2, status_effects: [],
     }));
 
     const allCombatants = rollInitiative([...allAllies, ...enemyCombatants]);
@@ -80,7 +135,6 @@ export default function CombatScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [combat, combatState]);
 
-  // Auto-scroll log
   useEffect(() => {
     if (logRef.current) logRef.current.scrollTop = logRef.current.scrollHeight;
   }, [log]);
@@ -92,46 +146,60 @@ export default function CombatScreen() {
     () => (inventory?.items || []).filter((i) => i.type === 'consumable'),
     [inventory]
   );
+  const currentAllySkills = useMemo(() => {
+    if (!currentAlly) return [];
+    return getSkillsForCombatant(currentAlly).filter((s) => !s.passive);
+  }, [currentAlly]);
 
-  // --- Finish combat helper ---
+  // --- Finish combat ---
   const finishCombat = useCallback((combatResult) => {
     setCombatState('ended');
     if (combatResult === 'victory') {
       const xp = combat?.xp_reward || calculateXPReward(combat?.enemies || []);
-      const gold = calculateGoldReward(combat?.enemies || []);
+      const gold = calculateGoldReward(combat?.enemies || [], combat?.gold_reward);
       setResult({ type: 'victory', xp, gold });
       addLog(`\n🏆 VITORIA! +${xp} XP, +${gold} ouro`);
+      // Autosave on victory
+      store.saveToSlot('auto');
     } else {
       setResult({ type: 'defeat' });
       addLog(`\n💀 DERROTA...`);
+      // Check if Arslan fell
+      const arslanFell = allies.some((a) => a.id === 'arslan' && a.hp <= 0);
+      if (arslanFell) {
+        setTimeout(() => store.setGamePhase('game_over'), 2000);
+      }
     }
-  }, [combat, addLog]);
+  }, [combat, addLog, allies, store]);
 
-  // --- Check if combat ended (uses latest state via setters) ---
   const checkEnd = useCallback(() => {
     setTimeout(() => {
       setEnemies((curEnemies) => {
         setAllies((curAllies) => {
           const end = checkCombatEnd(curAllies, curEnemies);
-          if (end) finishCombat(end);
+          if (end) {
+            finishCombat(end);
+          } else {
+            checkMidCombatEvents(curEnemies, roundNumber);
+          }
           return curAllies;
         });
         return curEnemies;
       });
     }, 100);
-  }, [finishCombat]);
+  }, [finishCombat, checkMidCombatEvents, roundNumber]);
 
   // --- ACTION: Heavy Attack (2 PA) ---
   const handleAttack = useCallback(() => {
     if (currentPA < 2 || !currentAlly || currentAlly.hp <= 0) return;
     const target = livingEnemies[selectedTargetIndex] || livingEnemies[0];
     if (!target) return;
-
     const attack = rollAttack(currentAlly, target);
     if (attack.hits) {
       const dmg = rollDamage(currentAlly, attack.isCrit);
       const newHP = Math.max(0, target.hp - dmg.total);
       setEnemies((prev) => prev.map((e) => e.id === target.id ? { ...e, hp: newHP } : e));
+      flashDamage(target.id);
       addLog(`${currentAlly.name} ataca ${target.name}! (d20: ${attack.roll}+${attack.attackMod}=${attack.total} vs CA ${target.ca}) ${attack.isCrit ? '💥 CRITICO! ' : ''}Dano: ${dmg.total}`);
       if (newHP <= 0) addLog(`  ☠ ${target.name} foi derrotado!`);
     } else {
@@ -146,13 +214,13 @@ export default function CombatScreen() {
     if (currentPA < 1 || !currentAlly || currentAlly.hp <= 0) return;
     const target = livingEnemies[selectedTargetIndex] || livingEnemies[0];
     if (!target) return;
-
     const attack = rollAttack(currentAlly, target);
     if (attack.hits) {
       const dmg = rollDamage(currentAlly, false);
       const reduced = Math.max(1, Math.floor(dmg.total * 0.6));
       const newHP = Math.max(0, target.hp - reduced);
       setEnemies((prev) => prev.map((e) => e.id === target.id ? { ...e, hp: newHP } : e));
+      flashDamage(target.id);
       addLog(`${currentAlly.name} faz ataque rapido em ${target.name}! (${attack.total} vs CA ${target.ca}) Dano: ${reduced}`);
       if (newHP <= 0) addLog(`  ☠ ${target.name} foi derrotado!`);
     } else {
@@ -175,7 +243,6 @@ export default function CombatScreen() {
   // --- ACTION: Use Item (1 PA) ---
   const handleUseItem = useCallback((item) => {
     if (currentPA < 1 || !currentAlly) return;
-
     if (item.effect === 'heal') {
       const healMatch = item.value_range?.match(/(\d+)d(\d+)\+?(\d+)?/);
       let healAmount = 8;
@@ -201,77 +268,185 @@ export default function CombatScreen() {
     setShowItemMenu(false);
   }, [currentPA, currentAlly, store, addLog]);
 
+  // --- ACTION: Execute Skill ---
+  const executeSkill = useCallback((skill, target) => {
+    if (!currentAlly) return;
+    const res = resolveSkill(skill, currentAlly, target, allies, enemies);
+    res.logs.forEach((msg) => addLog(msg));
+
+    setAllies((prev) => prev.map((a) => {
+      let upd = a;
+      if (res.allyUpdates[a.id]) upd = { ...upd, ...res.allyUpdates[a.id] };
+      if (a.id === currentAlly.id) {
+        const cd = { ...(upd.skillCooldowns || {}), ...res.cooldownSet };
+        const uses = { ...(upd.skillUsesThisCombat || {}) };
+        if (res.useConsumed) uses[res.useConsumed] = (uses[res.useConsumed] || 0) + 1;
+        upd = { ...upd, skillCooldowns: cd, skillUsesThisCombat: uses };
+      }
+      return upd;
+    }));
+
+    if (Object.keys(res.enemyUpdates).length > 0) {
+      setEnemies((prev) => prev.map((e) => {
+        const upd = res.enemyUpdates[e.id];
+        return upd ? { ...e, ...upd } : e;
+      }));
+    }
+
+    setCurrentPA((pa) => pa - res.paSpent);
+    setShowSkillMenu(false);
+    setTargetingSkill(null);
+    checkEnd();
+  }, [currentAlly, allies, enemies, addLog, checkEnd]);
+
+  const handleSkillSelect = useCallback((skill) => {
+    if (needsTargetSelection(skill)) {
+      setTargetingSkill(skill);
+      setShowSkillMenu(false);
+    } else {
+      executeSkill(skill, null);
+    }
+  }, [executeSkill]);
+
+  const cancelTargeting = useCallback(() => setTargetingSkill(null), []);
+
   // --- ENEMY TURN ---
   const runEnemyTurn = useCallback(() => {
-    addLog('═══ Turno dos Inimigos ═══');
+    addLog(`═══ Turno dos Inimigos (Rodada ${roundNumber}) ═══`);
 
     setEnemies((curEnemies) => {
-      const livingEnms = curEnemies.filter((e) => e.hp > 0);
+      let processedEnemies = curEnemies.map((enemy) => {
+        if (enemy.hp <= 0) return enemy;
+        const { updatedCombatant, logs } = processStatusEffects(enemy);
+        logs.forEach((msg) => addLog(msg));
+        return updatedCombatant;
+      });
 
       setAllies((curAllies) => {
-        const livingAlls = curAllies.filter((a) => a.hp > 0);
-        const updated = curAllies.map((a) => ({ ...a })); // shallow clone
+        const updated = curAllies.map((a) => ({ ...a }));
+        const livingAlls = updated.filter((a) => a.hp > 0);
 
-        livingEnms.forEach((enemy) => {
+        // Guardian check
+        const daryun = updated.find((a) => a.id === 'daryun' && a.hp > 0);
+        const hasGuardian = daryun && getSkillsForCombatant(daryun).some((s) => s.id === 'guardia_do_principe');
+        let guardianUsed = false;
+
+        processedEnemies.filter((e) => e.hp > 0).forEach((enemy) => {
           const actions = processEnemyTurn(enemy, livingAlls);
           actions.forEach((action) => {
             const idx = updated.findIndex((a) => a.id === action.target.id);
             if (idx === -1) return;
 
+            if (action.anticipated) {
+              addLog(`${enemy.name} tenta atacar ${action.target.name}... movimento antecipado!`);
+              return;
+            }
+
             if (action.attack.hits) {
+              // Guardian intercept
+              if (action.target.id === 'arslan' && hasGuardian && !guardianUsed) {
+                const dIdx = updated.findIndex((a) => a.id === 'daryun');
+                if (dIdx !== -1 && updated[dIdx].hp > 0) {
+                  const newHP = Math.max(0, updated[dIdx].hp - action.damage);
+                  updated[dIdx] = { ...updated[dIdx], hp: newHP };
+                  addLog(`🛡 Daryun intercepta o ataque contra Arslan! Dano: ${action.damage}`);
+                  if (newHP <= 0) addLog(`  ⚠ Daryun caiu protegendo o principe!`);
+                  guardianUsed = true;
+                  return;
+                }
+              }
+
               const newHP = Math.max(0, updated[idx].hp - action.damage);
               updated[idx] = { ...updated[idx], hp: newHP };
+              flashDamage(updated[idx].id);
               addLog(`${enemy.name} ataca ${updated[idx].name}! (d20: ${action.attack.roll}) ${action.attack.isCrit ? '💥 CRITICO! ' : ''}Dano: ${action.damage}`);
               if (newHP <= 0) addLog(`  ⚠ ${updated[idx].name} caiu!`);
+
+              if (action.appliedEffect) {
+                const fx = { ...action.appliedEffect, duration: action.appliedEffect.duration || 2 };
+                updated[idx] = {
+                  ...updated[idx],
+                  status_effects: [...(updated[idx].status_effects || []).filter((e) => e.name !== fx.name), fx],
+                };
+                addLog(`  ${fx.label || fx.name} aplicado em ${updated[idx].name}!`);
+              }
             } else {
               addLog(`${enemy.name} ataca ${updated[idx].name}... e erra! (d20: ${action.attack.roll})`);
             }
           });
         });
 
-        // Check end
-        const end = checkCombatEnd(updated, curEnemies);
+        const end = checkCombatEnd(updated, processedEnemies);
         if (end) {
           setTimeout(() => finishCombat(end), 300);
           return updated;
         }
 
-        // Next round: reset to first living ally
+        setRoundNumber((r) => r + 1);
         setTimeout(() => {
           let first = 0;
           while (first < updated.length && updated[first].hp <= 0) first++;
           if (first < updated.length) {
+            const { updatedCombatant, logs: seLogs } = processStatusEffects(updated[first]);
+            seLogs.forEach((msg) => addLog(msg));
+            const newCooldowns = tickCooldowns(updatedCombatant.skillCooldowns || {});
+            const slowPen = getSlowedPenalty(updatedCombatant);
+            const bonus = updatedCombatant.bonusPA || 0;
+            const startPA = Math.max(0, (updatedCombatant.pa_max || updatedCombatant.pa || 3) - slowPen + bonus);
+
+            setAllies((prev) => prev.map((a) =>
+              a.id === updatedCombatant.id ? { ...updatedCombatant, skillCooldowns: newCooldowns, bonusPA: 0 } : a
+            ));
             setActiveAllyIndex(first);
-            setCurrentPA(updated[first].pa_max || updated[first].pa || 3);
+            setCurrentPA(startPA);
             addLog('═══ Seu Turno ═══');
-            addLog(`--- Turno de ${updated[first].name} ---`);
+            addLog(`--- Turno de ${updatedCombatant.name} ---`);
+            if (slowPen > 0) addLog(`  🐌 PA reduzido por lentificacao.`);
+            if (bonus > 0) addLog(`  📖 PA bonus: +${bonus}`);
           }
         }, 500);
 
         return updated;
       });
 
-      return curEnemies;
+      return processedEnemies.map((e) => ({
+        ...e,
+        status_effects: (e.status_effects || []).filter((fx) => fx.name !== 'movement_anticipated'),
+      }));
     });
-  }, [addLog, finishCombat]);
+  }, [addLog, finishCombat, roundNumber]);
 
   // --- END ALLY TURN ---
   const handleEndAllyTurn = useCallback(() => {
-    // Remove defend bonus from current ally
     if (currentAlly?._defending) {
       setAllies((prev) => prev.map((a) =>
         a.id === currentAlly.id ? { ...a, ca: a.ca - 2, _defending: false } : a
       ));
     }
+    setShowSkillMenu(false);
+    setShowItemMenu(false);
+    setTargetingSkill(null);
 
-    // Find next living ally
     let nextIdx = activeAllyIndex + 1;
     while (nextIdx < allies.length && allies[nextIdx].hp <= 0) nextIdx++;
 
     if (nextIdx < allies.length) {
+      const nextAlly = allies[nextIdx];
+      const { updatedCombatant, logs } = processStatusEffects(nextAlly);
+      logs.forEach((msg) => addLog(msg));
+      const newCooldowns = tickCooldowns(updatedCombatant.skillCooldowns || {});
+      const slowPen = getSlowedPenalty(updatedCombatant);
+      const bonus = updatedCombatant.bonusPA || 0;
+      const startPA = Math.max(0, (updatedCombatant.pa_max || updatedCombatant.pa || 3) - slowPen + bonus);
+
+      setAllies((prev) => prev.map((a) =>
+        a.id !== nextAlly.id ? a : { ...updatedCombatant, skillCooldowns: newCooldowns, bonusPA: 0 }
+      ));
       setActiveAllyIndex(nextIdx);
-      setCurrentPA(allies[nextIdx].pa_max || allies[nextIdx].pa || 3);
-      addLog(`--- Turno de ${allies[nextIdx].name} ---`);
+      setCurrentPA(startPA);
+      addLog(`--- Turno de ${updatedCombatant.name} ---`);
+      if (slowPen > 0) addLog(`  🐌 PA reduzido por lentificacao.`);
+      if (bonus > 0) addLog(`  📖 PA bonus: +${bonus}`);
     } else {
       runEnemyTurn();
     }
@@ -282,13 +457,11 @@ export default function CombatScreen() {
     if (result?.type === 'victory') {
       store.addXP(result.xp);
       store.addGold(result.gold);
-      // Sync Arslan HP
       const arslan = allies.find((a) => a.id === 'arslan');
       if (arslan) {
         const delta = arslan.hp - player.hp;
         if (delta !== 0) store.updatePlayerHP(delta);
       }
-      // Sync general HP
       allies.filter((a) => a.isAlly).forEach((ally) => {
         const gen = (recruitedGenerals || []).find((g) => g.id === ally.id);
         if (gen) {
@@ -300,7 +473,6 @@ export default function CombatScreen() {
     store.endCombat();
   }, [result, store, allies, player, recruitedGenerals]);
 
-  // --- Guard ---
   if (!combat) return null;
 
   // ==================== RENDER ====================
@@ -314,33 +486,49 @@ export default function CombatScreen() {
         {/* Allies */}
         <div className={styles.side}>
           <h4 className={styles.sideLabel}>Aliados</h4>
-          {allies.map((ally, idx) => (
-            <div
-              key={ally.id}
-              className={[
-                styles.combatantCard,
-                ally.hp <= 0 ? styles.defeated : '',
-                idx === activeAllyIndex && combatState === 'player_turn' ? styles.activeTurn : '',
-              ].filter(Boolean).join(' ')}
-            >
-              <h3 className={styles.combatantName}>
-                {ally.name}
-                {ally.isPlayer && ' ★'}
-                {idx === activeAllyIndex && combatState === 'player_turn' && ' ◄'}
-              </h3>
-              {ally.title && <span className={styles.combatantTitle}>{ally.title}</span>}
-              <ProgressBar current={Math.max(0, ally.hp)} max={ally.hp_max} color="var(--hp-green)" label="HP" />
-              {idx === activeAllyIndex && combatState === 'player_turn' && (
-                <div className={styles.paBar}>
-                  {Array.from({ length: ally.pa_max || ally.pa || 3 }).map((_, j) => (
-                    <span key={j} className={`${styles.paDot} ${j < currentPA ? styles.paActive : ''}`} />
-                  ))}
-                  <span className={styles.paLabel}>PA</span>
-                </div>
-              )}
-              {ally.hp <= 0 && <span className={styles.defeatedLabel}>Caiu</span>}
-            </div>
-          ))}
+          {allies.map((ally, idx) => {
+            const isTargetable = targetingSkill?.target_type === 'single_ally' && ally.hp > 0;
+            return (
+              <div
+                key={ally.id}
+                className={[
+                  styles.combatantCard,
+                  ally.hp <= 0 ? styles.defeated : '',
+                  idx === activeAllyIndex && combatState === 'player_turn' ? styles.activeTurn : '',
+                  isTargetable ? styles.validTarget : '',
+                  damagedIds.has(ally.id) ? styles.damagedCard : '',
+                ].filter(Boolean).join(' ')}
+                onClick={() => { if (isTargetable) executeSkill(targetingSkill, ally); }}
+                style={{ cursor: isTargetable ? 'pointer' : 'default' }}
+              >
+                <h3 className={styles.combatantName}>
+                  {ally.name}
+                  {ally.isPlayer && ' ★'}
+                  {idx === activeAllyIndex && combatState === 'player_turn' && ' ◄'}
+                </h3>
+                {ally.title && <span className={styles.combatantTitle}>{ally.title}</span>}
+                <ProgressBar current={Math.max(0, ally.hp)} max={ally.hp_max} color="var(--hp-green)" label="HP" />
+                {(ally.status_effects || []).length > 0 && (
+                  <div className={styles.statusBadges}>
+                    {ally.status_effects.map((fx, i) => (
+                      <span key={i} className={styles.statusBadge} title={fx.label || fx.name}>
+                        {STATUS_ICONS[fx.name] || '●'}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {idx === activeAllyIndex && combatState === 'player_turn' && (
+                  <div className={styles.paBar}>
+                    {Array.from({ length: ally.pa_max || ally.pa || 3 }).map((_, j) => (
+                      <span key={j} className={`${styles.paDot} ${j < currentPA ? styles.paActive : ''}`} />
+                    ))}
+                    <span className={styles.paLabel}>PA</span>
+                  </div>
+                )}
+                {ally.hp <= 0 && <span className={styles.defeatedLabel}>Caiu</span>}
+              </div>
+            );
+          })}
         </div>
 
         <div className={styles.vs}>VS</div>
@@ -350,22 +538,40 @@ export default function CombatScreen() {
           <h4 className={styles.sideLabel}>Inimigos</h4>
           {enemies.map((enemy) => {
             const liveIdx = livingEnemies.indexOf(enemy);
+            const isTargetable = targetingSkill?.target_type === 'single_enemy' && enemy.hp > 0;
             return (
               <div
                 key={enemy.id}
                 className={[
                   styles.combatantCard,
                   enemy.hp <= 0 ? styles.defeated : '',
-                  liveIdx === selectedTargetIndex && enemy.hp > 0 ? styles.targeted : '',
+                  !targetingSkill && liveIdx === selectedTargetIndex && enemy.hp > 0 ? styles.targeted : '',
+                  isTargetable ? styles.validTarget : '',
+                  damagedIds.has(enemy.id) ? styles.damagedCard : '',
                 ].filter(Boolean).join(' ')}
-                onClick={() => { if (enemy.hp > 0 && liveIdx >= 0) setSelectedTargetIndex(liveIdx); }}
+                onClick={() => {
+                  if (isTargetable) {
+                    executeSkill(targetingSkill, enemy);
+                  } else if (enemy.hp > 0 && liveIdx >= 0 && !targetingSkill) {
+                    setSelectedTargetIndex(liveIdx);
+                  }
+                }}
                 style={{ cursor: enemy.hp > 0 ? 'pointer' : 'default' }}
               >
                 <h3 className={styles.combatantName}>
                   {enemy.name}
-                  {liveIdx === selectedTargetIndex && enemy.hp > 0 && ' ◄ Alvo'}
+                  {!targetingSkill && liveIdx === selectedTargetIndex && enemy.hp > 0 && ' ◄ Alvo'}
                 </h3>
                 <ProgressBar current={Math.max(0, enemy.hp)} max={enemy.hp_max} color="var(--hp-red)" label="HP" />
+                {(enemy.status_effects || []).length > 0 && (
+                  <div className={styles.statusBadges}>
+                    {enemy.status_effects.map((fx, i) => (
+                      <span key={i} className={`${styles.statusBadge} ${styles.statusBadgeEnemy}`} title={fx.label || fx.name}>
+                        {STATUS_ICONS[fx.name] || '●'}
+                      </span>
+                    ))}
+                  </div>
+                )}
                 {enemy.hp <= 0 && <span className={styles.defeatedLabel}>Derrotado</span>}
               </div>
             );
@@ -373,26 +579,93 @@ export default function CombatScreen() {
         </div>
       </div>
 
+      {/* ----- Mid-Combat Dramatic Event ----- */}
+      {midCombatEvent && (
+        <div className={styles.midCombatEvent}>
+          <div className={styles.midCombatEventText}>
+            <p>{midCombatEvent.text}</p>
+            {midCombatEvent.text_2 && <p>{midCombatEvent.text_2}</p>}
+          </div>
+          {midCombatEvent.choices && midCombatEvent.choices.length > 0 ? (
+            <div className={styles.midCombatChoices}>
+              {midCombatEvent.choices.map((ch) => (
+                <Button
+                  key={ch.id}
+                  variant={ch.condition ? 'gold' : 'secondary'}
+                  size="sm"
+                  onClick={() => {
+                    if (ch.character_score) store.updateCharacterScore(ch.character_score);
+                    setMidCombatEvent(null);
+                  }}
+                >
+                  {ch.text}
+                </Button>
+              ))}
+            </div>
+          ) : (
+            <Button variant="gold" size="sm" onClick={() => setMidCombatEvent(null)}>
+              Continuar
+            </Button>
+          )}
+        </div>
+      )}
+
+      {/* ----- Targeting Prompt ----- */}
+      {targetingSkill && !midCombatEvent && (
+        <div className={styles.targetingPrompt}>
+          <span>🎯 Escolha um alvo para <strong>{targetingSkill.name}</strong></span>
+          <Button variant="secondary" size="sm" onClick={cancelTargeting}>Cancelar</Button>
+        </div>
+      )}
+
       {/* ----- Actions ----- */}
-      {combatState === 'player_turn' && currentAlly && currentAlly.hp > 0 && (
+      {combatState === 'player_turn' && currentAlly && currentAlly.hp > 0 && !targetingSkill && !midCombatEvent && (
         <div className={styles.actions}>
           <Button variant="primary" size="md" onClick={handleAttack} disabled={currentPA < 2}>
             ⚔ Atacar (2 PA)
           </Button>
           <Button variant="secondary" size="md" onClick={handleLightAttack} disabled={currentPA < 1}>
-            🗡 Ataque Rapido (1 PA)
+            🗡 Rapido (1 PA)
           </Button>
           <Button variant="secondary" size="md" onClick={handleDefend} disabled={currentPA < 1}>
             🛡 Defender (1 PA)
           </Button>
+          {currentAllySkills.length > 0 && (
+            <Button variant="secondary" size="md" onClick={() => { setShowSkillMenu(!showSkillMenu); setShowItemMenu(false); }} disabled={currentPA < 1}>
+              ✦ Habilidade
+            </Button>
+          )}
           {consumables.length > 0 && (
-            <Button variant="secondary" size="md" onClick={() => setShowItemMenu(!showItemMenu)} disabled={currentPA < 1}>
-              🧪 Usar Item (1 PA)
+            <Button variant="secondary" size="md" onClick={() => { setShowItemMenu(!showItemMenu); setShowSkillMenu(false); }} disabled={currentPA < 1}>
+              🧪 Item (1 PA)
             </Button>
           )}
           <Button variant="gold" size="md" onClick={handleEndAllyTurn}>
-            ➡ Encerrar Turno
+            ➡ Encerrar
           </Button>
+        </div>
+      )}
+
+      {/* ----- Skill Menu ----- */}
+      {showSkillMenu && combatState === 'player_turn' && currentAlly && !midCombatEvent && (
+        <div className={styles.skillMenu}>
+          <h4>Habilidades de {currentAlly.name}</h4>
+          {currentAllySkills.map((skill) => {
+            const check = canUseSkill(skill, currentAlly, currentPA, currentAlly.skillCooldowns, currentAlly.skillUsesThisCombat);
+            return (
+              <button
+                key={skill.id}
+                className={[styles.skillItem, skill.legendary ? styles.legendarySkill : '', !check.canUse ? styles.skillDisabled : ''].filter(Boolean).join(' ')}
+                onClick={() => check.canUse && handleSkillSelect(skill)}
+                disabled={!check.canUse}
+              >
+                <span className={styles.skillName}>{skill.legendary ? '⭐ ' : '✦ '}{skill.name} ({skill.pa_cost} PA)</span>
+                <span className={styles.skillDesc}>{skill.description}</span>
+                {!check.canUse && <span className={styles.skillCooldown}>{check.reason}</span>}
+              </button>
+            );
+          })}
+          <Button variant="secondary" size="sm" onClick={() => setShowSkillMenu(false)}>Voltar</Button>
         </div>
       )}
 
@@ -429,7 +702,7 @@ export default function CombatScreen() {
 
       {/* ----- Combat Log ----- */}
       <div className={styles.logPanel}>
-        <h4 className={styles.logTitle}>Log de Combate</h4>
+        <h4 className={styles.logTitle}>Log de Combate — Rodada {roundNumber}</h4>
         <div className={styles.logContent} ref={logRef}>
           {log.map((entry, idx) => (
             <p key={idx} className={styles.logEntry}>{entry}</p>

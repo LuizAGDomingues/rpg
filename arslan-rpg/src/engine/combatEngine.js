@@ -9,18 +9,63 @@ export const rollInitiative = (combatants) => {
 };
 
 export const rollAttack = (attacker, target) => {
-  const roll = rollD20();
+  let roll = rollD20();
   const forMod = getModifierValue(attacker.attributes?.FOR || 10);
   const weaponBonus = attacker.weapon?.bonus_atk || 0;
-  const attackMod = forMod + weaponBonus;
+  let attackMod = forMod + weaponBonus;
+
+  // Intimidated penalty: -2 to attack rolls
+  if (hasStatusEffect(attacker, 'intimidated')) {
+    attackMod -= 2;
+  }
+
+  // Morale bonus: +1 to attack rolls
+  const moraleEffect = (attacker.status_effects || []).find((e) => e.name === 'morale');
+  if (moraleEffect) {
+    attackMod += moraleEffect.bonus || 1;
+  }
+
+  // Attack buff (from skills like Grito de Guerra)
+  const attackBuff = (attacker.status_effects || []).find((e) => e.name === 'attack_buff' || e.name === 'strategy_buff');
+  if (attackBuff) {
+    attackMod += attackBuff.attack_bonus || 0;
+  }
+
   const total = roll + attackMod;
   const isCrit = roll === 20;
   const isFumble = roll === 1;
 
-  // Stun effect: stunned targets have -2 CA
-  const targetCA = target.ca - (hasStatusEffect(target, 'stunned') ? 2 : 0);
+  // Stunned targets have -2 CA, derrubado targets have -2 CA
+  let targetCA = target.ca;
+  if (hasStatusEffect(target, 'stunned')) targetCA -= 2;
+  if (hasStatusEffect(target, 'derrubado')) targetCA -= 2;
+
+  // Marked targets: attacker gets advantage (roll 2d20, use higher)
+  if (hasStatusEffect(target, 'marked')) {
+    const roll2 = rollD20();
+    if (roll2 > roll) {
+      roll = roll2;
+      const newTotal = roll + attackMod;
+      const hits = roll === 20 || (roll !== 1 && newTotal >= targetCA);
+      return { roll, attackMod, total: newTotal, hits, isCrit: roll === 20, isFumble: false, advantage: true };
+    }
+  }
+
   const hits = isCrit || (!isFumble && total >= targetCA);
   return { roll, attackMod, total, hits, isCrit, isFumble };
+};
+
+export const rollAttackWithAdvantage = (attacker, target) => {
+  const r1 = rollD20();
+  const r2 = rollD20();
+  const roll = Math.max(r1, r2);
+  const forMod = getModifierValue(attacker.attributes?.FOR || 10);
+  const weaponBonus = attacker.weapon?.bonus_atk || 0;
+  const attackMod = forMod + weaponBonus;
+  const total = roll + attackMod;
+  const targetCA = target.ca - (hasStatusEffect(target, 'stunned') ? 2 : 0) - (hasStatusEffect(target, 'derrubado') ? 2 : 0);
+  const hits = roll === 20 || (roll !== 1 && total >= targetCA);
+  return { roll, attackMod, total, hits, isCrit: roll === 20, isFumble: false, advantage: true, rolls: [r1, r2] };
 };
 
 export const rollDamage = (attacker, isCrit = false) => {
@@ -59,6 +104,12 @@ export const processStatusEffects = (combatant) => {
   const logs = [];
   let updated = { ...combatant, status_effects: [...(combatant.status_effects || [])] };
 
+  // Remove skill-based CA buffs that expired
+  if (updated._skillDefending) {
+    updated = { ...updated, ca: updated.ca - (updated._skillDefendCA || 0), _skillDefending: false, _skillDefendCA: 0 };
+    logs.push(`  Postura defensiva de ${combatant.name} se dissipou.`);
+  }
+
   updated.status_effects = updated.status_effects
     .map((effect) => {
       if (effect.name === 'bleed') {
@@ -74,6 +125,21 @@ export const processStatusEffects = (combatant) => {
       if (effect.name === 'stunned') {
         logs.push(`💫 ${combatant.name} esta atordoado e perde sua acao!`);
       }
+      if (effect.name === 'derrubado') {
+        logs.push(`⬇ ${combatant.name} esta derrubado! (-2 CA)`);
+      }
+      if (effect.name === 'intimidated') {
+        logs.push(`😨 ${combatant.name} esta intimidado. (-2 em ataques)`);
+      }
+      if (effect.name === 'slowed') {
+        logs.push(`🐌 ${combatant.name} esta lentificado. (-1 PA neste turno)`);
+      }
+      if (effect.name === 'marked') {
+        logs.push(`🎯 ${combatant.name} esta marcado. Ataques contra ele tem vantagem.`);
+      }
+      if (effect.name === 'morale') {
+        logs.push(`💪 ${combatant.name} tem moral elevada. (+${effect.bonus || 1} em rolagens)`);
+      }
 
       // Decrement duration
       const remaining = (effect.duration || 1) - 1;
@@ -88,6 +154,13 @@ export const processStatusEffects = (combatant) => {
   return { updatedCombatant: updated, logs };
 };
 
+/**
+ * Get PA reduction from slowed status effect.
+ */
+export const getSlowedPenalty = (combatant) => {
+  return hasStatusEffect(combatant, 'slowed') ? 1 : 0;
+};
+
 /* ===== Enemy AI ===== */
 
 export const processEnemyTurn = (enemy, targets) => {
@@ -97,8 +170,26 @@ export const processEnemyTurn = (enemy, targets) => {
 
   // Check if enemy is stunned — skip turn
   if (hasStatusEffect(enemy, 'stunned')) return actions;
+  // Check if enemy is derrubado — loses first action
+  if (hasStatusEffect(enemy, 'derrubado')) return actions;
+
+  // Check if movement was anticipated — first attack auto-misses
+  if (hasStatusEffect(enemy, 'movement_anticipated')) {
+    actions.push({
+      target: livingTargets[0],
+      attack: { roll: 0, attackMod: 0, total: 0, hits: false, isCrit: false, isFumble: false },
+      damage: 0,
+      appliedEffect: null,
+      anticipated: true,
+    });
+    return actions;
+  }
 
   let remainingPA = enemy.pa || 2;
+  // Slowed enemies lose 1 PA
+  if (hasStatusEffect(enemy, 'slowed')) {
+    remainingPA = Math.max(0, remainingPA - 1);
+  }
 
   while (remainingPA >= 2 && livingTargets.length > 0) {
     // AI targeting: 40% chance to target the player (Arslan), otherwise random
@@ -145,7 +236,20 @@ export const calculateXPReward = (enemies) => {
   return enemies.reduce((sum, e) => sum + (e.xp || 20), 0);
 };
 
-export const calculateGoldReward = (enemies) => {
+export const calculateGoldReward = (enemies, combatGoldReward) => {
+  if (combatGoldReward) {
+    const match = String(combatGoldReward).match(/(\d+)d(\d+)([+-]\d+)?/);
+    if (match) {
+      const [, qty, sides, bonus] = match;
+      let total = 0;
+      for (let i = 0; i < parseInt(qty); i++) {
+        total += Math.floor(Math.random() * parseInt(sides)) + 1;
+      }
+      return total + parseInt(bonus || 0);
+    }
+    const flat = parseInt(combatGoldReward);
+    if (!isNaN(flat)) return flat;
+  }
   return enemies.reduce((sum, e) => {
     const gold = e.gold || Math.floor(Math.random() * 6) + 1;
     return sum + gold;

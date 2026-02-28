@@ -6,7 +6,7 @@
   "hp_base": 16,
   "pa_base": 3,
   "proficiencies": ["espadas_leves", "arcos", "armadura_leve"],
-  "starting_skills": ["Persuasao Nobre", "Leitura de Pessoas", "Discurso Inspirador"],
+  "starting_skills": ["persuasao_nobre", "leitura_de_pessoas", "discurso_inspirador"],
   "faction_bonus": { "escravos_libertos": 20, "sindhura": 10, "lusitanos_moderados": 15 },
   "dialogue_tags": ["diplomat"],
   "flavor": "Desbloqueia opcoes de dialogo exclusivas. Pode resolver conflitos sem combate."

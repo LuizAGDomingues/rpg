@@ -6,7 +6,7 @@
   "hp_base": 16,
   "pa_base": 4,
   "proficiencies": ["espadas_leves", "arcos", "armadura_leve"],
-  "starting_skills": ["Analise Tatica", "Antecipar Movimento", "Plano de Batalha"],
+  "starting_skills": ["analise_tatica", "antecipar_movimento", "plano_de_batalha"],
   "faction_bonus": { "nobreza_pars": 5, "turan": 10 },
   "dialogue_tags": ["strategist"],
   "flavor": "Bonus em combates em grupo. Revela fraquezas inimigas. PA extra por turno."

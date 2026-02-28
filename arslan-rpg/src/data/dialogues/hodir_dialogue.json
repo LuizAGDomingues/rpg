@@ -1,0 +1,103 @@
+{
+  "id": "hodir_dialogue",
+  "npc": "hodir_lord",
+  "nodes": [
+    {
+      "id": "start",
+      "text": "Principe Arslan. Kashan nao e lugar para principezinhos brincarem de guerra.",
+      "mood_check": true,
+      "branches": {
+        "hostile": { "text": "Nao tenho tempo para fugitivos. Saia do meu salao." },
+        "suspicious": { "text": "Principe Arslan. Kashan nao e lugar para principezinhos brincarem de guerra." },
+        "cautious": { "text": "Principe. Ouvi dizer que reuniu alguns homens. Interessante. O que deseja?" },
+        "friendly": { "text": "Principe Arslan! Kashan esta as suas ordens. O que precisa?" }
+      },
+      "options": [
+        { "id": "alliance", "text": "Preciso do apoio de Kashan na reconquista de Ecbatana.", "leads_to": "hodir_alliance" },
+        { "id": "diplomacy", "text": "[CAR 14] Lord Hodir, Kashan precisa de Pars tanto quanto Pars precisa de Kashan.", "leads_to": "hodir_diplomacy", "condition": "CAR >= 14", "roll": { "attribute": "CAR", "dc": 14 } },
+        { "id": "strategy", "text": "[INT 14] Tenho um plano que garante a seguranca de Kashan enquanto retomamos a capital.", "leads_to": "hodir_strategy", "condition": "INT >= 14", "roll": { "attribute": "INT", "dc": 14 } },
+        { "id": "spy_report", "text": "Ha um espiao lusitano em sua corte, Lord Hodir.", "leads_to": "hodir_spy", "condition": "kaveh_spy_hint" },
+        { "id": "exit", "text": "Voltarei em outro momento.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "hodir_alliance",
+      "text": "Reconquista? Com que exercito? Voce tem, o que, cem homens? Eu tenho muralhas e provisoes para um ano. Por que arriscaria isso por uma causa perdida?",
+      "options": [
+        { "id": "promise", "text": "Quando Ecbatana cair, Kashan sera a primeira cidade reconhecida. Sua familia tera lugar no conselho real.", "leads_to": "hodir_considers", "faction_effect": { "nobreza_pars": 5 } },
+        { "id": "threaten", "text": "Se nao ajudar Pars agora, quando os lusitanos vierem por Kashan, ninguem ajudara voce.", "leads_to": "hodir_offended", "faction_effect": { "nobreza_pars": -5 } },
+        { "id": "back", "text": "Vou pensar melhor.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "hodir_diplomacy",
+      "text": "Hm. Voce fala com mais juizo do que seu pai. Talvez... talvez Kashan possa contribuir com algumas centenas de soldados. Mas quero garantias por escrito.",
+      "faction_effect": { "nobreza_pars": 8 },
+      "set_flags": { "hodir_partial_alliance": true },
+      "options": [
+        { "id": "accept", "text": "Tera suas garantias. Pars honra seus aliados.", "leads_to": "hodir_deal", "faction_effect": { "nobreza_pars": 5 } },
+        { "id": "negotiate", "text": "Garantias, sim. Mas quero acesso a sua forja e mercado tambem.", "leads_to": "hodir_full_deal" },
+        { "id": "exit", "text": "Discutiremos os termos depois.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "hodir_strategy",
+      "text": "Um plano? Mostrar. Se for solido, terei que reconsiderar minha posicao.",
+      "set_flags": { "hodir_impressed": true },
+      "options": [
+        { "id": "explain", "text": "Kashan fica na rota de suprimentos lusitana. Se cortarmos, eles enfraquecem em Ecbatana.", "leads_to": "hodir_considers", "faction_effect": { "nobreza_pars": 10 } },
+        { "id": "back", "text": "Deixe-me refinar o plano.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "hodir_spy",
+      "text": "Espiao?! Em MINHA corte?! Isso e... preocupante. Quem lhe disse isso?",
+      "options": [
+        { "id": "protect_kaveh", "text": "Fontes confiaveis. Nao posso revelar.", "leads_to": "hodir_spy_response", "faction_effect": { "nobreza_pars": 3 } },
+        { "id": "reveal_kaveh", "text": "O ferreiro Kaveh ouviu conversas suspeitas.", "leads_to": "hodir_spy_response" }
+      ]
+    },
+    {
+      "id": "hodir_spy_response",
+      "text": "Investigarei pessoalmente. Se for verdade, principe... ficarei em divida com voce. Ninguem ameaca Kashan de dentro.",
+      "set_flags": { "hodir_spy_warned": true },
+      "faction_effect": { "nobreza_pars": 5 },
+      "options": [
+        { "id": "exit", "text": "Fico feliz em ajudar.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "hodir_considers",
+      "text": "Interessante. Preciso pensar. Volte amanha e discutiremos os termos de uma alianca.",
+      "set_flags": { "hodir_considering_alliance": true },
+      "options": [
+        { "id": "exit", "text": "Voltarei.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "hodir_offended",
+      "text": "Voce ousa me ameacar no meu proprio salao? Saia antes que eu mude de ideia sobre sua hospitalidade.",
+      "set_flags": { "offended_hodir_lord": true },
+      "options": [
+        { "id": "exit", "text": "Saindo.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "hodir_deal",
+      "text": "Entao esta feito. Kashan contribuira com 200 soldados e acesso a forja. Nao me decepcione, principe.",
+      "set_flags": { "kashan_alliance_partial": true },
+      "options": [
+        { "id": "exit", "text": "Nao decepcionarei.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "hodir_full_deal",
+      "text": "Voce negocia bem para um garoto. Pois bem — soldados, forja E mercado. Mas quando Ecbatana cair, lembre-se de Kashan.",
+      "set_flags": { "kashan_alliance_full": true },
+      "faction_effect": { "nobreza_pars": 5 },
+      "options": [
+        { "id": "exit", "text": "Kashan sera lembrada. Sempre.", "leads_to": "exit" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+[
+  {
+    "id": "epilogue_just",
+    "title": "O Rei Justo",
+    "trigger_condition": "just_king",
+    "text": [
+      "Ecbatana e retomada. A coroacao acontece tres semanas depois.",
+      "Arslan governa com firmeza. A lei e igual para todos — novidade assustadora para quem nunca precisou teme-la.",
+      "Hermes foi executado. Alguns nobres apoiaram. Os que nao apoiaram ficaram quietos.",
+      "A escravatura e questao em aberto. Ha promessas. Ha comissoes. Ha 'gradualmente'.",
+      "Uma noite, voce encontra Narsus olhando pela janela.",
+      "\"O que pensa?\" voce pergunta.",
+      "\"Que reis justos sao raros.\" Ele responde sem virar. \"E que raridade nao e o mesmo que suficiente.\"",
+      "Pars sobreviveu. Pars mudou. Quanto? O tempo vai dizer."
+    ]
+  },
+  {
+    "id": "epilogue_merciful",
+    "title": "O Rei Misericordioso",
+    "trigger_condition": "merciful_king",
+    "text": [
+      "Hermes foi confinado num mosteiro a tres dias de Ecbatana. Ninguem sabe quem ele e. Narsus garante que assim continue.",
+      "A coroacao e simples — a pedido de Arslan.",
+      "Etoile aparece na cerimonia. Nao de armadura. Ela mesma nao sabe bem por que apareceu.",
+      "A escravatura continua — por enquanto.",
+      "Daria saiu mais cedo da cerimonia do que os outros.",
+      "No ano seguinte, ha uma revolta de escravos em duas provincias. Pequena. Sufocada.",
+      "Arslan le o relatorio. Dobra o papel. Fica em silencio por um longo tempo.",
+      "'Gradualmente' esta vencendo.",
+      "Apenas."
+    ]
+  },
+  {
+    "id": "epilogue_wise",
+    "title": "O Rei que Pars Nao Merecia Ainda",
+    "trigger_condition": "wise_king",
+    "text": [
+      "Ecbatana e retomada. A coroacao e adiada por seis meses — tempo para reconstruir antes de comemorar.",
+      "A proclamacao de abolicao e lida na praca central. Aplausos de um lado. Silencio tenso do outro.",
+      "Dois nobres partem para exilio voluntario. Tres ficam e reclamam em todo jantar que frequentam.",
+      "Hermes trabalha no ministerio de reconstrucao. Ninguem sabe seu nome verdadeiro. Ele prefere assim.",
+      "Um dia, um funcionario novo — ex-escravo — pede conselho a Hermes sobre burocracia hostil.",
+      "Hermes responde com mais paciencia do que qualquer um esperaria.",
+      "Voce ouve sobre isso semanas depois, por Narsus.",
+      "\"Como esta ele?\"",
+      "\"Nao esta em paz.\" Narsus pensa. \"Mas esta trabalhando.\" Uma pausa. \"Para alguem como ele, isso e quase a mesma coisa.\"",
+      "Pars muda devagar. Mais devagar do que Arslan gostaria. Mais rapido do que qualquer rei anterior permitiu.",
+      "Na biblioteca restaurada de Ecbatana ha uma sala nova.",
+      "Sem nome na porta.",
+      "Narsus pintou o quadro na parede.",
+      "E terrivel.",
+      "Todo mundo que entra sorri."
+    ]
+  }
+]

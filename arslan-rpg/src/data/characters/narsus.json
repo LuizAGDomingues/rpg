@@ -8,7 +8,7 @@
   "hp": 18,
   "ca": 14,
   "weapon": { "name": "Espada de Narsus", "damage": "1d6+2", "type": "espada_leve" },
-  "skills": ["Plano Tatico", "Analisar Fraqueza", "Emboscada"],
+  "skills": ["criar_abertura", "instrucao_de_combate"],
   "passive": "Mente Brilhante: +2 em todos os testes de INT do grupo",
   "portrait_color": "#d4af37",
   "recruit_condition": "act2_started",

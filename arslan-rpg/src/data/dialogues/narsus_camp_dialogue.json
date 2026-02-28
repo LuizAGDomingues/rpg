@@ -1,0 +1,121 @@
+{
+  "id": "narsus_camp_dialogue",
+  "npc": "narsus",
+  "nodes": [
+    {
+      "id": "start",
+      "text": "Ah, Arslan. Precisa de mais algum milagre estrategico? Ou veio admirar minha pintura mais recente?",
+      "options": [
+        { "id": "ask_strategy", "text": "Preciso do seu conselho sobre os lusitanos.", "leads_to": "narsus_strategy" },
+        { "id": "painting", "text": "Mostre-me a pintura.", "leads_to": "narsus_painting", "condition": "NOT saw_painting" },
+        { "id": "ask_past", "text": "Por que voce foi exilado, Narsus?", "leads_to": "narsus_backstory", "condition": "narsus_recruited" },
+        { "id": "exit", "text": "Nada por enquanto.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "narsus_strategy",
+      "text": "Os lusitanos controlam Ecbatana, mas suas linhas de suprimento sao longas e vulneraveis. A chave nao e forca bruta — e logistica. Corte os suprimentos e eles definham como uma planta sem agua.",
+      "options": [
+        { "id": "ask_how", "text": "Como cortamos os suprimentos?", "leads_to": "narsus_supply_plan" },
+        { "id": "ask_silvermask", "text": "E o mascarado de prata?", "leads_to": "narsus_silvermask", "condition": "heard_of_silvermask" },
+        { "id": "back", "text": "Interessante. Vou pensar nisso.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "narsus_supply_plan",
+      "text": "Kashan fica na rota principal. Se convencer Lord Hodir a bloquear a passagem, metade do trigo lusitano para. Alem disso, os nomades de Turan podem interceptar caravanas pelo norte.",
+      "xp_reward": 15,
+      "options": [
+        { "id": "agree", "text": "Um plano em duas frentes. Brilhante.", "leads_to": "narsus_pleased" },
+        { "id": "back", "text": "Voltar.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "narsus_pleased",
+      "text": "Naturalmente que e brilhante. Sou eu, afinal. Agora va implementa-lo antes que eu perca a paciencia e comece a pintar de novo.",
+      "options": [
+        { "id": "exit", "text": "Ja estou indo.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "narsus_painting",
+      "text": "Contemplem! A aurora sobre as montanhas de Pars. Note as nuances de cor, a textura do ceu...",
+      "set_flags": { "saw_painting": true },
+      "options": [
+        { "id": "praise", "text": "E... interessante.", "leads_to": "narsus_painting_response" },
+        { "id": "honest", "text": "Narsus, isso parece um acidente com tinta.", "leads_to": "narsus_painting_offended" },
+        { "id": "diplomatic", "text": "[CAR 14] A arte e subjetiva. Vejo... intensidade emocional.", "leads_to": "narsus_painting_pleased", "condition": "CAR >= 14", "roll": { "attribute": "CAR", "dc": 14 } }
+      ]
+    },
+    {
+      "id": "narsus_painting_response",
+      "text": "'Interessante'? E o maximo que consegue? Elam disse a mesma coisa. Voces nao reconhecem genialidade.",
+      "options": [
+        { "id": "exit", "text": "Talvez um dia eu entenda.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "narsus_painting_offended",
+      "text": "Um ACIDENTE?! Isto e expressionismo avant-garde! O problema nao e a pintura — e a incapacidade do observador de transcender o literal!",
+      "faction_effect": { "nobreza_pars": -1 },
+      "options": [
+        { "id": "apologize", "text": "Desculpe, Narsus. Cada um tem seus talentos.", "leads_to": "start" },
+        { "id": "double_down", "text": "Daryun tambem acha horrivel.", "leads_to": "narsus_painting_furious" }
+      ]
+    },
+    {
+      "id": "narsus_painting_furious",
+      "text": "DARYUN?! Aquele filisteu nao distingue arte de uma parede de tijolos! ...Vou pintar sobre esta e fazer algo AINDA mais abstrato. Voces vao ver.",
+      "options": [
+        { "id": "exit", "text": "O que eu fiz...", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "narsus_painting_pleased",
+      "text": "Finalmente! Alguem com olhos para a arte! Sabia que havia algo em voce, Arslan. Vou dedicar minha proxima obra a voce.",
+      "faction_effect": { "nobreza_pars": 2 },
+      "options": [
+        { "id": "exit", "text": "Estou... honrado.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "narsus_backstory",
+      "text": "Defendi que Pars deveria abolir a escravatura. O Rei Andragoras considerou isso uma ameaca a ordem social. Fui exilado. E honestamente? Fui feliz em Dahman. Ate voces aparecerem.",
+      "options": [
+        { "id": "agree", "text": "Voce estava certo. Pars tem que mudar.", "leads_to": "narsus_respect", "condition": "class == diplomat", "faction_effect": { "escravos_libertos": 5, "nobreza_pars": -3 } },
+        { "id": "pragmatic", "text": "A escravatura e errada, mas muda gradualmente. Precisamos do trono primeiro.", "leads_to": "narsus_pragmatic", "condition": "class == strategist" },
+        { "id": "back", "text": "Entendo.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "narsus_respect",
+      "text": "Hmph. Talvez voce seja mesmo diferente do seu pai. Pars precisa de um lider que pense alem de tradicao. Conte comigo, Arslan.",
+      "options": [
+        { "id": "exit", "text": "Obrigado, Narsus.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "narsus_pragmatic",
+      "text": "Gradualmente? A unica mudanca gradual que funcionou na historia foi a erosao. Tudo mais exigiu acao. Mas... reconheco que o momento importa. Primeiro o trono, depois a mudanca.",
+      "options": [
+        { "id": "exit", "text": "Exatamente.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "narsus_silvermask",
+      "text": "O mascarado de prata... Intrigante. Pelos relatos, ele comanda os lusitanos mas nao e lusitano. Alguem com conhecimento intimo de Pars. Isso limita os suspeitos consideravelmente.",
+      "set_flags": { "narsus_silvermask_theory": true },
+      "options": [
+        { "id": "who", "text": "Quem voce acha que e?", "leads_to": "narsus_silvermask_theory" },
+        { "id": "back", "text": "Vamos investigar mais.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "narsus_silvermask_theory",
+      "text": "Ainda nao tenho certeza. Mas alguem com motivo para odiar a familia real de Pars E conhecimento da cidade... Ha poucos candidatos. Preciso de mais informacoes.",
+      "options": [
+        { "id": "exit", "text": "Conseguiremos essas informacoes.", "leads_to": "exit" }
+      ]
+    }
+  ]
+}

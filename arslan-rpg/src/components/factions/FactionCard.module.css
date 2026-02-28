@@ -25,10 +25,24 @@
     text-transform: uppercase;
 }
 
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
+    gap: var(--spacing-sm);
+}
+
 .rep {
     font-family: var(--font-heading);
     font-size: 0.8rem;
-    display: block;
+    flex-shrink: 0;
+}
+
+.effect {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    font-style: italic;
     text-align: right;
-    margin-top: 4px;
 }

@@ -1,21 +1,116 @@
 [
-  { "id": "campo_batalha", "region": "atropatene", "name": "Campo de Batalha", "description": "O local da batalha devastadora. Destrocos e memorias.", "type": "exploration", "available_actions": ["search", "rest"] },
-  { "id": "ruinas_acampamento", "region": "atropatene", "name": "Ruinas do Acampamento", "description": "Restos do acampamento do exercito de Pars.", "type": "exploration", "available_actions": ["search", "loot"] },
-  { "id": "floresta_sul", "region": "atropatene", "name": "Floresta ao Sul", "description": "Floresta densa que serviu de rota de fuga.", "type": "exploration", "available_actions": ["rest", "hunt"] },
-  { "id": "casa_narsus", "region": "exilio_narsus", "name": "Casa de Narsus", "description": "A morada do estrategista exilado, repleta de mapas e pinturas horriveis.", "type": "dialogue", "available_actions": ["talk", "rest"] },
-  { "id": "taberna_dahman", "region": "exilio_narsus", "name": "Taberna de Dahman", "description": "Unica taberna do vilarejo. Informacoes e descanso.", "type": "shop", "available_actions": ["shop", "talk", "rest"] },
-  { "id": "ferreiro_dahman", "region": "exilio_narsus", "name": "Ferreiro de Dahman", "description": "Ferreiro simples mas competente.", "type": "shop", "available_actions": ["shop", "repair"] },
-  { "id": "tenda_arslan", "region": "acampamento_base", "name": "Tenda de Arslan", "description": "Sua tenda pessoal. Aqui voce descansa e planeja.", "type": "rest", "available_actions": ["rest", "save", "plan"] },
-  { "id": "area_treino", "region": "acampamento_base", "name": "Area de Treino", "description": "Local para treinar e melhorar suas habilidades.", "type": "training", "available_actions": ["train", "spar"] },
-  { "id": "cozinha_campo", "region": "acampamento_base", "name": "Cozinha do Campo", "description": "Onde as racoes sao preparadas.", "type": "rest", "available_actions": ["rest", "cook"] },
-  { "id": "posto_vigia", "region": "acampamento_base", "name": "Posto de Vigia", "description": "Ponto elevado para vigiar a regiao.", "type": "exploration", "available_actions": ["scout", "talk"] },
-  { "id": "muralhas_kashan", "region": "kashan", "name": "Muralhas de Kashan", "description": "As imponentes muralhas da fortaleza.", "type": "exploration", "available_actions": ["scout", "talk"] },
-  { "id": "salao_lord", "region": "kashan", "name": "Salao do Lord", "description": "O salao principal de Lord Hodir.", "type": "dialogue", "available_actions": ["talk", "negotiate"] },
-  { "id": "ferreiro_kashan", "region": "kashan", "name": "Ferreiro de Kashan", "description": "Ferreiro militar com armas de qualidade.", "type": "shop", "available_actions": ["shop", "repair", "upgrade"] },
-  { "id": "palacio_real", "region": "ecbatana", "name": "Palacio Real", "description": "O trono de Pars. Agora nas maos dos lusitanos.", "type": "quest", "available_actions": ["infiltrate"] },
-  { "id": "mercado_ecbatana", "region": "ecbatana", "name": "Grande Mercado", "description": "O maior mercado de Pars. Agora sob controle lusitano.", "type": "shop", "available_actions": ["shop", "talk"] },
-  { "id": "templo_mithra", "region": "ecbatana", "name": "Templo de Mithra", "description": "O principal templo do deus Mithra.", "type": "dialogue", "available_actions": ["pray", "talk"] },
-  { "id": "palacio_sindhura", "region": "sindhura", "name": "Palacio de Sindhura", "description": "O grandioso palacio do reino vizinho.", "type": "dialogue", "available_actions": ["talk", "negotiate"] },
-  { "id": "mercado_sindhura", "region": "sindhura", "name": "Mercado de Sindhura", "description": "Mercado exotico com itens raros.", "type": "shop", "available_actions": ["shop"] },
-  { "id": "arena_sindhura", "region": "sindhura", "name": "Arena de Sindhura", "description": "Arena de combate para provar seu valor.", "type": "combat", "available_actions": ["fight", "watch"] }
+  {
+    "id": "campo_batalha", "region": "atropatene", "name": "Campo de Batalha",
+    "description": "O local da batalha devastadora. Destrocos e memorias.",
+    "type": "exploration", "npcs": ["mina_refugee", "commander_vahriz"],
+    "shop": false, "rest": false, "arrival_scene": null, "unlock_condition": null
+  },
+  {
+    "id": "ruinas_acampamento", "region": "atropatene", "name": "Ruinas do Acampamento",
+    "description": "Restos do acampamento do exercito de Pars.",
+    "type": "exploration", "npcs": ["yusuf_scholar"],
+    "shop": false, "rest": false, "arrival_scene": null, "unlock_condition": null
+  },
+  {
+    "id": "floresta_sul", "region": "atropatene", "name": "Floresta ao Sul",
+    "description": "Floresta densa que serviu de rota de fuga.",
+    "type": "exploration", "npcs": ["etoile_lusitana", "zahra_witch"],
+    "shop": false, "rest": true, "arrival_scene": null, "unlock_condition": null
+  },
+  {
+    "id": "casa_narsus", "region": "exilio_narsus", "name": "Casa de Narsus",
+    "description": "A morada do estrategista exilado, repleta de mapas e pinturas horriveis.",
+    "type": "dialogue", "npcs": [],
+    "shop": false, "rest": true, "arrival_scene": null, "unlock_condition": null
+  },
+  {
+    "id": "taberna_dahman", "region": "exilio_narsus", "name": "Taberna de Dahman",
+    "description": "Unica taberna do vilarejo. Informacoes e descanso.",
+    "type": "shop", "npcs": ["jahan_spy"],
+    "shop": true, "rest": true, "arrival_scene": null, "unlock_condition": null
+  },
+  {
+    "id": "ferreiro_dahman", "region": "exilio_narsus", "name": "Ferreiro de Dahman",
+    "description": "Ferreiro simples mas competente.",
+    "type": "shop", "npcs": [],
+    "shop": true, "rest": false, "arrival_scene": null, "unlock_condition": null
+  },
+  {
+    "id": "tenda_arslan", "region": "acampamento_base", "name": "Tenda de Arslan",
+    "description": "Sua tenda pessoal. Aqui voce descansa e planeja.",
+    "type": "rest", "npcs": ["rania_healer", "daria_slave"],
+    "shop": false, "rest": true, "arrival_scene": null, "unlock_condition": null
+  },
+  {
+    "id": "area_treino", "region": "acampamento_base", "name": "Area de Treino",
+    "description": "Local para treinar e melhorar suas habilidades.",
+    "type": "training", "npcs": ["sam_warrior"],
+    "shop": false, "rest": false, "arrival_scene": null, "unlock_condition": null
+  },
+  {
+    "id": "cozinha_campo", "region": "acampamento_base", "name": "Cozinha do Campo",
+    "description": "Onde as racoes sao preparadas.",
+    "type": "rest", "npcs": ["farid_cook"],
+    "shop": false, "rest": true, "arrival_scene": null, "unlock_condition": null
+  },
+  {
+    "id": "posto_vigia", "region": "acampamento_base", "name": "Posto de Vigia",
+    "description": "Ponto elevado para vigiar a regiao.",
+    "type": "exploration", "npcs": [],
+    "shop": false, "rest": false, "arrival_scene": null, "unlock_condition": null
+  },
+  {
+    "id": "muralhas_kashan", "region": "kashan", "name": "Muralhas de Kashan",
+    "description": "As imponentes muralhas da fortaleza.",
+    "type": "exploration", "npcs": ["bahram_turan"],
+    "shop": false, "rest": false, "arrival_scene": null, "unlock_condition": null
+  },
+  {
+    "id": "salao_lord", "region": "kashan", "name": "Salao do Lord",
+    "description": "O salao principal de Lord Hodir.",
+    "type": "dialogue", "npcs": ["hodir_lord"],
+    "shop": false, "rest": false, "arrival_scene": null, "unlock_condition": null
+  },
+  {
+    "id": "ferreiro_kashan", "region": "kashan", "name": "Ferreiro de Kashan",
+    "description": "Ferreiro militar com armas de qualidade.",
+    "type": "shop", "npcs": ["kaveh_blacksmith"],
+    "shop": true, "rest": false, "arrival_scene": null, "unlock_condition": null
+  },
+  {
+    "id": "palacio_real", "region": "ecbatana", "name": "Palacio Real",
+    "description": "O trono de Pars. Agora nas maos dos lusitanos.",
+    "type": "quest", "npcs": [],
+    "shop": false, "rest": false, "arrival_scene": null, "unlock_condition": "act4_started"
+  },
+  {
+    "id": "mercado_ecbatana", "region": "ecbatana", "name": "Grande Mercado",
+    "description": "O maior mercado de Pars. Agora sob controle lusitano.",
+    "type": "shop", "npcs": ["ishtar_dancer"],
+    "shop": true, "rest": false, "arrival_scene": null, "unlock_condition": "act4_started"
+  },
+  {
+    "id": "templo_mithra", "region": "ecbatana", "name": "Templo de Mithra",
+    "description": "O principal templo do deus Mithra.",
+    "type": "dialogue", "npcs": ["azrael_priest"],
+    "shop": false, "rest": false, "arrival_scene": null, "unlock_condition": null
+  },
+  {
+    "id": "palacio_sindhura", "region": "sindhura", "name": "Palacio de Sindhura",
+    "description": "O grandioso palacio do reino vizinho.",
+    "type": "dialogue", "npcs": [],
+    "shop": false, "rest": false, "arrival_scene": null, "unlock_condition": null
+  },
+  {
+    "id": "mercado_sindhura", "region": "sindhura", "name": "Mercado de Sindhura",
+    "description": "Mercado exotico com itens raros.",
+    "type": "shop", "npcs": ["shapur_merchant"],
+    "shop": true, "rest": false, "arrival_scene": null, "unlock_condition": null
+  },
+  {
+    "id": "arena_sindhura", "region": "sindhura", "name": "Arena de Sindhura",
+    "description": "Arena de combate para provar seu valor.",
+    "type": "combat", "npcs": [],
+    "shop": false, "rest": false, "arrival_scene": null, "unlock_condition": null
+  }
 ]

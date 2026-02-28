@@ -22,11 +22,11 @@ export const GAME_PHASES = {
 };
 
 export const FACTION_THRESHOLDS = [
-  { min: -100, max: -50, label: 'Hostil', color: 'var(--hp-red)' },
-  { min: -49, max: 0, label: 'Frio', color: 'var(--condition-stun)' },
-  { min: 1, max: 49, label: 'Cauteloso', color: 'var(--text-muted)' },
-  { min: 50, max: 79, label: 'Respeitoso', color: 'var(--gold)' },
-  { min: 80, max: 100, label: 'Aliado', color: 'var(--hp-green)' },
+  { min: -100, max: -50, label: 'Hostil',     color: 'var(--hp-red)',    effect: 'Atacam acampamentos. Inimigos ativos.' },
+  { min: -49,  max: 0,   label: 'Frio',       color: 'var(--condition-stun)', effect: 'Neutros. Nao prestam ajuda.' },
+  { min: 1,    max: 49,  label: 'Cauteloso',  color: 'var(--text-muted)', effect: 'Cooperam sob pressao.' },
+  { min: 50,   max: 79,  label: 'Respeitoso', color: 'var(--gold)',       effect: 'Enviam soldados quando solicitado.' },
+  { min: 80,   max: 100, label: 'Aliado',     color: 'var(--hp-green)',   effect: 'Lealdade total. Tropas e recursos disponiveis.' },
 ];
 
 export const PA_COSTS = {

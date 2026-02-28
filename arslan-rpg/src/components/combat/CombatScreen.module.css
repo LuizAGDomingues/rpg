@@ -212,7 +212,185 @@
   margin-bottom: var(--spacing-xs, 4px);
 }
 
+/* ----- Skill Menu ----- */
+
+.skillMenu {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.skillMenu h4 {
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  color: var(--gold-light);
+  margin-bottom: var(--spacing-xs, 4px);
+}
+
+.skillItem {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: border-color 0.2s;
+}
+
+.skillItem:hover:not(:disabled) {
+  border-color: var(--border-gold);
+}
+
+.skillItem:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.skillDisabled {
+  opacity: 0.5;
+}
+
+.skillName {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  color: var(--gold);
+}
+
+.skillDesc {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.skillCooldown {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  color: var(--crimson-light);
+  text-transform: uppercase;
+}
+
+.legendarySkill {
+  border-color: var(--gold-dark);
+  background: linear-gradient(135deg, var(--bg-card), rgba(201, 168, 76, 0.08));
+}
+
+.legendarySkill .skillName {
+  color: var(--gold-light);
+  text-shadow: 0 0 8px rgba(201, 168, 76, 0.3);
+}
+
+/* ----- Targeting ----- */
+
+.targetingPrompt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: rgba(52, 152, 219, 0.12);
+  border: 1px solid rgba(52, 152, 219, 0.3);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-md);
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  color: var(--text-light);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.targetingPrompt strong {
+  color: var(--gold);
+}
+
+.validTarget {
+  border-color: rgba(52, 152, 219, 0.6) !important;
+  box-shadow: 0 0 12px rgba(52, 152, 219, 0.3);
+  cursor: pointer !important;
+  animation: targetPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes targetPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(52, 152, 219, 0.2); }
+  50% { box-shadow: 0 0 16px rgba(52, 152, 219, 0.45); }
+}
+
+/* ----- Status Badges ----- */
+
+.statusBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: var(--spacing-xs, 4px);
+}
+
+.statusBadge {
+  font-size: 0.7rem;
+  padding: 1px 4px;
+  background: rgba(201, 168, 76, 0.12);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: default;
+}
+
+.statusBadgeEnemy {
+  background: rgba(192, 57, 43, 0.12);
+}
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+/* ----- Damage Flash ----- */
+
+@keyframes damageFlash {
+  0%   { background: rgba(183, 28, 28, 0.55); }
+  60%  { background: rgba(183, 28, 28, 0.2); }
+  100% { background: transparent; }
+}
+
+.damagedCard {
+  animation: damageFlash 0.45s ease-out;
+}
+
+/* ----- Mid-Combat Dramatic Event ----- */
+
+.midCombatEvent {
+  background: rgba(10, 8, 5, 0.92);
+  border: 1px solid var(--gold);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  margin: var(--spacing-md) 0;
+  animation: fadeIn 0.4s ease-out;
+  box-shadow: 0 0 24px rgba(201, 168, 76, 0.2);
+}
+
+.midCombatEventText p {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-light);
+  line-height: 1.65;
+  font-style: italic;
+  margin-bottom: var(--spacing-sm);
+}
+
+.midCombatEventText p:last-child {
+  margin-bottom: var(--spacing-md);
+}
+
+.midCombatChoices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  margin-top: var(--spacing-md);
 }

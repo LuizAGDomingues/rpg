@@ -1,0 +1,68 @@
+{
+  "id": "rania_dialogue",
+  "npc": "rania_healer",
+  "nodes": [
+    {
+      "id": "start",
+      "text": "Principe Arslan! Como esta? Precisa de cuidados?",
+      "mood_check": true,
+      "branches": {
+        "friendly": { "text": "Principe Arslan! Como esta? Precisa de cuidados?" },
+        "neutral": { "text": "O que precisa?" }
+      },
+      "options": [
+        { "id": "buy", "text": "Quero ver seus remedios.", "leads_to": "shop" },
+        { "id": "ask_past", "text": "Como voce aprendeu medicina?", "leads_to": "rania_past" },
+        { "id": "ask_herbs", "text": "Precisa de ajuda com algo?", "leads_to": "rania_quest_check" },
+        { "id": "exit", "text": "Nada por enquanto. Obrigado.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "rania_past",
+      "text": "Meu antigo dono era um medico persa. Enquanto ele me tratava como propriedade, eu memorizava cada erva, cada tecnica. Quando o principe libertou minha aldeia... finalmente pude usar o que aprendi para ajudar os meus.",
+      "options": [
+        { "id": "admire", "text": "Voce transformou sofrimento em conhecimento. Isso e admiravel.", "leads_to": "rania_touched", "faction_effect": { "escravos_libertos": 3 } },
+        { "id": "pragmatic", "text": "Precisamos de curandeiros. Voce e essencial aqui.", "leads_to": "rania_pragmatic" },
+        { "id": "back", "text": "Voltar.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "rania_touched",
+      "text": "Obrigada, principe. Poucas pessoas veem alem da escravidao. Se precisar de qualquer coisa, estarei aqui.",
+      "set_flags": { "helped_rania_healer": true },
+      "options": [
+        { "id": "exit", "text": "Obrigado, Rania.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "rania_pragmatic",
+      "text": "Essencial? Sim. Mas gostaria de ser vista como mais do que util. De qualquer forma... obrigada.",
+      "options": [
+        { "id": "exit", "text": "Ate mais.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "rania_quest_check",
+      "text": "Na verdade, sim. Minhas reservas de ervas medicinais estao acabando. Preciso de raiz-de-sol e folha-lunar, que so crescem na Floresta ao Sul. Mas e perigoso ir sozinha.",
+      "options": [
+        { "id": "accept", "text": "Eu consigo as ervas para voce.", "leads_to": "rania_quest_accepted", "start_quest": { "id": "sq_rania_herbs", "name": "Ervas Medicinais", "description": "Coletar raiz-de-sol e folha-lunar na Floresta ao Sul para Rania.", "objectives": [{ "id": "obj_raiz_sol", "text": "Encontrar raiz-de-sol" }, { "id": "obj_folha_lunar", "text": "Encontrar folha-lunar" }], "rewards": { "xp": 60, "gold": 0 } } },
+        { "id": "decline", "text": "Nao posso agora.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "rania_quest_accepted",
+      "text": "Obrigada! Tenha cuidado na floresta. Dizem que ha lobos por la.",
+      "options": [
+        { "id": "exit", "text": "Voltarei com as ervas.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "shop",
+      "text": "Aqui esta o que tenho. Nao e muito, mas cada frasco pode salvar uma vida.",
+      "is_shop": true,
+      "options": [
+        { "id": "back", "text": "Voltar.", "leads_to": "start" }
+      ]
+    }
+  ]
+}

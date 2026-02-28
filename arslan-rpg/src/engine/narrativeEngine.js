@@ -37,6 +37,10 @@ export const processChoice = (choice, gameState, store) => {
     });
   }
 
+  if (choice.character_score) {
+    store.updateCharacterScore(choice.character_score);
+  }
+
   if (choice.set_flags) {
     Object.entries(choice.set_flags).forEach(([flag, value]) => {
       store.setNarrativeFlag(flag, value);
@@ -73,6 +77,16 @@ export const processChoice = (choice, gameState, store) => {
     Object.entries(choice.set_world_flags).forEach(([flag, value]) => {
       store.setWorldFlag(flag, value);
     });
+  }
+
+  // Single flag shorthand used in dramatic dialogues
+  if (choice.set_flag) {
+    store.setNarrativeFlag(choice.set_flag, true);
+  }
+
+  // Single world flag shorthand
+  if (choice.world_flag) {
+    store.setWorldFlag(choice.world_flag, true);
   }
 
   if (choice.xp_reward) {

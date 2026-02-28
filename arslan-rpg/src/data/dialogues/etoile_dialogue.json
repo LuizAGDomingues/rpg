@@ -1,0 +1,118 @@
+{
+  "id": "etoile_dialogue",
+  "npc": "etoile",
+  "unlock_condition": "act4_started",
+  "nodes": [
+    {
+      "id": "start",
+      "text": "\"Principe Arslan. Eu me chamo Etoile. Sou soldada de Yaldabaoth — e nao vim lutar.\" Ela esta sozinha, sem capacete — gesto deliberado. \"Vim perguntar se voce quer evitar que mais gente morra.\"",
+      "options": [
+        {
+          "id": "open",
+          "text": "\"Estou ouvindo.\"",
+          "character_score": 3,
+          "leads_to": "etoile_explain"
+        },
+        {
+          "id": "hostile",
+          "text": "\"Lusitanos mataram meu povo. Nao tenho nada para conversar.\"",
+          "character_score": -5,
+          "leads_to": "etoile_rejected"
+        },
+        {
+          "id": "ask_faith",
+          "text": "\"Voce acredita em Yaldabaoth. Como concilia com o que ve?\"",
+          "character_score": 5,
+          "leads_to": "etoile_faith"
+        }
+      ]
+    },
+    {
+      "id": "etoile_explain",
+      "text": "\"Ha soldados em Ecbatana que estao la porque foram ordenados. Que nao escolheram esta guerra.\" Ela te olha. \"Nao sao todos Silvermask.\"",
+      "options": [
+        {
+          "id": "distinguish",
+          "text": "\"Ha diferenca entre quem obedeceu e quem queimou aldeias. Estou ouvindo essa diferenca.\"",
+          "character_score": 8,
+          "set_flag": "etoile_intel",
+          "leads_to": "etoile_alliance_offer"
+        },
+        {
+          "id": "skeptical",
+          "text": "\"Como sei que isso nao e armadilha?\"",
+          "leads_to": "etoile_skeptical"
+        }
+      ]
+    },
+    {
+      "id": "etoile_skeptical",
+      "text": "\"Nao sabe.\" Direto. \"Vim sozinha, sem armadura completa, ate um exercito inimigo. Isso e tudo que tenho.\" Uma pausa. \"Se for armadilha, e a pior da historia.\"",
+      "options": [
+        {
+          "id": "concede",
+          "text": "\"Ponto.\" Ouvir a oferta.",
+          "leads_to": "etoile_alliance_offer"
+        }
+      ]
+    },
+    {
+      "id": "etoile_faith",
+      "text": "Longa pausa. \"Yaldabaoth proibe escravatura. Foi o que me fez acreditar.\" Ela olha para o horizonte. \"Tem homens usando meu deus para justificar coisas que ele jamais ordenaria.\" Uma pausa. \"E eu demorei para enxergar isso.\"",
+      "options": [
+        {
+          "id": "go_on",
+          "text": "\"Isso deve ter custado caro.\"",
+          "leads_to": "etoile_alliance_offer"
+        }
+      ]
+    },
+    {
+      "id": "etoile_alliance_offer",
+      "text": "\"Se voce garantir que soldados que pousarem armas serao prisioneiros de guerra — nao executados — eu consigo que um terco da guarnicao nao lute.\"",
+      "options": [
+        {
+          "id": "accept",
+          "text": "\"Tenho minha palavra. Prisioneiros serao tratados com dignidade.\"",
+          "character_score": 10,
+          "set_flag": "lusitano_pows_protected",
+          "faction_effects": { "lusitanos_moderados": 30 },
+          "leads_to": "etoile_accepted"
+        },
+        {
+          "id": "cant_promise",
+          "text": "\"Nao consigo controlar o calor da batalha.\"",
+          "character_score": -3,
+          "set_flag": "etoile_partial_alliance",
+          "leads_to": "etoile_partial"
+        }
+      ]
+    },
+    {
+      "id": "etoile_accepted",
+      "text": "Ela fecha os olhos por um segundo. \"Obrigada.\" Sem mais. Ela coloca o capacete e se vira para partir. Na porta, para. \"Arslan.\" Sem titulo. \"Seja o que voce parece ser.\"",
+      "options": [
+        { "id": "exit", "text": "Deixa-la partir.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "etoile_partial",
+      "text": "\"Entendo.\" A oferta e menor. \"Mas ha uma unidade no portao leste que vai pousar as armas de qualquer jeito. Nao por acordo — por convicao propria.\" Ela parte.",
+      "options": [
+        { "id": "exit", "text": "Continuar.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "etoile_rejected",
+      "text": "\"Eu entendo.\" Ela coloca o capacete. \"Sinto pelo que meu povo fez. E sinto por esta conversa nao ter acontecido.\" Ela sai. A oportunidade passou.",
+      "options": [
+        { "id": "exit", "text": "Observa-la partir.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "exit",
+      "text": "",
+      "options": []
+    }
+  ]
+}

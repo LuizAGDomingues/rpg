@@ -24,3 +24,21 @@
     flex-direction: column;
     gap: var(--spacing-sm);
 }
+
+.progressRow {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 2px var(--spacing-sm) var(--spacing-xs);
+}
+
+.progressRow > *:first-child {
+    flex: 1;
+}
+
+.progressPct {
+    font-size: 0.75rem;
+    color: var(--gold);
+    font-family: var(--font-heading);
+    white-space: nowrap;
+}

@@ -1,0 +1,81 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  background: var(--bg-card);
+  border: 1px solid rgba(201, 168, 76, 0.15);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  width: 100%;
+  font-family: inherit;
+  color: inherit;
+}
+
+.card:hover:not(:disabled) {
+  border-color: var(--gold);
+  background: rgba(201, 168, 76, 0.05);
+}
+
+.card:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.current {
+  border-color: var(--gold);
+  background: rgba(201, 168, 76, 0.08);
+}
+
+.visited {
+  border-left: 3px solid var(--gold-dark);
+}
+
+.locked {
+  border-color: rgba(183, 28, 28, 0.3);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.name {
+  font-family: var(--font-heading);
+  color: var(--gold-light);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.icons {
+  display: flex;
+  gap: 4px;
+  font-size: 0.8rem;
+}
+
+.desc {
+  font-family: var(--font-body);
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.badge {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.lockBadge {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  color: var(--hp-red);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}

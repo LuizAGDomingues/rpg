@@ -1,0 +1,88 @@
+{
+  "id": "kaveh_dialogue",
+  "npc": "kaveh_blacksmith",
+  "nodes": [
+    {
+      "id": "start",
+      "text": "Nao atendo qualquer um. O que voce quer, rapaz?",
+      "mood_check": true,
+      "branches": {
+        "hostile": { "text": "Principe ou nao, nao tenho nada para voce. Saia." },
+        "suspicious": { "text": "Nao atendo qualquer um. O que voce quer, rapaz?" },
+        "friendly": { "text": "Ah, o Principe. Que posso fazer por voce hoje?" }
+      },
+      "options": [
+        { "id": "buy", "text": "Quero ver suas mercadorias.", "leads_to": "shop" },
+        { "id": "ask_atropatene", "text": "Voce perdeu alguem em Atropatene?", "leads_to": "kaveh_grief" },
+        { "id": "ask_quest", "text": "Preciso de uma arma especial. Tem como fazer uma?", "leads_to": "kaveh_commission", "condition": "level >= 3" },
+        { "id": "persuade", "text": "[CAR 12] Ouvi dizer que voce conhece tudo que acontece em Kashan.", "leads_to": "kaveh_info", "condition": "CAR >= 12", "roll": { "attribute": "CAR", "dc": 12 } },
+        { "id": "exit", "text": "Ate mais.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "kaveh_grief",
+      "text": "Meu filho. Fardad. Tinha 19 anos quando marchou para Atropatene. Nao voltou. Nenhum dos meninos de Kashan voltou.",
+      "options": [
+        { "id": "condolences", "text": "Sinto muito. Prometo que a morte de Fardad nao sera esquecida.", "leads_to": "kaveh_softened", "faction_effect": { "nobreza_pars": 3 } },
+        { "id": "ask_quest_son", "text": "Posso tentar descobrir o que aconteceu com ele.", "leads_to": "kaveh_quest_offer" },
+        { "id": "back", "text": "Voltar.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "kaveh_quest_offer",
+      "text": "Voce... faria isso? No campo de Atropatene, ha uma placa de identificacao que Fardad usava. Era de bronze com o emblema da nossa familia. Se puder trazer...",
+      "options": [
+        { "id": "accept_quest", "text": "Trarei a placa de Fardad.", "leads_to": "quest_accepted", "start_quest": { "id": "sq_kaveh_son", "name": "A Placa de Fardad", "description": "Encontrar a placa de identificacao de Fardad no campo de Atropatene.", "objectives": [{ "id": "obj_find_plate", "text": "Encontrar a placa de bronze no campo de batalha" }], "rewards": { "xp": 80, "gold": 30 } } },
+        { "id": "decline", "text": "Nao posso prometer isso agora.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "quest_accepted",
+      "text": "Obrigado, principe. Se trouxer a placa... terei uma espada digna esperando por voce. A melhor que ja fiz.",
+      "options": [
+        { "id": "exit", "text": "Voltarei com a placa.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "kaveh_softened",
+      "text": "Hm. Um principe que escuta. Raro. O que voce precisar da minha forja, principe, tera desconto.",
+      "set_flags": { "kaveh_softened": true },
+      "options": [
+        { "id": "buy_discount", "text": "Obrigado, Kaveh. Ver suas mercadorias.", "leads_to": "shop" },
+        { "id": "exit", "text": "Obrigado.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "kaveh_commission",
+      "text": "Uma arma especial, eh? Posso forjar uma lamina de aco de Kashan. Mas preciso de 50 de ouro e materiais raros. Traz o aco e eu faco o trabalho.",
+      "options": [
+        { "id": "accept", "text": "Feito. Conseguirei os materiais.", "leads_to": "start", "set_flags": { "kaveh_commission_accepted": true } },
+        { "id": "back", "text": "Vou pensar.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "kaveh_info",
+      "text": "Hm. Voce tem bons olhos, principe. Sim, eu ouco muita coisa nesta forja. Dizem que ha um espiao lusitano em Kashan — alguem na corte de Hodir.",
+      "options": [
+        { "id": "ask_more", "text": "Conte mais.", "leads_to": "kaveh_spy_detail" },
+        { "id": "thanks", "text": "Vou investigar isso.", "leads_to": "exit", "set_flags": { "kaveh_spy_hint": true } }
+      ]
+    },
+    {
+      "id": "kaveh_spy_detail",
+      "text": "Nao sei quem e. Mas quando ouco cochichar perto da minha porta a noite... as vozes falam lusitano. E vem da direcao do salao do Lord.",
+      "set_flags": { "kaveh_spy_hint": true },
+      "options": [
+        { "id": "exit", "text": "Muito util. Obrigado, Kaveh.", "leads_to": "exit", "faction_effect": { "nobreza_pars": 2 } }
+      ]
+    },
+    {
+      "id": "shop",
+      "text": "Veja o que tenho. Tudo feito a mao.",
+      "is_shop": true,
+      "options": [
+        { "id": "back", "text": "Voltar.", "leads_to": "start" }
+      ]
+    }
+  ]
+}

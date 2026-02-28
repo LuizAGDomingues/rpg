@@ -7,6 +7,7 @@ import { OrnamentDivider } from '../components/ui/Ornament';
 import warriorData from '../data/classes/warrior.json';
 import diplomatData from '../data/classes/diplomat.json';
 import strategistData from '../data/classes/strategist.json';
+import { getSkillById } from '../engine/skillEngine';
 import daryunData from '../data/characters/daryun.json';
 import styles from './ClassSelectScreen.module.css';
 
@@ -101,9 +102,16 @@ export default function ClassSelectScreen() {
             <div className={styles.skillsSection}>
               <span className={styles.skillsLabel}>Habilidades Iniciais:</span>
               <ul className={styles.skillsList}>
-                {cls.starting_skills.map((skill) => (
-                  <li key={skill}>{skill}</li>
-                ))}
+                {cls.starting_skills.map((skillId) => {
+                  const skill = getSkillById(skillId);
+                  if (!skill) return <li key={skillId}>{skillId}</li>;
+                  return (
+                    <li key={skillId} className={styles.skillCard}>
+                      <span className={styles.skillCardName}>{skill.name} <span className={styles.skillCardPA}>({skill.pa_cost} PA)</span></span>
+                      <span className={styles.skillCardDesc}>{skill.description}</span>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
 

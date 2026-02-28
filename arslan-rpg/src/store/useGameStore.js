@@ -13,6 +13,7 @@ const useGameStore = create(
         attributes: {}, hp: 0, hp_max: 0, pa: 3, ca: 10,
         equipment: { weapon: null, armor: null, shield: null },
         skills: [], legendary_skills: [], status_effects: [],
+        character_score: 0,
       },
 
       party: [],
@@ -23,7 +24,7 @@ const useGameStore = create(
         turan: -10, escravos_libertos: 0, clero_mithra: 30,
       },
 
-      inventory: { gold: 50, items: [], key_items: [] },
+      inventory: { gold: 50, items: [], key_items: [], rations: 3 },
       quests: { active: [], completed: [], failed: [] },
 
       world: {
@@ -64,6 +65,13 @@ const useGameStore = create(
         player: { ...state.player, skills: [...state.player.skills, skill] },
       })),
 
+      addLegendarySkill: (data) => set((state) => ({
+        player: {
+          ...state.player,
+          legendary_skills: [...state.player.legendary_skills, { character: data.character, skillId: data.skillId }],
+        },
+      })),
+
       levelUpAttribute: (attr) => set((state) => ({
         player: { ...state.player, attributes: { ...state.player.attributes, [attr]: state.player.attributes[attr] + 1 } },
       })),
@@ -100,12 +108,65 @@ const useGameStore = create(
         inventory: { ...state.inventory, gold: state.inventory.gold + amount },
       })),
 
+      addRations: (n) => set((state) => ({
+        inventory: { ...state.inventory, rations: Math.max(0, (state.inventory.rations || 0) + n) },
+      })),
+
+      useRation: () => set((state) => ({
+        inventory: { ...state.inventory, rations: Math.max(0, (state.inventory.rations || 0) - 1) },
+      })),
+
+      // --- Save slots ---
+      saveToSlot: (slot) => {
+        const state = get();
+        const saveData = {
+          timestamp: Date.now(),
+          currentAct: state.currentAct,
+          currentScene: state.currentScene,
+          player: state.player,
+          recruited_generals: state.recruited_generals,
+          factions: state.factions,
+          inventory: state.inventory,
+          quests: state.quests,
+          world: state.world,
+          narrative: state.narrative,
+        };
+        localStorage.setItem(`arslan-save-${slot}`, JSON.stringify(saveData));
+      },
+
+      loadFromSlot: (slot) => {
+        const raw = localStorage.getItem(`arslan-save-${slot}`);
+        if (!raw) return false;
+        try {
+          const data = JSON.parse(raw);
+          set({ ...data, gamePhase: 'playing', combat: null, dialogue: null });
+          return true;
+        } catch { return false; }
+      },
+
+      getSaveInfo: () => {
+        const slots = {};
+        ['auto', '1', '2', '3'].forEach((slot) => {
+          const raw = localStorage.getItem(`arslan-save-${slot}`);
+          if (raw) {
+            try {
+              const d = JSON.parse(raw);
+              slots[slot] = { timestamp: d.timestamp, act: d.currentAct, playerLevel: d.player?.level };
+            } catch { /* skip */ }
+          }
+        });
+        return slots;
+      },
+
       startCombat: (combatData) => set({ combat: combatData, gamePhase: 'combat' }),
       endCombat: () => set({ combat: null, gamePhase: 'playing' }),
       updateCombat: (updates) => set((state) => ({ combat: state.combat ? { ...state.combat, ...updates } : null })),
 
       startDialogue: (dialogueData) => set({ dialogue: dialogueData, gamePhase: 'dialogue' }),
       endDialogue: () => set({ dialogue: null, gamePhase: 'playing' }),
+      updateDialogueNode: (nodeId) => set((state) => ({
+        dialogue: state.dialogue ? { ...state.dialogue, currentNodeId: nodeId } : null,
+      })),
 
       addNarrativeLog: (paragraph) => set((state) => ({
         narrative: { ...state.narrative, log: [...state.narrative.log, paragraph] },
@@ -131,6 +192,13 @@ const useGameStore = create(
 
       setCurrentLocation: (locationId) => set((state) => ({
         world: { ...state.world, current_location: locationId, visited_locations: state.world.visited_locations.includes(locationId) ? state.world.visited_locations : [...state.world.visited_locations, locationId] },
+      })),
+
+      updateCharacterScore: (delta) => set((state) => ({
+        player: {
+          ...state.player,
+          character_score: Math.max(-100, Math.min(100, (state.player.character_score || 0) + delta)),
+        },
       })),
 
       addXP: (amount) => set((state) => {
@@ -161,10 +229,10 @@ const useGameStore = create(
 
       resetGame: () => set({
         gamePhase: 'title', currentAct: 1, currentScene: 'prologue_start',
-        player: { class: null, name: 'Arslan', level: 1, xp: 0, xp_next: 100, attributes: {}, hp: 0, hp_max: 0, pa: 3, ca: 10, equipment: { weapon: null, armor: null, shield: null }, skills: [], legendary_skills: [], status_effects: [] },
+        player: { class: null, name: 'Arslan', level: 1, xp: 0, xp_next: 100, attributes: {}, hp: 0, hp_max: 0, pa: 3, ca: 10, equipment: { weapon: null, armor: null, shield: null }, skills: [], legendary_skills: [], status_effects: [], character_score: 0 },
         party: [], recruited_generals: [],
         factions: { nobreza_pars: 20, lusitanos_moderados: -60, sindhura: 0, turan: -10, escravos_libertos: 0, clero_mithra: 30 },
-        inventory: { gold: 50, items: [], key_items: [] },
+        inventory: { gold: 50, items: [], key_items: [], rations: 3 },
         quests: { active: [], completed: [], failed: [] },
         world: { current_region: 'atropatene', current_location: null, unlocked_regions: ['atropatene'], visited_locations: [], world_flags: {} },
         narrative: { log: [], flags: {}, choices_made: [] },

@@ -1,0 +1,71 @@
+[
+  {
+    "id": "reaction_low_character",
+    "trigger_condition": "character_score <= -30",
+    "effects": [
+      {
+        "location": "acampamento_base",
+        "scene_change": "O acampamento esta mais quieto. Menos pessoas te olham nos olhos.",
+        "faction_modifier": { "escravos_libertos": -10 }
+      },
+      {
+        "npc": "daria_slave",
+        "dialogue_change": "Daria faz o que voce pede. Nao oferece mais sugestoes."
+      },
+      {
+        "troop_recruitment": "Escravos libertos e refugiados param de se voluntariar. Recrutamento cai 40%.",
+        "world_flag": "reputation_feared"
+      }
+    ]
+  },
+  {
+    "id": "reaction_very_negative",
+    "trigger_condition": "character_score <= -60",
+    "effects": [
+      {
+        "scene_injection": "act4_march",
+        "text": "Na marcha para Ecbatana, o canto das tropas que virou ritual parou. Os soldados marcham em silencio.",
+        "note": "Pequeno detalhe. Sem fanfarra. O jogador sente se estiver prestando atencao."
+      },
+      {
+        "npc": "narsus",
+        "dialogue_change": "Narsus ainda oferece estrategias. Parou de discutir filosofia. E eficiente e distante.",
+        "world_flag": "narsus_disillusioned"
+      },
+      {
+        "npc": "etoile_lusitana",
+        "dialogue_change": "Etoile nao aparece na fronteira. O mensageiro diz que ela 'reconsiderou'.",
+        "note": "Etoile so aparece se Arslan demonstrou ser diferente dos outros conquistadores."
+      }
+    ]
+  },
+  {
+    "id": "reaction_high_character",
+    "trigger_condition": "character_score >= 40",
+    "effects": [
+      {
+        "scene_injection": "travel_any",
+        "probability": 0.2,
+        "text": "Na beira da estrada, um grupo de criancas para e olha a coluna passar. Uma delas acena.",
+        "note": "Momentos de esperanca que aparecem organicamente, sem anuncio."
+      },
+      {
+        "troop_recruitment": "Refugiados se voluntariam sem que Arslan precise pedir. +50 soldados.",
+        "world_flag": "reputation_beloved"
+      }
+    ]
+  },
+  {
+    "id": "reaction_very_high_character",
+    "trigger_condition": "character_score >= 70",
+    "effects": [
+      {
+        "scene_injection": "act4_ecbatana_walls",
+        "text": "Quando o exercito de Arslan chega as muralhas, um sino comeca a soar de dentro. Depois outro. Depois mais.",
+        "text_2": "Nao e alarme. E o sino do Templo de Mithra — o mesmo que os Lusitanos proibiram tocar.",
+        "text_3": "Alguem dentro da cidade esta abrindo os portoes por dentro.",
+        "gameplay_effect": "Batalha de Ecbatana: -2 inimigos iniciais. Portao abre automaticamente no turno 3."
+      }
+    ]
+  }
+]

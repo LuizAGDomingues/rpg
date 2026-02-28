@@ -116,94 +116,7 @@
         {
           "id": "fight_kharlan",
           "text": "Por Pars e por justica — enfrentar Kharlan!",
-          "next_scene": "march_to_ecbatana",
-          "start_combat": {
-            "id": "kharlan_boss",
-            "name": "Confronto com Kharlan, o Traidor",
-            "enemies": [
-              {
-                "id": "kharlan",
-                "name": "General Kharlan",
-                "hp": 80,
-                "ca": 18,
-                "pa": 4,
-                "attributes": {
-                  "FOR": 17,
-                  "DES": 14,
-                  "CON": 16,
-                  "INT": 13,
-                  "SAB": 12,
-                  "CAR": 14
-                },
-                "weapon": {
-                  "name": "Lanca do Traidor",
-                  "damage": "1d10+4",
-                  "bonus_atk": 3
-                },
-                "on_hit_effect": {
-                  "name": "bleed",
-                  "label": "Sangramento",
-                  "duration": 3
-                },
-                "on_hit_chance": 0.3,
-                "xp": 200,
-                "gold": 30,
-                "ai": "aggressive_simple"
-              },
-              {
-                "id": "kharlan_guard",
-                "name": "Guarda de Kharlan",
-                "hp": 20,
-                "ca": 15,
-                "pa": 2,
-                "attributes": {
-                  "FOR": 14,
-                  "DES": 12,
-                  "CON": 14,
-                  "INT": 10,
-                  "SAB": 10,
-                  "CAR": 10
-                },
-                "weapon": {
-                  "name": "Espada Longa",
-                  "damage": "1d8+2"
-                },
-                "xp": 30,
-                "gold": 5,
-                "ai": "aggressive_simple"
-              },
-              {
-                "id": "kharlan_guard",
-                "name": "Guarda de Kharlan",
-                "hp": 20,
-                "ca": 15,
-                "pa": 2,
-                "attributes": {
-                  "FOR": 14,
-                  "DES": 12,
-                  "CON": 14,
-                  "INT": 10,
-                  "SAB": 10,
-                  "CAR": 10
-                },
-                "weapon": {
-                  "name": "Espada Longa",
-                  "damage": "1d8+2"
-                },
-                "xp": 30,
-                "gold": 5,
-                "ai": "aggressive_simple"
-              }
-            ],
-            "xp_reward": 400,
-            "gold_reward": "6d6"
-          },
-          "set_flags": {
-            "kharlan_defeated": true
-          },
-          "faction_effects": {
-            "nobreza_pars": 15
-          }
+          "next_scene": "kharlan_confrontation"
         }
       ]
     },
@@ -223,7 +136,7 @@
         {
           "id": "begin_battle",
           "text": "Pela gloria de Pars — AVANCAR!",
-          "next_scene": "wall_battle",
+          "next_scene": "etoile_encounter",
           "set_flags": {
             "final_battle_begun": true
           }
@@ -330,7 +243,7 @@
         {
           "id": "face_silvermask",
           "text": "Eu aceito seu desafio, Silvermask!",
-          "next_scene": "silvermask_fight"
+          "next_scene": "silvermask_confrontation"
         }
       ]
     },
@@ -381,7 +294,30 @@
                 "ai": "tactical_boss"
               }
             ],
-            "xp_reward": 500
+            "xp_reward": 500,
+            "mid_combat_events": [
+              {
+                "id": "mask_cracks",
+                "trigger": "boss_hp_pct_65",
+                "triggered": false,
+                "text": "A mascara racha. Nao cai — mas pela primeira vez voce ve a pele embaixo. A cicatriz na tempora.",
+                "text_2": "Hermes nao para. Mas ele sabe que voce viu."
+              },
+              {
+                "id": "hermes_voice_breaks",
+                "trigger": "boss_hp_pct_45",
+                "triggered": false,
+                "text": "\"Voce luta diferente do que esperava.\" A voz de Hermes, pela primeira vez, nao e fria.",
+                "text_2": "\"Andragoras nunca me ensinou a lutar. Tive que aprender sozinho.\" Ele ataca. \"Com o que sobrou.\""
+              },
+              {
+                "id": "mask_falls",
+                "trigger": "boss_hp_pct_20",
+                "triggered": false,
+                "text": "A mascara finalmente cai. O rosto embaixo e jovem. Mais jovem do que a voz deixava entender.",
+                "text_2": "Cheio de cicatrizes — nao de batalha. Antigas. Anteriores. O jogador ve Hermes como pessoa pela primeira vez."
+              }
+            ]
           }
         }
       ]
@@ -453,7 +389,8 @@
         {
           "id": "show_mercy",
           "text": "Poupe-o. Ja houve derramamento de sangue demais.",
-          "next_scene": "epilogue",
+          "next_scene": "tahamine_encounter_scene",
+          "character_score": 10,
           "faction_effects": {
             "escravos_libertos": 10,
             "clero_mithra": 10,
@@ -463,12 +400,14 @@
             "spared_silvermask": true,
             "merciful_king": true
           },
+          "world_flag": "hermes_spared",
           "xp_reward": 300
         },
         {
           "id": "demand_justice",
           "text": "Voce causou sofrimento demais. A justica deve ser feita.",
-          "next_scene": "epilogue",
+          "next_scene": "tahamine_encounter_scene",
+          "character_score": -5,
           "faction_effects": {
             "nobreza_pars": 15,
             "escravos_libertos": -5
@@ -477,13 +416,15 @@
             "punished_silvermask": true,
             "just_king": true
           },
+          "world_flag": "hermes_executed",
           "xp_reward": 300
         },
         {
           "id": "offer_redemption",
           "text": "Pars precisa de cura, nao de vinganca. Junte-se a mim para reconstruir.",
-          "next_scene": "epilogue",
-          "condition": "CAR >= 16",
+          "next_scene": "tahamine_encounter_scene",
+          "condition": "CAR >= 16 AND character_score >= 20",
+          "character_score": 15,
           "faction_effects": {
             "nobreza_pars": 5,
             "escravos_libertos": 15,
@@ -493,6 +434,7 @@
             "redeemed_silvermask": true,
             "wise_king": true
           },
+          "world_flag": "hermes_redemption_path",
           "xp_reward": 500
         }
       ]
@@ -511,7 +453,331 @@
         "E assim termina a lenda do Principe Heroico de Pars.",
         "FIM"
       ],
-      "choices": []
+      "choices": [
+        {
+          "id": "to_epilogue",
+          "text": "Continuar...",
+          "next_scene": "epilogue_dynamic",
+          "set_act": 5
+        }
+      ]
+    },
+    {
+      "id": "kharlan_confrontation",
+      "title": "O Ultimo General",
+      "type": "dramatic_dialogue",
+      "text": [
+        "Kharlan esta sozinho na ponte. Poderia ter fugido. Escolheu nao fugir.",
+        "Ele te olha por um longo momento — nao com odio. Com algo mais dificil de nomear.",
+        "\"Voce cresceu, Arslan. Parece seu pai quando jovem.\" Uma pausa. \"Antes de Andragoras se tornar o que se tornou.\""
+      ],
+      "choices": [
+        {
+          "id": "accuse",
+          "text": "\"Voce destruiu Pars. Milhares morreram por causa de voce.\"",
+          "character_score": -2,
+          "next_scene": "kharlan_confrontation_accuse"
+        },
+        {
+          "id": "ask_why",
+          "text": "\"Por que, Kharlan? Voce era o general mais respeitado de Pars.\"",
+          "character_score": 3,
+          "next_scene": "kharlan_confrontation_ask_why"
+        },
+        {
+          "id": "offer_mercy",
+          "text": "[CAR 15] \"Venha conosco, Kharlan. Ajude a reconstruir o que ajudou a quebrar.\"",
+          "condition": "CAR >= 15",
+          "character_score": 10,
+          "next_scene": "kharlan_confrontation_mercy"
+        }
+      ]
+    },
+    {
+      "id": "kharlan_confrontation_accuse",
+      "type": "dramatic_dialogue",
+      "text": [
+        "\"Milhares morreriam de qualquer forma. Andragoras estava levando Pars para uma guerra de tres frentes que nao podiamos ganhar. Eu vi os mapas que ele escondia. O que eu fiz foi cirurgia. Dolorosa. Mas cirurgia.\""
+      ],
+      "choices": [
+        {
+          "id": "dont_believe",
+          "text": "\"Mentiras de um traidor para justificar covardia.\"",
+          "character_score": -3,
+          "next_scene": "kharlan_fight_scene"
+        },
+        {
+          "id": "consider",
+          "text": "\"Mesmo que seja verdade — havia outro caminho. Sempre ha.\"",
+          "character_score": 5,
+          "next_scene": "kharlan_fight_scene"
+        }
+      ]
+    },
+    {
+      "id": "kharlan_confrontation_ask_why",
+      "type": "dramatic_dialogue",
+      "text": [
+        "A pergunta parece surpreende-lo. Nao a acusacao — a pergunta honesta.",
+        "\"Porque eu vi o que Andragoras planejava para os nobres que o questionavam. Para sua rainha.\" Uma pausa. \"Para voce.\""
+      ],
+      "choices": [
+        {
+          "id": "press_origin",
+          "text": "\"O que voce sabe sobre mim?\"",
+          "condition": "NOT tahamine_truth_revealed",
+          "character_score": 3,
+          "set_flag": "kharlan_hinted_origin",
+          "next_scene": "kharlan_fight_scene"
+        },
+        {
+          "id": "press_origin_knows",
+          "text": "\"Voce sabia sobre minha origem.\"",
+          "condition": "tahamine_truth_revealed",
+          "character_score": 5,
+          "next_scene": "kharlan_fight_scene"
+        },
+        {
+          "id": "no_more_words",
+          "text": "Nao ha mais nada a dizer. Levantar a espada.",
+          "next_scene": "kharlan_fight_scene"
+        }
+      ]
+    },
+    {
+      "id": "kharlan_confrontation_mercy",
+      "type": "dramatic_dialogue",
+      "text": [
+        "O silencio dura muito.",
+        "\"Eu matei homens que confiavam em mim. Essa divida nao se paga com uma segunda chance.\" Ele abaixa a espada. \"Va. Nao vou lutar hoje. Mas nao posso seguir voce.\""
+      ],
+      "choices": [
+        {
+          "id": "accept_his_terms",
+          "text": "Respeitar sua decisao e partir.",
+          "character_score": 8,
+          "set_flag": "kharlan_spared_no_fight",
+          "world_flag": "kharlan_spared",
+          "next_scene": "march_to_ecbatana"
+        }
+      ]
+    },
+    {
+      "id": "kharlan_fight_scene",
+      "title": "O Confronto Final",
+      "type": "narrative",
+      "text": [
+        "Kharlan ergue a lanca. Ha algo nos seus olhos — nao raiva. Resolucao.",
+        "\"Lute como filho de Pars. E o minimo que lhe peco.\""
+      ],
+      "choices": [
+        {
+          "id": "fight_kharlan_final",
+          "text": "Enfrentar Kharlan!",
+          "next_scene": "kharlan_post_combat",
+          "start_combat": {
+            "id": "kharlan_boss_dramatic",
+            "name": "Confronto com Kharlan, o General",
+            "enemies": [
+              {
+                "id": "kharlan",
+                "name": "General Kharlan",
+                "hp": 80,
+                "ca": 18,
+                "pa": 4,
+                "attributes": { "FOR": 18, "DES": 15, "CON": 17, "INT": 14, "SAB": 13, "CAR": 14 },
+                "weapon": { "name": "Lanca de Pars", "damage": "1d10+4", "bonus_atk": 3 },
+                "on_hit_effect": { "name": "bleed", "label": "Sangramento", "duration": 2 },
+                "on_hit_chance": 0.3,
+                "xp": 500,
+                "gold": 0,
+                "ai": "tactical_boss"
+              },
+              {
+                "id": "kharlan_guard",
+                "name": "Guarda de Kharlan",
+                "hp": 20,
+                "ca": 15,
+                "pa": 2,
+                "attributes": { "FOR": 14, "DES": 12, "CON": 14, "INT": 10, "SAB": 10, "CAR": 10 },
+                "weapon": { "name": "Espada Longa", "damage": "1d8+2" },
+                "xp": 30,
+                "gold": 5,
+                "ai": "aggressive_simple"
+              }
+            ],
+            "xp_reward": 400,
+            "gold_reward": "6d6",
+            "mid_combat_events": [
+              {
+                "id": "kharlan_60",
+                "trigger": "boss_hp_pct_60",
+                "triggered": false,
+                "text": "Kharlan ri — nao de escarnio, de reconhecimento. \"Voce aprendeu a lutar. Bem.\" Ele ajusta a lanca. \"Mas aprendi mais cedo.\""
+              },
+              {
+                "id": "kharlan_40",
+                "trigger": "boss_hp_pct_40",
+                "triggered": false,
+                "text": "Pela primeira vez, Kharlan recua meio passo. Para avaliar. \"Voce poderia ter sido rei de um Pars diferente. Talvez ainda possa.\""
+              },
+              {
+                "id": "kharlan_20",
+                "trigger": "boss_hp_pct_20",
+                "triggered": false,
+                "text": "Kharlan esta exausto. Mas nao vai cair sem decisao consciente. \"Termine isso, Arslan. Nao preciso de misericordia.\""
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "kharlan_post_combat",
+      "title": "A Decisao",
+      "type": "dramatic_dialogue",
+      "text": [
+        "Kharlan cai de joelhos. A lanca no chao. Ainda respira.",
+        "Daryun esta de pe atras de voce. Em silencio."
+      ],
+      "choices": [
+        {
+          "id": "execute_kharlan",
+          "text": "Executar Kharlan. Justica por Atropatene.",
+          "character_score": -5,
+          "world_flag": "kharlan_executed",
+          "faction_effects": { "nobreza_pars": 5, "escravos_libertos": -5 },
+          "set_flags": { "kharlan_defeated": true },
+          "next_scene": "march_to_ecbatana"
+        },
+        {
+          "id": "spare_kharlan",
+          "text": "Deixa-lo viver. Que carregue o peso.",
+          "character_score": 8,
+          "world_flag": "kharlan_spared",
+          "set_flags": { "kharlan_defeated": true, "kharlan_spared_in_battle": true },
+          "next_scene": "march_to_ecbatana"
+        },
+        {
+          "id": "let_daryun_decide",
+          "text": "Olhar para Daryun. A decisao e dele.",
+          "world_flag": "kharlan_executed",
+          "set_flags": { "kharlan_defeated": true },
+          "faction_effects": { "nobreza_pars": 5 },
+          "next_scene": "march_to_ecbatana"
+        }
+      ]
+    },
+    {
+      "id": "silvermask_confrontation",
+      "title": "O Pretendente",
+      "type": "dramatic_dialogue",
+      "text": [
+        "Silvermask esta sozinho no salao do trono. Como se soubesse que voce viria.",
+        "Narsus fala baixo: \"Olhe como segura a espada. A posicao dos pes.\" Uma pausa. \"Ele foi treinado em Pars.\"",
+        "Silvermask remove o manto. A mascara reflete as chamas.",
+        "\"Arslan.\" A voz e quieta. Quase intima. \"Nos encontramos finalmente.\""
+      ],
+      "choices": [
+        {
+          "id": "ask_who",
+          "text": "\"Quem e voce?\"",
+          "next_scene": "silvermask_fight"
+        },
+        {
+          "id": "know_hermes",
+          "text": "\"Hermes. Filho de Osroes. O principe que Andragoras apagou.\"",
+          "condition": "tahamine_truth_revealed",
+          "character_score": 5,
+          "next_scene": "silvermask_fight"
+        }
+      ]
+    },
+    {
+      "id": "etoile_encounter",
+      "title": "A Soldada Sem Capacete",
+      "type": "narrative",
+      "text": [
+        "Na vespera do ataque, uma sentinela anuncia uma visitante singular.",
+        "\"Uma soldada lusitana. Sozinha. Sem armas visiveis. Diz que quer falar com o principe.\""
+      ],
+      "choices": [
+        {
+          "id": "receive_etoile",
+          "text": "Recebe-la.",
+          "next_scene": "final_war_council_scene",
+          "start_dialogue": {
+            "npcId": "etoile_dialogue",
+            "startNode": "start"
+          }
+        },
+        {
+          "id": "ignore_etoile",
+          "text": "Recusar. Nao ha tempo para envios lusitanos.",
+          "character_score": -3,
+          "next_scene": "final_war_council_scene"
+        }
+      ]
+    },
+    {
+      "id": "final_war_council_scene",
+      "title": "A Vespera",
+      "type": "narrative",
+      "text": [
+        "A noite antes de Ecbatana. O fogo central reuniu todo mundo — sem que ninguem convocasse. Apenas aconteceu.",
+        "Daryun: \"Amanha lutamos pela ultima vez neste exilio. Depois de amanha e outra coisa.\"",
+        "Narsus examina os mapas. \"Os numeros estao razoavelmente a nosso favor. 'Razoavelmente' tem que ser suficiente.\"",
+        "Elam verifica o arco pela decima vez. \"Mestre Narsus me ensinou que planejar e bom, mas as vezes a flecha vai onde precisa ir.\"",
+        "Gieve afina a flauta. \"Ja escrevi a cancao sobre isso. Antes mesmo de acontecer. Confianca artistica.\"",
+        "Falangies rezou desde o por do sol. Quando termina: \"Mithra ve o que fazemos com o que nos foi dado.\" Ela te olha. \"Mostre a ele.\"",
+        "Todos olham para Arslan."
+      ],
+      "choices": [
+        {
+          "id": "speech_duty",
+          "text": "\"Lutamos pelo dever. Por Pars. Pelo que este reino ainda pode ser.\"",
+          "character_score": 3,
+          "next_scene": "wall_battle"
+        },
+        {
+          "id": "speech_people",
+          "text": "\"Nao luto pelo trono. Luto pelas pessoas que merecem um pais melhor.\"",
+          "condition": "character_score >= 10",
+          "character_score": 8,
+          "next_scene": "wall_battle"
+        },
+        {
+          "id": "speech_silence",
+          "text": "Nao dizer nada. Apenas acenar e se levantar.",
+          "character_score": 2,
+          "next_scene": "wall_battle"
+        }
+      ]
+    },
+    {
+      "id": "tahamine_encounter_scene",
+      "title": "A Rainha no Exilio Interno",
+      "type": "narrative",
+      "text": [
+        "No palacio retomado, ha um comodo que os soldados deixaram intacto. A ordem veio de Narsus: 'Nao entrem.'",
+        "Voce sabe por que."
+      ],
+      "choices": [
+        {
+          "id": "enter_tahamine",
+          "text": "Entrar.",
+          "next_scene": "epilogue",
+          "start_dialogue": {
+            "npcId": "tahamine_dialogue",
+            "startNode": "start"
+          }
+        },
+        {
+          "id": "not_yet",
+          "text": "Nao agora. Ha muito a fazer.",
+          "next_scene": "epilogue"
+        }
+      ]
     }
   ]
 }

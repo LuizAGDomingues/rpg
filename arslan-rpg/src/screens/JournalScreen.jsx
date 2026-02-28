@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useGameStore from '../store/useGameStore';
+import { getActiveQuestProgress } from '../engine/questEngine';
 import Button from '../components/ui/Button';
 import Panel from '../components/ui/Panel';
+import ProgressBar from '../components/ui/ProgressBar';
 import { OrnamentDivider } from '../components/ui/Ornament';
 import QuestEntry from '../components/journal/QuestEntry';
 import QuestDetail from '../components/journal/QuestDetail';
@@ -11,6 +13,7 @@ import styles from './JournalScreen.module.css';
 export default function JournalScreen() {
   const navigate = useNavigate();
   const quests = useGameStore((s) => s.quests);
+  const gameState = useGameStore();
   const [selectedQuest, setSelectedQuest] = useState(null);
 
   return (
@@ -30,9 +33,25 @@ export default function JournalScreen() {
               <p className={styles.empty}>Nenhuma quest ativa.</p>
             ) : (
               <div className={styles.questList}>
-                {quests.active.map((q) => (
-                  <QuestEntry key={q.id} quest={q} active onClick={() => setSelectedQuest(q)} />
-                ))}
+                {quests.active.map((q) => {
+                  const progress = getActiveQuestProgress(q, gameState);
+                  return (
+                    <div key={q.id}>
+                      <QuestEntry quest={q} active onClick={() => setSelectedQuest(q)} />
+                      {progress.total > 0 && (
+                        <div className={styles.progressRow}>
+                          <ProgressBar
+                            current={progress.done}
+                            max={progress.total}
+                            color="var(--gold)"
+                            height={4}
+                          />
+                          <span className={styles.progressPct}>{progress.done}/{progress.total} ({progress.percent}%)</span>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             )}
           </Panel>

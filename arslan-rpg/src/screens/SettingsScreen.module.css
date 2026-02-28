@@ -90,3 +90,68 @@
     gap: var(--spacing-md);
     justify-content: center;
 }
+
+.saveMsg {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--gold);
+    margin-bottom: var(--spacing-sm);
+    font-style: italic;
+}
+
+.slotsGrid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.slotRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    gap: var(--spacing-md);
+}
+
+.slotInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.slotLabel {
+    font-family: var(--font-heading);
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.slotMeta {
+    font-family: var(--font-body);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}
+
+.slotEmpty {
+    font-family: var(--font-body);
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    font-style: italic;
+}
+
+.slotActions {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-shrink: 0;
+}
+
+.autosaveRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--border);
+}

@@ -8,10 +8,10 @@ export const updateReputation = (currentRep, delta) => {
 export const getFactionStatus = (repValue) => {
   for (const t of FACTION_THRESHOLDS) {
     if (repValue >= t.min && repValue <= t.max) {
-      return { label: t.label, color: t.color };
+      return { label: t.label, color: t.color, effect: t.effect || '' };
     }
   }
-  return { label: 'Desconhecido', color: 'var(--text-muted)' };
+  return { label: 'Desconhecido', color: 'var(--text-muted)', effect: '' };
 };
 
 export const checkFactionUnlocks = (factions) => {

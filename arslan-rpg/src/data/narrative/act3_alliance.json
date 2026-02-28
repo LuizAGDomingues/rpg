@@ -457,12 +457,211 @@
       "text": [
         "Aliancas foram firmadas. Companheiros leais se juntaram a causa. O exercito de Arslan, embora pequeno, e leal e determinado.",
         "Mas Silvermask se aproxima. Os lusitanos reforcam Ecbatana. E segredos sobre o passado de Arslan comecam a emergir.",
-        "A batalha final se aproxima. O destino de Pars sera decidido.",
-        "Fim do Ato III — A Alianca"
+        "Narsus aponta para o sul no mapa. \"Sindhura. Rajendra e seu irmao Gadhevi disputam o trono. Se apoiarmos o lado certo — e ele vencer — ganhamos alianca e elefantes de guerra.\"",
+        "Daryun: \"Envolvimento em politica estrangeira enquanto Pars esta ocupada.\"",
+        "Narsus: \"A batalha de Ecbatana tem muros altos. Elefantes ignoram muros.\""
       ],
       "choices": [
         {
-          "id": "to_act4",
+          "id": "pursue_sindhura",
+          "text": "\"Vale o desvio.\" Ir a Sindhura.",
+          "next_scene": "sindhura_border",
+          "world_flag": "pursuing_sindhura",
+          "unlock_region": "sindhura"
+        },
+        {
+          "id": "skip_sindhura",
+          "text": "\"Nao temos tempo. Kashan e suficiente.\"",
+          "next_scene": "act4_preparations",
+          "set_act": 4
+        }
+      ]
+    },
+    {
+      "id": "sindhura_border",
+      "title": "A Fronteira",
+      "type": "narrative",
+      "text": [
+        "Guardas com turbantes dourados bloqueiam a estrada.",
+        "\"Parsenses nao entram sem convite do Rei.\"",
+        "Narsus, baixo: \"Dois modos de entrar: autoridade ou conexao.\""
+      ],
+      "choices": [
+        {
+          "id": "authority",
+          "text": "\"Sou Arslan, Principe de Pars. Solicito audiencia.\"",
+          "next_scene": "sindhura_palace_entry"
+        },
+        {
+          "id": "diplomacy",
+          "text": "[Diplomata CAR 14] Encontrar terreno comum com o oficial.",
+          "condition": "class == diplomat AND CAR >= 14",
+          "next_scene": "sindhura_palace_entry_easy"
+        }
+      ]
+    },
+    {
+      "id": "sindhura_palace_entry",
+      "title": "O Palacio de Rajendra",
+      "type": "narrative",
+      "text": [
+        "O palacio de Sindhura e mais umido, mais colorido, mais barulhento do que tudo em Pars.",
+        "Rajendra recebe voces num salao aberto. E mais jovem do que Arslan esperava.",
+        "\"O principe de Pars.\" Ele te examina. \"Meu pai dizia que Pars era invencivel.\" Uma pausa. \"E entao caiu. Interessante.\"",
+        "Narsus murmura: \"Honesto. Cuidado.\""
+      ],
+      "choices": [
+        {
+          "id": "direct",
+          "text": "\"Vim pedir alianca. Ofeco comercio favoravel e reconhecimento de sua legitimidade.\"",
+          "next_scene": "sindhura_negotiation"
+        },
+        {
+          "id": "appeal",
+          "text": "\"Proponho que Sindhura e Pars nao repitam o erro dos reinos que cairam isolados.\"",
+          "character_score": 2,
+          "next_scene": "sindhura_negotiation"
+        },
+        {
+          "id": "curious",
+          "text": "\"Seu pai via Pars como invencivel. O que voce ve?\"",
+          "character_score": 3,
+          "next_scene": "sindhura_negotiation"
+        }
+      ]
+    },
+    {
+      "id": "sindhura_palace_entry_easy",
+      "title": "O Palacio de Rajendra",
+      "type": "narrative",
+      "text": [
+        "A entrada e facilitada. Rajendra ja ouviu falar de voce pelos canais diplomaticos.",
+        "\"Arslan de Pars.\" Ele sorri. \"Seu nome chegou antes de voce.\""
+      ],
+      "choices": [
+        {
+          "id": "proceed_easy",
+          "text": "Ir direto a negociacao.",
+          "faction_effects": { "sindhura": 10 },
+          "next_scene": "sindhura_negotiation"
+        }
+      ]
+    },
+    {
+      "id": "sindhura_negotiation",
+      "title": "O Preco da Alianca",
+      "type": "narrative",
+      "text": [
+        "Rajendra propoe: apoio de Arslan nas provincias do norte — disputadas com Gadhevi — em troca de elefantes de guerra.",
+        "Narsus: \"Viavel. Mas atrasa Ecbatana em duas semanas.\"",
+        "Daryun: \"Duas semanas que os lusitanos usam para reforcar as defesas.\"",
+        "Narsus: \"Duas semanas que valem um terco a mais de forca de ataque.\""
+      ],
+      "choices": [
+        {
+          "id": "accept_full",
+          "text": "\"Aceito. Ajudamos no norte.\"",
+          "world_flag": "sindhura_full_alliance",
+          "faction_effects": { "sindhura": 40 },
+          "next_scene": "sindhura_northern_campaign"
+        },
+        {
+          "id": "negotiate",
+          "text": "[Estrategista / Diplomata] Propor ajuda diplomatica ao inves de militar.",
+          "condition": "class == strategist OR class == diplomat",
+          "world_flag": "sindhura_partial_alliance",
+          "faction_effects": { "sindhura": 25 },
+          "next_scene": "sindhura_departure"
+        },
+        {
+          "id": "decline",
+          "text": "\"Nao podemos atrasar. Obrigado pela audiencia.\"",
+          "world_flag": "sindhura_no_alliance",
+          "next_scene": "sindhura_departure"
+        }
+      ]
+    },
+    {
+      "id": "sindhura_northern_campaign",
+      "title": "As Provincias do Norte",
+      "type": "narrative",
+      "text": [
+        "O general de Gadhevi espera com 200 homens. Nao esta aqui para negociar.",
+        "Narsus examina o terreno. \"A colina ali. Se chegarmos antes deles, o combate termina em dez minutos.\""
+      ],
+      "choices": [
+        {
+          "id": "fight_gadhevi",
+          "text": "Tomar a colina e confrontar o general!",
+          "next_scene": "sindhura_departure",
+          "start_combat": {
+            "id": "sindhura_north_battle",
+            "name": "Campanha do Norte de Sindhura",
+            "enemies": [
+              {
+                "id": "gadhevi_general",
+                "name": "General de Gadhevi",
+                "hp": 38,
+                "ca": 16,
+                "pa": 3,
+                "attributes": { "FOR": 16, "DES": 13, "CON": 15, "INT": 12, "SAB": 11, "CAR": 13 },
+                "weapon": { "name": "Cimitarra Cerimonial", "damage": "1d10+3", "bonus_atk": 2 },
+                "xp": 180,
+                "gold": 25,
+                "ai": "tactical_boss",
+                "mid_combat_events": [
+                  {
+                    "id": "gadhevi_gen_50",
+                    "trigger": "boss_hp_pct_50",
+                    "triggered": false,
+                    "text": "O general para — olha seus homens em desvantagem. Ele pondera."
+                  }
+                ]
+              },
+              {
+                "id": "gadhevi_cavalry",
+                "name": "Cavaleiro de Gadhevi",
+                "hp": 22,
+                "ca": 14,
+                "pa": 3,
+                "attributes": { "FOR": 14, "DES": 13, "CON": 13, "INT": 10, "SAB": 10, "CAR": 10 },
+                "weapon": { "name": "Lanca de Cavalaria", "damage": "1d8+2" },
+                "xp": 50,
+                "gold": 8,
+                "ai": "aggressive_simple"
+              },
+              {
+                "id": "gadhevi_cavalry",
+                "name": "Cavaleiro de Gadhevi",
+                "hp": 22,
+                "ca": 14,
+                "pa": 3,
+                "attributes": { "FOR": 14, "DES": 13, "CON": 13, "INT": 10, "SAB": 10, "CAR": 10 },
+                "weapon": { "name": "Lanca de Cavalaria", "damage": "1d8+2" },
+                "xp": 50,
+                "gold": 8,
+                "ai": "aggressive_simple"
+              }
+            ],
+            "xp_reward": 350,
+            "gold_reward": "5d6"
+          }
+        }
+      ]
+    },
+    {
+      "id": "sindhura_departure",
+      "title": "A Partida",
+      "type": "narrative",
+      "text": [
+        "Rajendra os escolta ate a fronteira pessoalmente.",
+        "\"Seu pai era temido em Sindhura, Arslan. Voce e algo diferente.\" Um sorriso. \"Provavelmente melhor.\"",
+        "Elam olha para tras ao cruzar a fronteira. \"Posso voltar aqui um dia?\"",
+        "Narsus: \"Se Pars sobreviver amanha, voce pode ir a qualquer lugar.\""
+      ],
+      "choices": [
+        {
+          "id": "to_act4_sindhura",
           "text": "Continuar para o Ato IV...",
           "next_scene": "act4_preparations",
           "set_act": 4

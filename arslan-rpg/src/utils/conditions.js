@@ -1,5 +1,12 @@
 export const checkCondition = (condition, gameState) => {
   if (!condition) return true;
+  // OR groups: any group matching is sufficient
+  if (condition.includes(' OR ')) {
+    return condition.split(' OR ').some((orPart) => {
+      const andParts = orPart.split(' AND ');
+      return andParts.every((part) => evaluateSingle(part.trim(), gameState));
+    });
+  }
   const parts = condition.split(' AND ');
   return parts.every((part) => evaluateSingle(part.trim(), gameState));
 };
@@ -22,23 +29,22 @@ const evaluateSingle = (condition, state) => {
     if (op === '==') return v === n;
   }
 
-  // narrative flag
-  if (state.narrative.flags[condition] !== undefined) return !!state.narrative.flags[condition];
+  // NOT prefix — negates the inner condition
+  const notMatch = condition.match(/^NOT\s+(.+)$/);
+  if (notMatch) return !evaluateSingle(notMatch[1].trim(), state);
 
-  // world flag
-  if (state.world.world_flags[condition] !== undefined) return !!state.world.world_flags[condition];
+  // general recruited — MUST be checked before generic narrative flags
+  // to avoid narsus_recruited being intercepted by narrative.flags
+  const rec = condition.match(/^(\w+)_recruited$/);
+  if (rec) return state.recruited_generals.some((g) => g.id === rec[1]);
 
-  // quest completed
+  // quest completed — MUST be checked before generic flags
   const qc = condition.match(/^quest_(\w+)_completed$/);
   if (qc) return state.quests.completed.some((q) => q.id === qc[1]);
 
-  // quest active
+  // quest active — MUST be checked before generic flags
   const qa = condition.match(/^quest_(\w+)_active$/);
   if (qa) return state.quests.active.some((q) => q.id === qa[1]);
-
-  // general recruited
-  const rec = condition.match(/^(\w+)_recruited$/);
-  if (rec) return state.recruited_generals.some((g) => g.id === rec[1]);
 
   // act started
   const act = condition.match(/^act(\d+)_started$/);
@@ -63,6 +69,25 @@ const evaluateSingle = (condition, state) => {
     if (op === '>') return rep > n;
     if (op === '<') return rep < n;
   }
+
+  // character_score comparison
+  const csMatch = condition.match(/^character_score\s*(>=|<=|>|<|==)\s*(-?\d+)$/);
+  if (csMatch) {
+    const [, op, val] = csMatch;
+    const score = state.player?.character_score || 0;
+    const n = parseInt(val);
+    if (op === '>=') return score >= n;
+    if (op === '<=') return score <= n;
+    if (op === '>') return score > n;
+    if (op === '<') return score < n;
+    if (op === '==') return score === n;
+  }
+
+  // Generic narrative flag (checked AFTER specific patterns)
+  if (state.narrative.flags[condition] !== undefined) return !!state.narrative.flags[condition];
+
+  // Generic world flag (checked AFTER specific patterns)
+  if (state.world.world_flags[condition] !== undefined) return !!state.world.world_flags[condition];
 
   return false;
 };

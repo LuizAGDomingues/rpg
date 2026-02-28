@@ -3,6 +3,7 @@ import useGameStore from './store/useGameStore';
 import TitleScreen from './screens/TitleScreen';
 import ClassSelectScreen from './screens/ClassSelectScreen';
 import GameScreen from './screens/GameScreen';
+import GameOverScreen from './screens/GameOverScreen';
 import MapScreen from './screens/MapScreen';
 import InventoryScreen from './screens/InventoryScreen';
 import PartyScreen from './screens/PartyScreen';
@@ -37,6 +38,8 @@ function PhaseRouter({ phase }) {
     case 'combat':
     case 'dialogue':
       return <GameScreen />;
+    case 'game_over':
+      return <GameOverScreen />;
     default:
       return <TitleScreen />;
   }
