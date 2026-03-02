@@ -271,17 +271,35 @@
       "choices": [
         {
           "id": "fight_bridge",
-          "text": "Nao temos escolha. Pela ponte!",
+          "text": "Daryun vai na frente. Nos o cobrimos.",
           "next_scene": "post_bridge_fight",
           "start_combat": {
             "id": "bridge_battle",
-            "name": "Batalha na Ponte",
+            "name": "Guardas da Ponte",
+            "combat_modifiers": { "narrow_passage": true },
             "enemies": [
-              { "id": "lusitanian_soldier", "name": "Soldado Lusitano", "hp": 16, "ca": 14, "pa": 2, "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Longa", "damage": "1d8+2" }, "ai": "aggressive_simple" },
-              { "id": "lusitanian_soldier", "name": "Soldado Lusitano", "hp": 16, "ca": 14, "pa": 2, "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Longa", "damage": "1d8+2" }, "ai": "aggressive_simple" }
+              { "id": "lusitanian_soldier", "name": "Guarda Lusitano", "hp": 16, "ca": 14, "pa": 2, "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Longa", "damage": "1d8+2" }, "ai": "defensive" },
+              { "id": "lusitanian_soldier", "name": "Guarda Lusitano", "hp": 16, "ca": 14, "pa": 2, "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Longa", "damage": "1d8+2" }, "ai": "defensive" },
+              { "id": "lusitanian_sergeant", "name": "Sargento da Ponte", "hp": 28, "ca": 16, "pa": 3, "attributes": { "FOR": 15, "DES": 10, "CON": 14, "INT": 9, "SAB": 9, "CAR": 10 }, "weapon": { "name": "Montante", "damage": "1d10+3" }, "ai": "defensive" }
             ],
-            "xp_reward": 80,
+            "xp_reward": 100,
             "gold_reward": "4d6"
+          }
+        },
+        {
+          "id": "wait_nightfall",
+          "text": "Esperar ate a noite. Menos guardas na troca de turno.",
+          "next_scene": "post_bridge_fight",
+          "start_combat": {
+            "id": "bridge_night",
+            "name": "Guardas da Ponte (Noite)",
+            "combat_modifiers": { "narrow_passage": true, "night_combat": true },
+            "enemies": [
+              { "id": "lusitanian_soldier", "name": "Guarda Sonolento", "hp": 16, "ca": 12, "pa": 2, "attributes": { "FOR": 13, "DES": 9, "CON": 12, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Longa", "damage": "1d8+1" }, "ai": "defensive" },
+              { "id": "lusitanian_soldier", "name": "Guarda Sonolento", "hp": 16, "ca": 12, "pa": 2, "attributes": { "FOR": 13, "DES": 9, "CON": 12, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Longa", "damage": "1d8+1" }, "ai": "defensive" }
+            ],
+            "xp_reward": 70,
+            "gold_reward": "3d6"
           }
         },
         {

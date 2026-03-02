@@ -1,7 +1,7 @@
 # ARSLAN RPG — Status de Implementação
 
 > Documento de acompanhamento das fases do ARSLAN_NEXT.md.
-> Atualizado após a sessão de implementação da Fase D.
+> Atualizado após a sessão de implementação das Fases D e E.
 
 ---
 
@@ -23,13 +23,13 @@
 | # | Sistema | Status | Obs |
 |---|---------|--------|-----|
 | 2.1 | DialogueScreen | ✅ Feito | Completo com skill check, humor do NPC, flags, fações |
-| 2.2 | Locais do mapa clicáveis com NPCs | ❌ Faltando | Mapa mostra regiões, não locais individuais |
+| 2.2 | Locais do mapa clicáveis com NPCs | ✅ Feito | `LocationPanel` com NPCs, loja, descanso |
 | 2.3 | Habilidades em combate | ✅ Feito | Submenu de skills, cooldowns, habilidades lendárias |
-| 2.4 | Sistema de Descanso | ❌ Faltando | — |
-| 2.5 | Sistema de Loja | ❌ Faltando | Placeholder no diálogo, lógica não implementada |
-| 2.6 | Saves múltiplos + autosave | ❌ Faltando | Só localStorage simples sem slots |
-| 2.7 | Tela de Game Over | ❌ Faltando | Derrota mostra painel estático, sem carregar save |
-| 2.8 | Notificações de milestone de facções | ❌ Faltando | — |
+| 2.4 | Sistema de Descanso | ✅ Feito | `LocationPanel` com botão Descansar |
+| 2.5 | Sistema de Loja | ✅ Feito | `LocationPanel` com loja, buyItem, sellItem |
+| 2.6 | Saves múltiplos + autosave | ✅ Feito | `saveToSlot`/`loadFromSlot` com slots auto/1/2/3 |
+| 2.7 | Tela de Game Over | ✅ Feito | `GameOverScreen` com carregamento de save |
+| 2.8 | Notificações de milestone de facções | ✅ Feito | `factionMilestone` banner em `GameScreen` |
 
 ---
 
@@ -37,12 +37,12 @@
 
 | # | Melhoria | Status | Obs |
 |---|----------|--------|-----|
-| 3.1 | Flash de dano / animações CSS | ⚠ Parcial | Transições básicas existem; flash de dano no card não implementado |
+| 3.1 | Flash de dano / animações CSS | ✅ Feito | `damageFlash` animation no `CombatScreen.module.css` |
 | 3.2 | Música procedural (Web Audio API) | ❌ Faltando | — |
-| 3.3 | Indicador de progresso do ato | ❌ Faltando | — |
+| 3.3 | Indicador de progresso do ato | ✅ Feito | `actProgressBar` em `GameScreen` |
 | 3.4 | Glossário (tooltips em palavras-chave) | ❌ Faltando | — |
-| 3.5 | Labels de reputação visível por facção | ❌ Faltando | FactionCard mostra número, sem label Hostil/Aliado |
-| 3.6 | Contador de tropas dinâmico | ❌ Faltando | — |
+| 3.5 | Labels de reputação visível por facção | ✅ Feito | `FactionCard` usa `getFactionStatus` com labels |
+| 3.6 | Contador de tropas dinâmico | ✅ Feito | `troopCount` calculado em `GameScreen` |
 
 ---
 
@@ -79,13 +79,43 @@
 
 ---
 
-## Fase E — Combates Situacionais (`NEXT_04`)
+## Fase E — Combates Situacionais (`NEXT_04`) ✅ Mecânicas Completas
 
-| Combate | Status | Obs |
-|---------|--------|-----|
-| Patrulha na Floresta — bônus de emboscada (turno 1) | ❌ Faltando | Escolha existe na cena mas não afeta o combate |
-| Emboscada Lusitana — sistema de ondas | ❌ Faltando | `wave_system` não implementado no `combatEngine` |
-| Demais combates situacionais planejados | ❌ Faltando | Passagem estreita, sobreviver N turnos, duelo singular, etc. |
+### Mecânicas implementadas em `CombatScreen.jsx`:
+
+| Mecânica | Status | Obs |
+|----------|--------|-----|
+| `wave_system` | ✅ Feito | Multi-wave com `advanceWave`, `waveNumberRef`, banner visual |
+| `ambush_first_turn` | ✅ Feito | Inimigos pulam turno 1; log de emboscada |
+| `survive_turns` | ✅ Feito | Vitória após N rodadas; contador animado |
+| `land_N_hits` | ✅ Feito | Vitória ao acertar N golpes; counter visual |
+| `party_locked` | ✅ Feito | Apenas Arslan combate; aliados ignorados na inicialização |
+| `wave_on_turn` | ✅ Feito | Reforços entram no turno N |
+| `narrow_passage` | ✅ Feito | Flag no combate (usado no Ato 1 ponte) |
+| `night_combat` | ✅ Feito | Flag no combate (escolha noturna no Ato 1) |
+
+### CSS adicionado em `CombatScreen.module.css`:
+
+| Classe | Propósito |
+|--------|-----------|
+| `.waveBanner` | Indica onda atual (gold, uppercase) |
+| `.waveTransition` | Overlay entre ondas com texto de intro |
+| `.surviveCounter` | Contador de rodadas com animação `survivePulse` |
+| `.hitCounter` | Contador de acertos para `land_N_hits` |
+| `.partyLocked` | Aviso de duelo singular (crimson) |
+
+### Combates de conteúdo atualizados:
+
+| Combate | Status | Arquivo |
+|---------|--------|---------|
+| Ponte Ato 1 — `bridge_battle` | ✅ Feito | `act1_prologue.json` — `narrow_passage`, 3 inimigos, opção noturna |
+| Emboscada Ato 2 — `road_ambush` | ✅ Feito | `act2_exile.json` — `wave_system` 2 ondas |
+| Treino com Daryun — `training_spar` | ✅ Feito | `act2_exile.json` — `land_N_hits: 3` |
+| Cena A — Nova cena ponte (Ato 1) | ✅ Feito | `act1_prologue.json` |
+| Cena B — Mensageiro Interceptado (Ato 2) | ✅ Feito | `act2_exile.json` — `messenger_capture` + `post_messenger_fight` |
+| Cena C — Traição em Kashan | ❌ Faltando | Baixa prioridade |
+| Cena D — Duelo com Cavaleiro Turan | ❌ Faltando | Baixa prioridade |
+| Cena E — Caravana de Escravos | ❌ Faltando | Baixa prioridade |
 
 ---
 
@@ -94,13 +124,15 @@
 | Fase | Progresso |
 |------|-----------|
 | A — Bugs críticos | 4/6 ✅ |
-| B — Sistemas de UI | 2/8 ✅ |
-| B — Melhorias visuais | 0/6 ✅ |
+| B — Sistemas de UI | 8/8 ✅ |
+| B — Melhorias visuais | 4/6 ✅ |
 | C — Conteúdo base | Parcial em todas as áreas |
 | D — Narrativa e drama | **✅ Completa** |
-| E — Combates situacionais | 0/5+ ✅ |
+| E — Mecânicas de combate | **✅ Completa** (8/8 mecânicas) |
+| E — Cenas situacionais | 4/7 ✅ (C/D/E faltando) |
 
 **Prioridades recomendadas para a próxima sessão:**
-1. Bug 3 — `arrival_scene` no mapa (desbloquearia NPCs e quests)
-2. Sistema 2.2 — locais clicáveis (desbloquearia loja, descanso, quests)
-3. Fase E — `wave_system` em `combatEngine` (mecânica usada em vários combates)
+1. Bug 3 — `arrival_scene` no mapa para regiões (eventos ao viajar)
+2. Fase E Cenas C/D/E — traição Kashan, duelo Turan, caravana escravos
+3. 3.2 — Música procedural Web Audio API
+4. 3.4 — Glossário com tooltips em palavras-chave narrativas

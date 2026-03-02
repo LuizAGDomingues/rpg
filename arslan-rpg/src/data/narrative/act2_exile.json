@@ -173,86 +173,71 @@
           "start_combat": {
             "id": "road_ambush",
             "name": "Emboscada Lusitana",
-            "enemies": [
+            "wave_system": true,
+            "waves": [
               {
-                "id": "lusitanian_soldier",
-                "name": "Soldado Lusitano",
-                "hp": 16,
-                "ca": 14,
-                "pa": 2,
-                "attributes": {
-                  "FOR": 14,
-                  "DES": 10,
-                  "CON": 13,
-                  "INT": 8,
-                  "SAB": 8,
-                  "CAR": 8
-                },
-                "weapon": {
-                  "name": "Espada Longa",
-                  "damage": "1d8+2"
-                },
-                "ai": "aggressive_simple"
+                "wave": 1,
+                "label": "Onda 1 — Ataque Inicial",
+                "enemies": [
+                  {
+                    "id": "lusitanian_soldier",
+                    "name": "Soldado Lusitano",
+                    "hp": 16,
+                    "ca": 14,
+                    "pa": 2,
+                    "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 },
+                    "weapon": { "name": "Espada Longa", "damage": "1d8+2" },
+                    "ai": "aggressive_simple"
+                  },
+                  {
+                    "id": "lusitanian_soldier",
+                    "name": "Soldado Lusitano",
+                    "hp": 16,
+                    "ca": 14,
+                    "pa": 2,
+                    "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 },
+                    "weapon": { "name": "Espada Longa", "damage": "1d8+2" },
+                    "ai": "aggressive_simple"
+                  },
+                  {
+                    "id": "lusitanian_archer",
+                    "name": "Arqueiro Lusitano",
+                    "hp": 12,
+                    "ca": 12,
+                    "pa": 2,
+                    "attributes": { "FOR": 10, "DES": 14, "CON": 10, "INT": 8, "SAB": 10, "CAR": 8 },
+                    "weapon": { "name": "Arco Longo", "damage": "1d8+1" },
+                    "ai": "aggressive_simple"
+                  }
+                ]
               },
               {
-                "id": "lusitanian_soldier",
-                "name": "Soldado Lusitano",
-                "hp": 16,
-                "ca": 14,
-                "pa": 2,
-                "attributes": {
-                  "FOR": 14,
-                  "DES": 10,
-                  "CON": 13,
-                  "INT": 8,
-                  "SAB": 8,
-                  "CAR": 8
-                },
-                "weapon": {
-                  "name": "Espada Longa",
-                  "damage": "1d8+2"
-                },
-                "ai": "aggressive_simple"
-              },
-              {
-                "id": "lusitanian_archer",
-                "name": "Arqueiro Lusitano",
-                "hp": 12,
-                "ca": 12,
-                "pa": 2,
-                "attributes": {
-                  "FOR": 10,
-                  "DES": 14,
-                  "CON": 10,
-                  "INT": 8,
-                  "SAB": 10,
-                  "CAR": 8
-                },
-                "weapon": {
-                  "name": "Arco Longo",
-                  "damage": "1d8+1"
-                },
-                "ai": "aggressive_simple"
-              },
-              {
-                "id": "lusitanian_sergeant",
-                "name": "Sargento Lusitano",
-                "hp": 24,
-                "ca": 15,
-                "pa": 3,
-                "attributes": {
-                  "FOR": 15,
-                  "DES": 12,
-                  "CON": 14,
-                  "INT": 10,
-                  "SAB": 10,
-                  "CAR": 11
-                },
-                "weapon": {
-                  "name": "Espada Larga",
-                  "damage": "1d10+3"
-                },
-                "ai": "aggressive_simple"
+                "wave": 2,
+                "trigger": "wave_1_cleared",
+                "label": "Reforco pelo Flanco",
+                "intro_text": "Mais soldados emergem das arvores pela esquerda!",
+                "enemies": [
+                  {
+                    "id": "lusitanian_sergeant",
+                    "name": "Sargento Lusitano",
+                    "hp": 24,
+                    "ca": 15,
+                    "pa": 3,
+                    "attributes": { "FOR": 15, "DES": 12, "CON": 14, "INT": 10, "SAB": 10, "CAR": 11 },
+                    "weapon": { "name": "Espada Larga", "damage": "1d10+3" },
+                    "ai": "aggressive_simple"
+                  },
+                  {
+                    "id": "lusitanian_soldier",
+                    "name": "Soldado Lusitano",
+                    "hp": 16,
+                    "ca": 14,
+                    "pa": 2,
+                    "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 },
+                    "weapon": { "name": "Espada Longa", "damage": "1d8+2" },
+                    "ai": "aggressive_simple"
+                  }
+                ]
               }
             ],
             "xp_reward": 150,
@@ -295,10 +280,94 @@
         {
           "id": "whats_next",
           "text": "O que voce sugere, Narsus?",
-          "next_scene": "narsus_plan",
+          "next_scene": "messenger_capture",
           "set_flags": {
             "camp_established": true
           }
+        }
+      ]
+    },
+    {
+      "id": "messenger_capture",
+      "title": "O Mensageiro Interceptado",
+      "type": "narrative",
+      "text": [
+        "No segundo dia no acampamento, Elam retorna de uma patrulha com noticias urgentes.",
+        "\"Um mensageiro lusitano foi visto na estrada ao norte. Cavalga com escolta de dois soldados e carrega um tubo lacrado com o selo do Geral Kharlan.\"",
+        "Narsus franze o cenho. \"Correspondencia lusitana pode conter ordens de captura... ou pior, as coordenadas deste acampamento.\"",
+        "\"Devemos intercepta-lo,\" diz Daryun, ja segurando a lanca. \"Mas preferivelmente vivo. Precisamos das informacoes que carrega.\""
+      ],
+      "choices": [
+        {
+          "id": "ambush_messenger",
+          "text": "Armemos uma emboscada e capturemos o mensageiro.",
+          "next_scene": "post_messenger_fight",
+          "start_combat": {
+            "id": "messenger_escort",
+            "name": "Escolta do Mensageiro",
+            "enemies": [
+              {
+                "id": "lusitanian_scout_1",
+                "name": "Soldado de Escolta",
+                "hp": 14,
+                "ca": 13,
+                "pa": 2,
+                "attributes": { "FOR": 13, "DES": 11, "CON": 12, "INT": 8, "SAB": 8, "CAR": 8 },
+                "weapon": { "name": "Espada Curta", "damage": "1d6+1" },
+                "ai": "aggressive_simple"
+              },
+              {
+                "id": "lusitanian_scout_2",
+                "name": "Soldado de Escolta",
+                "hp": 14,
+                "ca": 13,
+                "pa": 2,
+                "attributes": { "FOR": 13, "DES": 11, "CON": 12, "INT": 8, "SAB": 8, "CAR": 8 },
+                "weapon": { "name": "Espada Curta", "damage": "1d6+1" },
+                "ai": "aggressive_simple"
+              },
+              {
+                "id": "lusitanian_messenger",
+                "name": "Mensageiro Lusitano",
+                "hp": 10,
+                "ca": 11,
+                "pa": 2,
+                "attributes": { "FOR": 10, "DES": 13, "CON": 10, "INT": 12, "SAB": 10, "CAR": 10 },
+                "weapon": { "name": "Adaga", "damage": "1d4" },
+                "ai": "defensive"
+              }
+            ],
+            "xp_reward": 80,
+            "gold_reward": "2d6"
+          }
+        },
+        {
+          "id": "let_messenger_pass",
+          "text": "Deixe-o passar. Nao e hora de arriscar.",
+          "next_scene": "narsus_plan",
+          "set_flags": { "ignored_messenger": true }
+        }
+      ]
+    },
+    {
+      "id": "post_messenger_fight",
+      "title": null,
+      "type": "narrative",
+      "text": [
+        "O mensageiro capturado treme enquanto Narsus abre o tubo lacrado com cuidado.",
+        "\"Interessante.\" Narsus le em silencio por um longo momento. \"Muito interessante.\"",
+        "\"O que diz?\" Daryun pressiona.",
+        "\"Ordens para o Geral Kharlan. Ele deve varrer a regiao de Dahman ate o fim da lua.\" Narsus dobra a carta lentamente. \"E mencionam que um reforco de quinhentos soldados marcha de Ecbatana para se juntar a ele.\"",
+        "A informacao e valiosa — e perturbadora. O tempo esta se esgotando.",
+        "\"Precisamos agir com mais rapidez,\" conclui Narsus. \"Mas ao menos agora sabemos o que enfrentamos.\""
+      ],
+      "choices": [
+        {
+          "id": "to_narsus_plan",
+          "text": "Com essas informacoes, qual e o nosso plano?",
+          "next_scene": "narsus_plan",
+          "xp_reward": 40,
+          "set_flags": { "intercepted_messenger": true }
         }
       ]
     },
@@ -384,6 +453,9 @@
                 "ai": "defensive"
               }
             ],
+            "win_condition": "land_N_hits",
+            "win_condition_hits": 3,
+            "win_condition_text": "Acerte Daryun 3 vezes para provar seu valor!",
             "xp_reward": 80,
             "gold_reward": "0"
           }

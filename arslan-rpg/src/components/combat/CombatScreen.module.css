@@ -394,3 +394,98 @@
   justify-content: center;
   margin-top: var(--spacing-md);
 }
+
+/* ----- Wave / Mode Indicators ----- */
+
+.waveBanner {
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  background: rgba(201, 168, 76, 0.08);
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  border-radius: var(--radius-md);
+  padding: 4px var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+}
+
+.waveTransition {
+  background: rgba(10, 8, 5, 0.95);
+  border: 1px solid var(--gold);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  margin: var(--spacing-md) 0;
+  text-align: center;
+  animation: fadeIn 0.5s ease-out;
+  box-shadow: 0 0 30px rgba(201, 168, 76, 0.25);
+}
+
+.waveTransition p {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--text-light);
+  font-style: italic;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.surviveCounter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--mp-blue);
+  background: rgba(52, 152, 219, 0.08);
+  border: 1px solid rgba(52, 152, 219, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  text-align: center;
+  animation: survivePulse 2s ease-in-out infinite;
+}
+
+@keyframes survivePulse {
+  0%, 100% { box-shadow: 0 0 6px rgba(52, 152, 219, 0.15); }
+  50% { box-shadow: 0 0 14px rgba(52, 152, 219, 0.35); }
+}
+
+.surviveHint {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.hitCounter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--gold-light);
+  background: rgba(201, 168, 76, 0.08);
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  text-align: center;
+}
+
+.partyLocked {
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  color: var(--crimson-light);
+  background: rgba(192, 57, 43, 0.08);
+  border: 1px solid rgba(192, 57, 43, 0.25);
+  border-radius: var(--radius-md);
+  padding: 4px var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}

@@ -43,7 +43,12 @@ export default function CombatScreen() {
   const [midCombatEvent, setMidCombatEvent] = useState(null);
   const [triggeredEventIds, setTriggeredEventIds] = useState(new Set());
   const [damagedIds, setDamagedIds] = useState(new Set());
+  const [waveNumber, setWaveNumber] = useState(0);
+  const [waveTransition, setWaveTransition] = useState(null);
+  const [hitCount, setHitCount] = useState(0);
   const logRef = useRef(null);
+  const waveNumberRef = useRef(0);
+  const roundNumberRef = useRef(1);
 
   const addLog = useCallback((msg) => {
     setLog((prev) => [...prev.slice(-50), msg]);
@@ -53,6 +58,26 @@ export default function CombatScreen() {
     setDamagedIds((prev) => new Set([...prev, id]));
     setTimeout(() => setDamagedIds((prev) => { const n = new Set(prev); n.delete(id); return n; }), 450);
   }, []);
+
+  // --- Wave advancement ---
+  const advanceWave = useCallback((nextIdx) => {
+    const nextWave = combat.waves[nextIdx];
+    waveNumberRef.current = nextIdx;
+    setWaveNumber(nextIdx);
+    const label = nextWave.label || `Onda ${nextIdx + 1} de ${combat.waves.length}`;
+    setWaveTransition(nextWave.intro_text || label);
+    addLog(`\n⚔ ${label}${nextWave.intro_text ? ': ' + nextWave.intro_text : ''}`);
+    setTimeout(() => {
+      const newEnemies = (nextWave.enemies || []).map((e, i) => ({
+        ...e,
+        id: e.id ? `${e.id}_w${nextIdx}_${i}` : `enemy_w${nextIdx}_${i}`,
+        hp_max: e.hp, pa_max: e.pa || 2, status_effects: [],
+      }));
+      setEnemies(newEnemies);
+      setSelectedTargetIndex(0);
+      setWaveTransition(null);
+    }, 2200);
+  }, [combat, addLog]);
 
   // --- Mid-combat event check ---
   const checkMidCombatEvents = useCallback((currentEnemies, currentRound) => {
@@ -100,7 +125,7 @@ export default function CombatScreen() {
       skillCooldowns: {}, skillUsesThisCombat: {}, status_effects: [],
     };
 
-    const generalAllies = (recruitedGenerals || []).slice(0, 3).map((gen) => {
+    const generalAllies = combat.party_locked ? [] : (recruitedGenerals || []).slice(0, 3).map((gen) => {
       const genSkills = gen.skills ? [...gen.skills] : [];
       legendarySkills.forEach((ls) => {
         if (ls.character === gen.id && !genSkills.includes(ls.skillId)) genSkills.push(ls.skillId);
@@ -117,8 +142,9 @@ export default function CombatScreen() {
     });
 
     const allAllies = [playerCombatant, ...generalAllies];
-    const enemyCombatants = combat.enemies.map((e, i) => ({
-      ...e, id: `${e.id}_${i}`, hp_max: e.hp, pa_max: e.pa || 2, status_effects: [],
+    const initialEnemyList = combat.wave_system ? (combat.waves?.[0]?.enemies || []) : (combat.enemies || []);
+    const enemyCombatants = initialEnemyList.map((e, i) => ({
+      ...e, id: e.id ? `${e.id}_${i}` : `enemy_${i}`, hp_max: e.hp, pa_max: e.pa || 2, status_effects: [],
     }));
 
     const allCombatants = rollInitiative([...allAllies, ...enemyCombatants]);
@@ -128,7 +154,8 @@ export default function CombatScreen() {
     setEnemies(enemyCombatants);
     setActiveAllyIndex(0);
     setCurrentPA(allAllies[0].pa);
-    addLog(`⚔ Combate iniciado: ${combat.name}!`);
+    if (combat.wave_system) addLog(`⚔ Combate iniciado: ${combat.name}! (${combat.waves?.length || 1} ondas)`);
+    else addLog(`⚔ Combate iniciado: ${combat.name}!`);
     addLog(`Iniciativa: ${initiativeMsg}`);
     addLog(`--- Turno de ${allAllies[0].name} ---`);
     setCombatState('player_turn');
@@ -177,7 +204,14 @@ export default function CombatScreen() {
       setEnemies((curEnemies) => {
         setAllies((curAllies) => {
           const end = checkCombatEnd(curAllies, curEnemies);
-          if (end) {
+          if (end === 'victory' && combat?.wave_system) {
+            const nextIdx = waveNumberRef.current + 1;
+            if (nextIdx < (combat.waves?.length || 0)) {
+              setTimeout(() => advanceWave(nextIdx), 150);
+            } else {
+              finishCombat('victory');
+            }
+          } else if (end) {
             finishCombat(end);
           } else {
             checkMidCombatEvents(curEnemies, roundNumber);
@@ -187,7 +221,7 @@ export default function CombatScreen() {
         return curEnemies;
       });
     }, 100);
-  }, [finishCombat, checkMidCombatEvents, roundNumber]);
+  }, [finishCombat, checkMidCombatEvents, roundNumber, combat, advanceWave]);
 
   // --- ACTION: Heavy Attack (2 PA) ---
   const handleAttack = useCallback(() => {
@@ -202,12 +236,20 @@ export default function CombatScreen() {
       flashDamage(target.id);
       addLog(`${currentAlly.name} ataca ${target.name}! (d20: ${attack.roll}+${attack.attackMod}=${attack.total} vs CA ${target.ca}) ${attack.isCrit ? '💥 CRITICO! ' : ''}Dano: ${dmg.total}`);
       if (newHP <= 0) addLog(`  ☠ ${target.name} foi derrotado!`);
+      if (combat?.win_condition === 'land_N_hits') {
+        const newCount = hitCount + 1;
+        setHitCount(newCount);
+        if (newCount >= (combat.win_condition_hits || Infinity)) {
+          setTimeout(() => finishCombat('victory'), 300);
+          return;
+        }
+      }
     } else {
       addLog(`${currentAlly.name} ataca ${target.name}... e erra! (d20: ${attack.roll}+${attack.attackMod}=${attack.total} vs CA ${target.ca})${attack.isFumble ? ' ❌ FALHA CRITICA!' : ''}`);
     }
     setCurrentPA((pa) => pa - 2);
     checkEnd();
-  }, [currentPA, currentAlly, livingEnemies, selectedTargetIndex, addLog, checkEnd]);
+  }, [currentPA, currentAlly, livingEnemies, selectedTargetIndex, addLog, checkEnd, combat, hitCount, finishCombat]);
 
   // --- ACTION: Light Attack (1 PA) ---
   const handleLightAttack = useCallback(() => {
@@ -223,12 +265,20 @@ export default function CombatScreen() {
       flashDamage(target.id);
       addLog(`${currentAlly.name} faz ataque rapido em ${target.name}! (${attack.total} vs CA ${target.ca}) Dano: ${reduced}`);
       if (newHP <= 0) addLog(`  ☠ ${target.name} foi derrotado!`);
+      if (combat?.win_condition === 'land_N_hits') {
+        const newCount = hitCount + 1;
+        setHitCount(newCount);
+        if (newCount >= (combat.win_condition_hits || Infinity)) {
+          setTimeout(() => finishCombat('victory'), 300);
+          return;
+        }
+      }
     } else {
       addLog(`${currentAlly.name} erra o ataque rapido em ${target.name}! (${attack.total} vs CA ${target.ca})`);
     }
     setCurrentPA((pa) => pa - 1);
     checkEnd();
-  }, [currentPA, currentAlly, livingEnemies, selectedTargetIndex, addLog, checkEnd]);
+  }, [currentPA, currentAlly, livingEnemies, selectedTargetIndex, addLog, checkEnd, combat, hitCount, finishCombat]);
 
   // --- ACTION: Defend (1 PA) ---
   const handleDefend = useCallback(() => {
@@ -314,6 +364,37 @@ export default function CombatScreen() {
   const runEnemyTurn = useCallback(() => {
     addLog(`═══ Turno dos Inimigos (Rodada ${roundNumber}) ═══`);
 
+    // Ambush: skip enemy first round entirely
+    if (combat?.combat_modifiers?.ambush_first_turn && roundNumber === 1) {
+      addLog('⚡ EMBOSCADA! Inimigos surpresos — pulam o primeiro turno!');
+      setRoundNumber((r) => { const n = r + 1; roundNumberRef.current = n; return n; });
+      setTimeout(() => {
+        setAllies((cur) => {
+          let first = 0;
+          while (first < cur.length && cur[first].hp <= 0) first++;
+          if (first < cur.length) {
+            setActiveAllyIndex(first);
+            setCurrentPA(cur[first].pa_max || cur[first].pa || 3);
+            addLog('═══ Seu Turno ═══');
+            addLog(`--- Turno de ${cur[first].name} ---`);
+          }
+          return cur;
+        });
+      }, 400);
+      return;
+    }
+
+    // Wave-on-turn: add reinforcements
+    const wot = combat?.wave_on_turn;
+    if (wot && roundNumber === wot.turn) {
+      addLog(`\n🔔 ${wot.text}`);
+      const wotEnemies = (wot.enemies || []).map((e, i) => ({
+        ...e, id: `wot_${e.name.replace(/\s/g, '_').toLowerCase()}_${i}`,
+        hp_max: e.hp, pa_max: e.pa || 2, status_effects: [],
+      }));
+      setEnemies((prev) => [...prev, ...wotEnemies]);
+    }
+
     setEnemies((curEnemies) => {
       let processedEnemies = curEnemies.map((enemy) => {
         if (enemy.hp <= 0) return enemy;
@@ -382,8 +463,13 @@ export default function CombatScreen() {
           return updated;
         }
 
-        setRoundNumber((r) => r + 1);
+        setRoundNumber((r) => { const n = r + 1; roundNumberRef.current = n; return n; });
         setTimeout(() => {
+          // survive_turns win condition
+          if (combat?.win_condition === 'survive_turns' && roundNumberRef.current > (combat?.survive_turns || Infinity)) {
+            finishCombat('victory');
+            return;
+          }
           let first = 0;
           while (first < updated.length && updated[first].hp <= 0) first++;
           if (first < updated.length) {
@@ -414,7 +500,7 @@ export default function CombatScreen() {
         status_effects: (e.status_effects || []).filter((fx) => fx.name !== 'movement_anticipated'),
       }));
     });
-  }, [addLog, finishCombat, roundNumber]);
+  }, [addLog, finishCombat, roundNumber, combat]);
 
   // --- END ALLY TURN ---
   const handleEndAllyTurn = useCallback(() => {
@@ -578,6 +664,39 @@ export default function CombatScreen() {
           })}
         </div>
       </div>
+
+      {/* ----- Wave / Mode Indicators ----- */}
+      {combat?.wave_system && !waveTransition && (
+        <div className={styles.waveBanner}>
+          Onda {waveNumber + 1} de {combat.waves?.length}
+        </div>
+      )}
+      {waveTransition && (
+        <div className={styles.waveTransition}>
+          <p>{waveTransition}</p>
+        </div>
+      )}
+      {combat?.win_condition === 'survive_turns' && (
+        <div className={styles.surviveCounter}>
+          ⏳ Aguente: Rodada {roundNumber} / {combat.survive_turns}
+          {combat.progress_display && (
+            <span className={styles.surviveHint}>
+              {combat.progress_display.replace('Turno X', `Turno ${roundNumber}`)}
+            </span>
+          )}
+        </div>
+      )}
+      {combat?.win_condition === 'land_N_hits' && (
+        <div className={styles.hitCounter}>
+          ⚔ Acertos: {hitCount} / {combat.win_condition_hits}
+          {combat.win_condition_text && <span className={styles.surviveHint}>{combat.win_condition_text}</span>}
+        </div>
+      )}
+      {combat?.party_locked && (
+        <div className={styles.partyLocked}>
+          ⚔ Duelo Singular — Apenas Arslan combate
+        </div>
+      )}
 
       {/* ----- Mid-Combat Dramatic Event ----- */}
       {midCombatEvent && (
