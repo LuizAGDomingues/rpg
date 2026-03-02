@@ -133,6 +133,11 @@ export default function GameScreen() {
     // Autosave on scene advance
     if (choice.next_scene) store.saveToSlot('auto');
 
+    if (choice.navigate_to_map) {
+      navigate('/map');
+      return;
+    }
+
     const combatResult = choiceResults.find((r) => r.type === 'combat');
     if (combatResult) {
       store.startCombat(combatResult.combatData);

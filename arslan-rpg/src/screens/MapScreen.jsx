@@ -43,8 +43,15 @@ export default function MapScreen() {
   };
 
   const handleTravel = (regionId) => {
+    const region = regions.find((r) => r.id === regionId);
+    const alreadyVisited = gameState.world.world_flags?.[`region_${regionId}_visited`];
     setCurrentRegion(regionId);
     setSelectedLocation(null);
+    if (region?.arrival_scene && !alreadyVisited) {
+      useGameStore.getState().setWorldFlag(`region_${regionId}_visited`, true);
+      useGameStore.getState().setCurrentScene(region.arrival_scene);
+      navigate('/');
+    }
   };
 
   const isLocationLocked = (loc) => {

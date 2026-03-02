@@ -489,3 +489,17 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
+
+.civiliansWarning {
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  color: #d4ac0d;
+  background: rgba(212, 172, 13, 0.08);
+  border: 1px solid rgba(212, 172, 13, 0.30);
+  border-radius: var(--radius-md);
+  padding: 6px var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  letter-spacing: 0.05em;
+  animation: survivePulse 2.5s ease-in-out infinite;
+}

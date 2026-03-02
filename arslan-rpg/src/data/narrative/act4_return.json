@@ -778,6 +778,25 @@
           "next_scene": "epilogue"
         }
       ]
+    },
+
+    {
+      "id": "ecbatana_region_arrival",
+      "title": "Ecbatana — A Capital Ocupada",
+      "type": "narrative",
+      "text": [
+        "Ecbatana. A palavra carrega o peso de tudo que foi perdido.",
+        "As torres da cidade ainda se erguem altivas, mas a bandeira de Pars ja nao tremula sobre elas. Estandartes lusitanos cobrem os muros que deveriam ser seu lar.",
+        "Narsus coloca a mao no ombro de Arslan. 'Nao e a cidade que voce vai recuperar — e o que ela representa. Lembre disso quando o momento chegar.'"
+      ],
+      "choices": [
+        {
+          "id": "survey_ecbatana",
+          "text": "Avaliar a situacao da cidade.",
+          "navigate_to_map": true,
+          "xp_reward": 20
+        }
+      ]
     }
   ]
 }

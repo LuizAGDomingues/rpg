@@ -1,8 +1,8 @@
 [
-  { "id": "ecbatana", "name": "Ecbatana", "description": "A capital de Pars. Tomada pelos Lusitanos.", "unlock_condition": "act4_started", "locations": ["palacio_real", "mercado_ecbatana", "templo_mithra", "bairro_pobre"] },
+  { "id": "ecbatana", "name": "Ecbatana", "description": "A capital de Pars. Tomada pelos Lusitanos.", "unlock_condition": "act4_started", "arrival_scene": "ecbatana_region_arrival", "locations": ["palacio_real", "mercado_ecbatana", "templo_mithra", "bairro_pobre"] },
   { "id": "atropatene", "name": "Campo de Atropatene", "description": "Local da batalha desastrosa onde Pars caiu.", "unlock_condition": null, "locations": ["campo_batalha", "ruinas_acampamento", "floresta_sul"] },
-  { "id": "exilio_narsus", "name": "Vilarejo de Dahman", "description": "Vilarejo remoto onde Narsus vive em exilio.", "unlock_condition": "act2_started", "locations": ["casa_narsus", "taberna_dahman", "ferreiro_dahman"] },
+  { "id": "exilio_narsus", "name": "Vilarejo de Dahman", "description": "Vilarejo remoto onde Narsus vive em exilio.", "unlock_condition": "act2_started", "arrival_scene": "dahman_region_arrival", "locations": ["casa_narsus", "taberna_dahman", "ferreiro_dahman"] },
   { "id": "acampamento_base", "name": "Acampamento dos Exilados", "description": "O quartel-general movel de Arslan.", "unlock_condition": "act2_started", "locations": ["tenda_arslan", "area_treino", "cozinha_campo", "posto_vigia"] },
-  { "id": "kashan", "name": "Fortaleza de Kashan", "description": "Fortaleza chave no coracao de Pars.", "unlock_condition": "kashan_unlocked", "locations": ["muralhas_kashan", "salao_lord", "ferreiro_kashan"] },
-  { "id": "sindhura", "name": "Reino de Sindhura", "description": "O reino vizinho ao sul.", "unlock_condition": "act3_started", "locations": ["palacio_sindhura", "mercado_sindhura", "arena_sindhura"] }
+  { "id": "kashan", "name": "Fortaleza de Kashan", "description": "Fortaleza chave no coracao de Pars.", "unlock_condition": "kashan_unlocked", "arrival_scene": "kashan_region_arrival", "locations": ["muralhas_kashan", "salao_lord", "ferreiro_kashan"] },
+  { "id": "sindhura", "name": "Reino de Sindhura", "description": "O reino vizinho ao sul.", "unlock_condition": "act3_started", "arrival_scene": "sindhura_region_arrival", "locations": ["palacio_sindhura", "mercado_sindhura", "arena_sindhura"] }
 ]

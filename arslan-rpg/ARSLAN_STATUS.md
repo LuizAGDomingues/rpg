@@ -11,7 +11,7 @@
 |---|-----|--------|-----|
 | 1 | `gold_reward` nunca parseado em combate | ✅ Feito | `calculateGoldReward` atualizado em `combatEngine.js` e `CombatScreen` |
 | 2 | `factionEngine` / `questEngine` eram código morto | ✅ Feito | `FactionCard` usa `getFactionStatus`; `JournalScreen` usa `getActiveQuestProgress` |
-| 3 | Viagem no mapa não dispara eventos narrativos | ❌ Faltando | `MapScreen` chama `setCurrentRegion` mas sem `arrival_scene` |
+| 3 | Viagem no mapa não dispara eventos narrativos | ✅ Feito | `handleTravel` dispara `arrival_scene` na primeira visita; cenas adicionadas em act2/3/4; `navigate_to_map` em GameScreen |
 | 4 | Side quests sem caminho de início | ⚠ Parcial | `DialogueScreen` existe; falta NPCs em locais do mapa oferecerem quests |
 | 5 | Habilidades Lendárias sem sistema de uso | ✅ Feito | `skillEngine.js` + menu de skills no `CombatScreen` |
 | 6 | Condição `narsus_recruited` avaliava flag errada | ✅ Feito | `conditions.js` tem pattern `_recruited` checando `recruited_generals` |
@@ -113,9 +113,9 @@
 | Treino com Daryun — `training_spar` | ✅ Feito | `act2_exile.json` — `land_N_hits: 3` |
 | Cena A — Nova cena ponte (Ato 1) | ✅ Feito | `act1_prologue.json` |
 | Cena B — Mensageiro Interceptado (Ato 2) | ✅ Feito | `act2_exile.json` — `messenger_capture` + `post_messenger_fight` |
-| Cena C — Traição em Kashan | ❌ Faltando | Baixa prioridade |
-| Cena D — Duelo com Cavaleiro Turan | ❌ Faltando | Baixa prioridade |
-| Cena E — Caravana de Escravos | ❌ Faltando | Baixa prioridade |
+| Cena C — Traição em Kashan | ✅ Feito | `act3_alliance.json` — `kashan_spy_confrontation`, `kashan_betrayal` (survive_turns), `post_kashan_escape`, `hodir_spy_exposed` |
+| Cena D — Duelo com Cavaleiro Turan | ✅ Feito | `act3_alliance.json` — `turan_envoy_encounter`, `turan_duel_scene` (party_locked + mid_combat_events), `turan_duel_outcome/win/execute/loss`; `loss_scene` no CombatScreen |
+| Cena E — Caravana de Escravos | ✅ Feito | `act3_alliance.json` — `slave_road_encounter`, `slave_caravan_scene` (civilians_present), `caravan_no_fight`, `post_caravan_fight`; `.civiliansWarning` CSS |
 
 ---
 
@@ -123,16 +123,15 @@
 
 | Fase | Progresso |
 |------|-----------|
-| A — Bugs críticos | 4/6 ✅ |
+| A — Bugs críticos | 5/6 ✅ |
 | B — Sistemas de UI | 8/8 ✅ |
 | B — Melhorias visuais | 4/6 ✅ |
 | C — Conteúdo base | Parcial em todas as áreas |
 | D — Narrativa e drama | **✅ Completa** |
-| E — Mecânicas de combate | **✅ Completa** (8/8 mecânicas) |
-| E — Cenas situacionais | 4/7 ✅ (C/D/E faltando) |
+| E — Mecânicas de combate | **✅ Completa** (8/8 mecânicas + `loss_scene` + `civilians_present`) |
+| E — Cenas situacionais | **✅ 7/7 ✅** |
 
 **Prioridades recomendadas para a próxima sessão:**
-1. Bug 3 — `arrival_scene` no mapa para regiões (eventos ao viajar)
-2. Fase E Cenas C/D/E — traição Kashan, duelo Turan, caravana escravos
-3. 3.2 — Música procedural Web Audio API
-4. 3.4 — Glossário com tooltips em palavras-chave narrativas
+1. 3.2 — Música procedural Web Audio API
+2. 3.4 — Glossário com tooltips em palavras-chave narrativas
+3. Fase C — NPCs e side quests (conectar dialógos ao mapa)

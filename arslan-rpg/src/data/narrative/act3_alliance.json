@@ -307,6 +307,12 @@
             "partial_kashan_alliance": true
           },
           "xp_reward": 100
+        },
+        {
+          "id": "spy_situation",
+          "text": "[Narsus murmura] Alteza, ha um espiao aqui — ele ja reportou sua situacao real a Hodir.",
+          "condition": "knows_about_kashan_spy",
+          "next_scene": "kashan_spy_confrontation"
         }
       ]
     },
@@ -439,10 +445,7 @@
         {
           "id": "prepare_act4",
           "text": "E hora de planejar o ataque final.",
-          "next_scene": "act3_end",
-          "set_flags": {
-            "act3_complete": true
-          },
+          "next_scene": "turan_envoy_encounter",
           "faction_effects": {
             "clero_mithra": 10
           },
@@ -665,6 +668,424 @@
           "text": "Continuar para o Ato IV...",
           "next_scene": "act4_preparations",
           "set_act": 4
+        }
+      ]
+    },
+
+    {
+      "id": "kashan_region_arrival",
+      "title": "Fortaleza de Kashan",
+      "type": "narrative",
+      "text": [
+        "As muralhas ciclópicas de Kashan dominam o horizonte. Construída sobre rocha viva, a fortaleza nunca foi tomada por assalto — apenas por traicao.",
+        "Lord Hodir governa aqui com mao de ferro. Seja qual for o motivo da visita, toda entrada e registrada, todo movimento e observado.",
+        "Narsus: \"Lembre-se — aqui somos hóspedes. Por enquanto.\""
+      ],
+      "choices": [
+        {
+          "id": "explore_kashan_map",
+          "text": "Explorar a fortaleza.",
+          "navigate_to_map": true,
+          "xp_reward": 15
+        }
+      ]
+    },
+
+    {
+      "id": "sindhura_region_arrival",
+      "title": "Reino de Sindhura",
+      "type": "narrative",
+      "text": [
+        "O calor muda assim que a fronteira e cruzada. O ar e mais úmido, mais pesado. Os templos aqui sao cobertos de ouro e flores.",
+        "Sindhura e um reino de contrastes — grandiosidade e pobreza lado a lado, elefantes de guerra nas ruas ao lado de mendicantes.",
+        "Elam observa tudo com olhos arregalados. 'E diferente de tudo que conheco.'"
+      ],
+      "choices": [
+        {
+          "id": "explore_sindhura_map",
+          "text": "Explorar o reino.",
+          "navigate_to_map": true,
+          "xp_reward": 15
+        }
+      ]
+    },
+
+    {
+      "id": "kashan_spy_confrontation",
+      "title": "O Espiao de Hodir",
+      "type": "narrative",
+      "text": [
+        "Narsus puxa Arslan para um canto enquanto Hodir consulta seus conselheiros.",
+        "\"O espiao que o mensageiro mencionou — ele esta nesta sala. Vi ele entregar um bilhete a Hodir enquanto voces negociavam. Hodir ja sabe que voce tem menos de trinta homens.\"",
+        "Daryun coloca a mao na espada. \"Entao Hodir esta nos tolerando por algum motivo. Ou esperando o momento certo.\"",
+        "\"Ou,\" Narsus continua, \"podemos usar isso a nosso favor.\""
+      ],
+      "choices": [
+        {
+          "id": "expose_spy_to_hodir",
+          "text": "Confrontar Hodir diretamente: 'Sei que voce sabe. E sei quem e o espiao.'",
+          "next_scene": "hodir_spy_exposed",
+          "character_score": 3
+        },
+        {
+          "id": "flee_kashan_quietly",
+          "text": "Sair agora — discretamente — antes que ele decida agir.",
+          "next_scene": "kashan_betrayal"
+        }
+      ]
+    },
+
+    {
+      "id": "hodir_spy_exposed",
+      "title": "Cartas na Mesa",
+      "type": "narrative",
+      "text": [
+        "Hodir olha para voce por um longo segundo. Depois — ri.",
+        "\"Impressionante. Eu esperava que voce nao soubesse.\" Ele se reclina. \"O espiao e inutil agora. Voce pode ir embora, ou...'",
+        "Uma pausa deliberada. '...posso oferecer os 500 soldados que mencionei antes. Mas agora quero algo diferente em troca. Sua honestidade. Um principe que se recusa a fingir e raro, Arslan.\"",
+        "Narsus nao consegue esconder a surpresa. Daryun tampouco."
+      ],
+      "choices": [
+        {
+          "id": "accept_hodir_respect",
+          "text": "\"Pars nao precisa de um rei que mente para seus proprios aliados.\"",
+          "next_scene": "gieve_encounter",
+          "faction_effects": { "nobreza_pars": 25 },
+          "set_flags": { "full_kashan_alliance": true, "hodir_respects_arslan": true },
+          "character_score": 5,
+          "xp_reward": 200
+        }
+      ]
+    },
+
+    {
+      "id": "kashan_betrayal",
+      "title": "A Traicao em Kashan",
+      "type": "narrative",
+      "text": [
+        "Os portoes de Kashan se fecham atras de voces.",
+        "\"Guardas!\" A voz de Hodir ecoa no patio. \"O principe e seus homens nao deixarao a fortaleza.\"",
+        "Narsus ja esta se movendo. \"Os cavalos estao nos estabulos, noroeste. Tres minutos de corrida.\"",
+        "Daryun desembainha. \"Eu abro caminho. Voces correm.\""
+      ],
+      "choices": [
+        {
+          "id": "run_for_horses",
+          "text": "Correr. Agora.",
+          "next_scene": "post_kashan_escape",
+          "start_combat": {
+            "id": "kashan_escape",
+            "name": "Fuga de Kashan",
+            "win_condition": "survive_turns",
+            "survive_turns": 4,
+            "win_condition_text": "Aguente 4 turnos enquanto Narsus e Elam alcancam os cavalos.",
+            "wave_on_turn": {
+              "turn": 3,
+              "text": "Mais guardas chegam pelo corredor leste.",
+              "enemies": [
+                { "name": "Guarda de Kashan", "hp": 20, "ca": 15, "pa": 2, "weapon": { "damage": "1d8+2" }, "ai": "aggressive_simple" },
+                { "name": "Guarda de Kashan", "hp": 20, "ca": 15, "pa": 2, "weapon": { "damage": "1d8+2" }, "ai": "aggressive_simple" }
+              ]
+            },
+            "enemies": [
+              { "name": "Guarda de Kashan", "hp": 20, "ca": 15, "pa": 2, "weapon": { "damage": "1d8+2" }, "ai": "aggressive_simple" },
+              { "name": "Guarda de Kashan", "hp": 20, "ca": 15, "pa": 2, "weapon": { "damage": "1d8+2" }, "ai": "aggressive_simple" },
+              { "name": "Guarda de Kashan", "hp": 20, "ca": 15, "pa": 2, "weapon": { "damage": "1d8+2" }, "ai": "aggressive_simple" }
+            ],
+            "xp_reward": 180
+          }
+        }
+      ]
+    },
+
+    {
+      "id": "post_kashan_escape",
+      "title": null,
+      "type": "narrative",
+      "text": [
+        "Os quatro cavalos atravessam os portoes antes que possam ser fechados. Uma flecha passa raspando o elmo de Daryun.",
+        "Quando voces param para respirar a uma milha de Kashan, Narsus ja esta ajustando o mapa.",
+        "\"Isso foi inconveniente.\" Ele vira o mapa. \"Mas aprendemos o suficiente. E Kashan nao tem exercito para nos perseguir — o cerco lusitano ainda esta la fora. Continuemos.\""
+      ],
+      "choices": [
+        {
+          "id": "regroup_after_escape",
+          "text": "O que agora, Narsus?",
+          "next_scene": "gieve_encounter",
+          "set_flags": { "escaped_kashan": true },
+          "xp_reward": 80
+        }
+      ]
+    },
+
+    {
+      "id": "turan_envoy_encounter",
+      "title": "O Mensageiro das Estepes",
+      "type": "narrative",
+      "text": [
+        "Na estrada de saida, um jinete solitario bloqueia o caminho. Trajes das estepes — Turan.",
+        "Ele nao saca arma. Entrega um rolo de couro lacrado.",
+        "A mensagem e curta: 'Bahram, Lider das Tribos de Turan, convida o Principe de Pars a provar seu valor. Um duelo. Apenas voce. O vencedor determina se ha algo a discutir.'",
+        "Narsus le duas vezes. '\"Bahram nao negocia. Ele avalia. Se voce vencer ou perder com honra, a conversa acontece. Se recusar... nao ha conversa.\"'"
+      ],
+      "choices": [
+        {
+          "id": "seek_turan_duel",
+          "text": "\"Aceito o desafio. Onde encontro Bahram?\"",
+          "next_scene": "turan_duel_scene",
+          "set_flags": { "accepted_turan_challenge": true }
+        },
+        {
+          "id": "ignore_turan",
+          "text": "\"Nao temos tempo para duelos. Seguimos em frente.\"",
+          "next_scene": "slave_road_encounter",
+          "character_score": -1
+        }
+      ]
+    },
+
+    {
+      "id": "turan_duel_scene",
+      "title": "O Duelo Singular",
+      "type": "narrative",
+      "text": [
+        "O acampamento de Turan e um mar de tendas escuras nas colinas. Bahram os espera no centro — um homem de quase dois metros, cicatrizes cruzando o rosto.",
+        "Ele planta a lanca no chao — gesto universal de duelo.",
+        "\"Voce, principe. So voce. Se vencer, ha o que discutir. Se perder, va embora — ainda com vida.\"",
+        "Daryun da um passo a frente. Bahram nem vira a cabeca. \"Se aquele homem der mais um passo, a conversa acaba e levamos suas cabecas.\"",
+        "Daryun para. Olha para voce. A decisao e sua."
+      ],
+      "choices": [
+        {
+          "id": "accept_duel_alone",
+          "text": "\"Aceito. Recuem, todos.\"",
+          "next_scene": "turan_duel_outcome",
+          "start_combat": {
+            "id": "turan_duel",
+            "name": "Duelo Singular com Bahram",
+            "win_condition": "eliminate_all",
+            "party_locked": true,
+            "loss_scene": "turan_duel_loss",
+            "enemies": [
+              {
+                "name": "Bahram de Turan",
+                "hp": 42, "ca": 15, "pa": 3,
+                "attributes": { "FOR": 17, "DES": 16, "CON": 15, "INT": 12, "SAB": 13, "CAR": 14 },
+                "weapon": { "name": "Sabre das Estepes", "damage": "1d10+3", "bonus_atk": 2 },
+                "ai": "tactical_boss",
+                "mid_combat_events": [
+                  {
+                    "id": "bahram_60",
+                    "trigger": "boss_hp_pct_60",
+                    "triggered": false,
+                    "text": "Bahram recua um passo — nao por medo, mas para avaliar. \"Voce luta diferente dos outros principes que conheci.\""
+                  },
+                  {
+                    "id": "bahram_arslan_low",
+                    "trigger": "arslan_hp_below_40pct",
+                    "triggered": false,
+                    "text": "Bahram poderia acabar com isso agora. Mas espera — olhando para voce. \"Levante-se, principe. Nao termina assim.\""
+                  }
+                ]
+              }
+            ],
+            "xp_reward": 300
+          }
+        },
+        {
+          "id": "decline_duel",
+          "text": "\"Meus homens combatem juntos. Nao aceito duelos isolados.\"",
+          "next_scene": "turan_duel_loss",
+          "character_score": -2
+        }
+      ]
+    },
+
+    {
+      "id": "turan_duel_outcome",
+      "title": "Pos-Duelo",
+      "type": "narrative",
+      "text": [
+        "Bahram esta no chao, sua propria lanca apontada para o peito por voce.",
+        "O acampamento inteiro segura a respiracao.",
+        "\"Finalize,\" ele diz — sem medo, sem suplicar. Como se o resultado fosse apenas mais um fato."
+      ],
+      "choices": [
+        {
+          "id": "spare_bahram",
+          "text": "Abaixar a arma.",
+          "next_scene": "turan_duel_win",
+          "character_score": 8
+        },
+        {
+          "id": "execute_bahram",
+          "text": "Finalizar.",
+          "next_scene": "turan_duel_execute",
+          "character_score": -12
+        }
+      ]
+    },
+
+    {
+      "id": "turan_duel_win",
+      "title": "Alianca de Turan",
+      "type": "narrative",
+      "text": [
+        "Bahram olha para voce por um longo tempo. Depois ri — genuino, pela primeira vez.",
+        "\"Voce nao e o que eu esperava.\" Ele se levanta, sem ajuda. \"Um principe que ganha um duelo e nao mata. Ou e tolo ou e algo que nao vi antes.\"",
+        "\"Turan lutara ao seu lado, Arslan de Pars. Nao porque precisamos — mas porque queremos ver onde isso vai.\""
+      ],
+      "choices": [
+        {
+          "id": "accept_turan_alliance",
+          "text": "\"Pars e Turan, lado a lado.\"",
+          "next_scene": "slave_road_encounter",
+          "faction_effects": { "turan": 40 },
+          "set_flags": { "turan_alliance": true },
+          "xp_reward": 200
+        }
+      ]
+    },
+
+    {
+      "id": "turan_duel_execute",
+      "title": "Um Erro Irreversivel",
+      "type": "narrative",
+      "text": [
+        "O acampamento de Turan fica em silencio absoluto.",
+        "Depois, um dos guerreiros cospe no chao. 'Leve seus homens e va, principe. Turan nao tem negocios com assassinos de duelos.'",
+        "Narsus fecha os olhos por um momento. Daryun nao diz nada — mas voce ve a expressao dele."
+      ],
+      "choices": [
+        {
+          "id": "leave_turan",
+          "text": "Partir em silencio.",
+          "next_scene": "slave_road_encounter",
+          "faction_effects": { "turan": -30 },
+          "set_flags": { "turan_permanently_closed": true },
+          "xp_reward": 30
+        }
+      ]
+    },
+
+    {
+      "id": "turan_duel_loss",
+      "title": "Derrota Honrada",
+      "type": "narrative",
+      "text": [
+        "Bahram abaixa a lanca antes do golpe final.",
+        "\"Voce lutou bem para um homem das pedras.\" Ele faz sinal para seus homens. \"Van embora. Ainda com vida.\"",
+        "Narsus caminha ao seu lado na saida. \"Nao foi uma derrota total. Bahram tem uma especie de... respeito por quem nao foge. Talvez haja outra oportunidade mais tarde.\""
+      ],
+      "choices": [
+        {
+          "id": "leave_turan_loss",
+          "text": "Continuar o caminho.",
+          "next_scene": "slave_road_encounter",
+          "xp_reward": 50
+        }
+      ]
+    },
+
+    {
+      "id": "slave_road_encounter",
+      "title": "A Estrada",
+      "type": "narrative",
+      "text": [
+        "Na estrada de volta ao acampamento, uma fila de correntes ecoa antes de ser vista.",
+        "Uma caravana para na estrada diante de voces. Dezesseis escravos acorrentados uns aos outros, guardados por oito soldados armados.",
+        "\"Alguem bloqueou a estrada,\" o lider dos guardas olha para voces. \"Saiam do caminho.\"",
+        "Narsus fala baixo: \"Os escravos estao no meio. Qualquer ataque descuidado...'",
+        "Ele nao precisa terminar a frase."
+      ],
+      "choices": [
+        {
+          "id": "attack_caravan_careful",
+          "text": "Atacar com cuidado. Ninguem acorrentado se machuca.",
+          "next_scene": "post_caravan_fight",
+          "start_combat": {
+            "id": "slave_caravan",
+            "name": "Libertacao da Caravana",
+            "civilians_present": true,
+            "civilians": {
+              "count": 16,
+              "name": "Escravos Acorrentados",
+              "hp": 16
+            },
+            "enemies": [
+              { "name": "Guarda da Caravana", "hp": 18, "ca": 14, "pa": 2, "weapon": { "damage": "1d8+2" }, "ai": "defensive" },
+              { "name": "Guarda da Caravana", "hp": 18, "ca": 14, "pa": 2, "weapon": { "damage": "1d8+2" }, "ai": "defensive" },
+              { "name": "Guarda da Caravana", "hp": 18, "ca": 14, "pa": 2, "weapon": { "damage": "1d8+2" }, "ai": "defensive" },
+              { "name": "Guarda da Caravana", "hp": 18, "ca": 14, "pa": 2, "weapon": { "damage": "1d8+2" }, "ai": "defensive" },
+              {
+                "name": "Lider da Caravana",
+                "hp": 32, "ca": 16, "pa": 3,
+                "weapon": { "damage": "1d10+3" },
+                "ai": "cowardly",
+                "passive": "Covarde: se HP < 30%, tenta fugir"
+              }
+            ],
+            "xp_reward": 220,
+            "gold_reward": "4d6"
+          }
+        },
+        {
+          "id": "negotiate_caravan",
+          "text": "[Diplomata CAR 15] Convencer os guardas de que nao vale a pena.",
+          "condition": "class == diplomat AND CAR >= 15",
+          "next_scene": "caravan_no_fight"
+        },
+        {
+          "id": "ignore_caravan",
+          "text": "Nao e nosso problema agora. Continuar.",
+          "next_scene": "act3_end",
+          "character_score": -5
+        }
+      ]
+    },
+
+    {
+      "id": "caravan_no_fight",
+      "title": "Palavras que Cortam Mais que Espadas",
+      "type": "narrative",
+      "text": [
+        "Voce se dirige ao lider com calma — descrevendo a forca do seu grupo, o numero de generais, a batalha de Kashan que acabou de acontecer.",
+        "Os guardas trocam olhares. O lider avalia a forca do grupo diante dele.",
+        "\"Nao pagamos suficiente para isso.\" Ele joga as chaves das correntes no chao e vai embora com seus homens.",
+        "Os escravos ficam parados em silencio. Depois um deles — uma mulher jovem — pergunta: 'Somos livres?'"
+      ],
+      "choices": [
+        {
+          "id": "free_caravan_diplomatic",
+          "text": "\"Sao livres. Podem ir para onde quiserem.\"",
+          "next_scene": "act3_end",
+          "faction_effects": { "escravos_libertos": 20 },
+          "character_score": 5,
+          "set_flags": { "caravan_freed_diplomatic": true, "act3_complete": true },
+          "xp_reward": 200
+        }
+      ]
+    },
+
+    {
+      "id": "post_caravan_fight",
+      "title": "Correntes Quebradas",
+      "type": "narrative",
+      "text": [
+        "Os guardas fugiram ou caem. Daryun quebra as correntes com um golpe.",
+        "Dezesseis pessoas olham para voces sem saber o que fazer. Estao com medo — de voces tambem.",
+        "Narsus distribui racoes que sobraram. 'Uma coisa e libertar. Outra e que eles tenham para onde ir.'",
+        "Arslan olha para eles. 'Pars sera diferente. Isso e uma promessa.'"
+      ],
+      "choices": [
+        {
+          "id": "promise_freed_slaves",
+          "text": "\"Quando Ecbatana cair, voces terao um lugar em Pars.\"",
+          "next_scene": "act3_end",
+          "faction_effects": { "escravos_libertos": 25 },
+          "character_score": 6,
+          "set_flags": { "caravan_freed_combat": true, "act3_complete": true },
+          "xp_reward": 150
         }
       ]
     }

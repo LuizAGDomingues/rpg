@@ -525,6 +525,25 @@
           }
         }
       ]
+    },
+
+    {
+      "id": "dahman_region_arrival",
+      "title": "Vilarejo de Dahman",
+      "type": "narrative",
+      "text": [
+        "O vilarejo de Dahman — um punhado de casas de pedra calmas, distante do tumulto da capital.",
+        "Aqui Narsus viveu seu exilio. A paz deste lugar contrasta estranhamente com tudo que aconteceu desde que voce partiu.",
+        "Elam acena de longe, reconhecendo o grupo. Alguns moradores observam com curiosidade discreta."
+      ],
+      "choices": [
+        {
+          "id": "explore_dahman",
+          "text": "Explorar o vilarejo.",
+          "navigate_to_map": true,
+          "xp_reward": 10
+        }
+      ]
     }
   ]
 }

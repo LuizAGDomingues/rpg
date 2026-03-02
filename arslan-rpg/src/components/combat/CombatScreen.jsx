@@ -555,9 +555,14 @@ export default function CombatScreen() {
           if (hpDelta !== 0) store.updateGeneralHP(ally.id, hpDelta);
         }
       });
+    } else {
+      // Defeat: check for loss_scene override
+      if (combat?.loss_scene) {
+        store.setCurrentScene(combat.loss_scene);
+      }
     }
     store.endCombat();
-  }, [result, store, allies, player, recruitedGenerals]);
+  }, [result, store, allies, player, recruitedGenerals, combat]);
 
   if (!combat) return null;
 
@@ -695,6 +700,11 @@ export default function CombatScreen() {
       {combat?.party_locked && (
         <div className={styles.partyLocked}>
           ⚔ Duelo Singular — Apenas Arslan combate
+        </div>
+      )}
+      {combat?.civilians_present && (
+        <div className={styles.civiliansWarning}>
+          ⚠ {combat.civilians?.count || 0} civis no campo de batalha — Cuidado com ataques em area
         </div>
       )}
 
