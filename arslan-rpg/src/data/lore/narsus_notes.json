@@ -1,0 +1,50 @@
+[
+  {
+    "id": "note_kingdom_theory",
+    "title": "Sobre a Natureza dos Reinos",
+    "unlock_flag": "narsus_recruited",
+    "author": "Narsus",
+    "text": "Um reino nao e uma terra. Um reino e um contrato entre governante e governado — tacito, fragil, mas mais duradouro do que qualquer exercito. Andragoras quebrou esse contrato ao ignorar seu povo em favor de sua corte. Arslan precisara reaprender o que seu pai esqueceu: que o poder verdadeiro nao vem da forca, mas da legitimidade que o povo concede.\n\nA escravidao e o sintoma mais visivel dessa ruptura. Um reino onde metade da populacao nao tem nada a perder nao tem como manter-se unido quando os tempos dificultam. Os lusitanos nao conquistaram Pars pela forca de seus exercitos — conquistaram pela fraqueza de nossas fundacoes.",
+    "category": "politica"
+  },
+  {
+    "id": "note_military_doctrine",
+    "title": "Doutrina Militar de Pars — Fraquezas",
+    "unlock_flag": "narsus_military_discussed",
+    "author": "Narsus",
+    "text": "O exercito de Pars e magnifico na campanha aberta — cavalaria pesada, arceiros de elite, veteranos experientes. E precisamente por isso que os lusitanos escolheram Atropatene: o terreno de colinas e bruma neutralizou todas essas vantagens.\n\nUma licao que Kharlan conhecia e usou contra nos. Para reconquistar Ecbatana, precisaremos de estrategias que nossos inimigos nao esperem. Surpresa e velocidade valem mais do que numero em guerra de restauracao. Arslan nao tem exercito suficiente para combater os lusitanos diretamente — mas tem o que eles nao tem: legitimidade e a simpatia da populacao local.",
+    "category": "tatica"
+  },
+  {
+    "id": "note_silvermask_analysis",
+    "title": "Analise — Mascara de Prata",
+    "unlock_flag": "silvermask_encountered",
+    "author": "Narsus",
+    "text": "Ha algo perturbador no cavaleiro que chamam de Mascara de Prata. Sua tecnica e primorosa — acima da media lusitana, muito acima. Mas nao e isso que me perturba.\n\nE a forma como ele olha para Arslan. Nao e o olhar de um inimigo que ve uma ameaca. E o olhar de alguem que ve uma questao nao respondida. Investigar sua identidade sera essencial antes do confronto final — ha uma variavel nessa equacao que ainda nao compreendo completamente.",
+    "category": "inteligencia"
+  },
+  {
+    "id": "note_etoile_paradox",
+    "title": "O Paradoxo de Etoile",
+    "unlock_flag": "etoile_met",
+    "author": "Narsus",
+    "text": "A soldada lusitana que Arslan insiste em nao chamar de inimiga representa um problema filosofico interessante. Ela e sinceramente boa — honesta, corajosa, fiel aos seus principios. E precisamente por isso que e perigosa.\n\nFanatismo de pessoas ruins e previsivel e contornavel. Fanatismo de pessoas genuinamente virtuosas e muito mais dificil de combater, porque apela a nossa propria moralidade. Arslan esta certo em trata-la com respeito. A questao e se esse respeito sobrevivera ao confronto inevitavel que a guerra demandara.",
+    "category": "observacao"
+  },
+  {
+    "id": "note_slavery_economics",
+    "title": "A Economica da Escravidao",
+    "unlock_flag": "slavery_discussed",
+    "author": "Narsus",
+    "text": "A nobreza de Pars resistira a abolicao da escravidao com toda a forca que tiver. Nao por malicia, mas por interesse — e esse e o pior tipo de resistencia, porque e racional.\n\nMinha proposta ao principe: liberdade gradual com compensacao, combinada com um novo sistema de servico remunerado. Economicamente inferior para os nobres no curto prazo, mas politicamente imprescindivel. Uma Pars com cem mil escravos libertos que lutem por ela vale mais do que uma Pars com cem mil escravizados esperando a primeira oportunidade de mudar de lado.\n\nE um argumento que Arslan pode usar com a nobreza: nao apelo a moralidade, mas ao interesse proprio. Pragmatismo pode salvar mais vidas do que principios isolados.",
+    "category": "politica"
+  },
+  {
+    "id": "note_arslan_potential",
+    "title": "Sobre o Principe — Nota Pessoal",
+    "unlock_flag": "act3_complete",
+    "author": "Narsus",
+    "text": "Tenho me perguntado, as vezes, se eu mesmo acredito que Arslan pode reunificar Pars. A resposta honesta: nao sei. O que sei e que ele tem algo que raramente vejo em realeza — a capacidade de ser mudado por suas experiencias. A maioria dos reis que conheci tinha convicoes fixas antes de assumir o trono. Arslan ainda esta aprendendo o que acredita.\n\nIsso o torna imprevisivel para nos, seus aliados. Mas tambem o torna extraordinariamente perigoso para nossos inimigos, que presumem saber o que ele fara. Um principe que pode surpreender a si mesmo pode certamente surpreender seus adversarios.\n\nEstou — e com relutancia que admito isto — otimista.",
+    "category": "pessoal"
+  }
+]

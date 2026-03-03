@@ -1,0 +1,108 @@
+[
+  {
+    "id": "camp_narsus_maps",
+    "title": "Narsus Estuda os Mapas",
+    "requires_general": "narsus",
+    "trigger_flag": "narsus_recruited",
+    "not_flag": "camp_narsus_maps_seen",
+    "set_flag": "camp_narsus_maps_seen",
+    "text": "Tarde da noite, Arslan encontra Narsus debrucado sobre mapas e rolos de pergaminho, tracando linhas com um estilete. 'Nao consigo dormir sabendo que ha problemas taticos por resolver,' ele murmura sem olhar para cima. 'Venha, Alteza. Deixe-me explicar o que estou pensando.'",
+    "reward": { "xp": 40 },
+    "choices": [
+      {
+        "text": "Sentar e ouvir os planos de Narsus",
+        "result": "Narsus explica sua estrategia com paixao crescente. Sua mente e como uma maquina de guerra — cada detalhe calculado, cada contingencia prevista. Voce aprende mais nessa hora do que em semanas de campanha.",
+        "reward": { "xp": 40, "character_score": 2 }
+      },
+      {
+        "text": "Pedir que Narsus descanse — a campanha precisa dele",
+        "result": "'Voce tem razao, Alteza,' Narsus concorda com um sorriso raro. 'E bom saber que o principe se preocupa com seus conselheiros. Nao e uma qualidade comum em realeza.' Ele enrola os mapas.",
+        "reward": { "xp": 20, "character_score": 5, "faction_pars": 2 }
+      }
+    ]
+  },
+  {
+    "id": "camp_daryun_vigilia",
+    "title": "Daryun de Guarda",
+    "requires_general": "daryun",
+    "trigger_flag": "daryun_recruited",
+    "not_flag": "camp_daryun_vigilia_seen",
+    "set_flag": "camp_daryun_vigilia_seen",
+    "text": "Voce desperta no meio da noite e encontra Daryun em pe, olhando para a escuridao alem do acampamento. Ele nao dormiu. 'Em Atropatene, quando eu era jovem, aprendi que e no momento em que o guerreiro baixa a guarda que o inimigo ataca,' ele diz sem se virar. Sua voz carrega o peso de muitas batalhas.",
+    "choices": [
+      {
+        "text": "Ficar acordado com Daryun por um tempo",
+        "result": "Voces ficam em silencio por um longo momento, ouvindo os sons da noite. Nao ha necessidade de palavras — a presenca de um ao lado do outro diz tudo que precisa ser dito sobre lealdade.",
+        "reward": { "xp": 30, "character_score": 3 }
+      },
+      {
+        "text": "Ordenar que Daryun durma — voce vai fazer a guarda",
+        "result": "Daryun hesita, depois inclina a cabeca. 'Como Vossa Alteza desejar.' Mas voce ve nos olhos dele algo que raramente aparece — gratidao genuina. Ele dorme pela primeira vez em dias.",
+        "reward": { "xp": 25, "character_score": 8, "faction_pars": 3 }
+      }
+    ]
+  },
+  {
+    "id": "camp_gieve_music",
+    "title": "A Musica de Gieve",
+    "requires_general": "gieve",
+    "trigger_flag": "gieve_recruited",
+    "not_flag": "camp_gieve_music_seen",
+    "set_flag": "camp_gieve_music_seen",
+    "text": "Gieve toca seu alaude suavemente perto do fogo, uma melodia que voce nao reconhece. Nao e uma cancao de batalha nem uma balada famosa — e algo mais pessoal, mais solitario. Quando percebe que esta sendo observado, ele sorri. 'Todo artista tem suas cancoes que ninguem jamais escuta, Alteza. Esta e para as pessoas que ficaram para tras.'",
+    "choices": [
+      {
+        "text": "Pedir para ouvir mais",
+        "result": "Gieve toca por mais uma hora, as vezes cantando baixinho. Voce descobre que sob a fachada do artista exibicionista ha uma pessoa com perdas reais e memorias que duram. No final ele diz: 'Obrigado, Alteza. Era so o que eu precisava.'",
+        "reward": { "xp": 25, "character_score": 4 }
+      },
+      {
+        "text": "Perguntar quem eram essas pessoas",
+        "result": "Gieve para de tocar. Por um momento, o rosto animado desaparece. 'Pessoas que eu decepcionei,' ele responde. 'Antes de me tornar... isto.' Ele indica a si mesmo. 'Mas isto e o suficiente.' A musica recomeça.",
+        "reward": { "xp": 35, "flag": "gieve_backstory_known" }
+      }
+    ]
+  },
+  {
+    "id": "camp_elam_training",
+    "title": "Elam em Treinamento Noturno",
+    "requires_general": "elam",
+    "trigger_flag": "elam_recruited",
+    "not_flag": "camp_elam_training_seen",
+    "set_flag": "camp_elam_training_seen",
+    "text": "Voce encontra Elam praticando arco no escuro, acertando alvos que voce mal consegue ver. O jovem para quando percebe sua presenca. 'Eu quero ser digno do grupo,' ele explica, sem desculpas. 'Daryun e Narsus sao lendas. Eu ainda tenho muito para aprender.' Ha determinacao em seus olhos que vai alem da idade.",
+    "choices": [
+      {
+        "text": "Encorajar Elam — ele ja provou seu valor",
+        "result": "'Obrigado, Alteza,' Elam diz, e pela primeira vez desde que voce o conhece, ele parece realmente acreditar nas proprias habilidades. 'Se o principe acredita em mim, entao eu tambem preciso acreditar.' Algo muda nele naquele momento.",
+        "reward": { "xp": 30, "character_score": 5, "flag": "elam_encouraged" }
+      },
+      {
+        "text": "Treinar com Elam por um tempo",
+        "result": "Voces treinam lado a lado na escuridao. Elam e um professor paciente, e voce descobre que ha tecnicas de arco que nunca aprendera com os mestres do palacio. Antes do amanhecer, ambos sao um pouco melhores do que eram.",
+        "reward": { "xp": 50, "character_score": 3 }
+      }
+    ]
+  },
+  {
+    "id": "camp_falangies_prayer",
+    "title": "Falangies Ora para Mithra",
+    "requires_general": "falangies",
+    "trigger_flag": "falangies_recruited",
+    "not_flag": "camp_falangies_prayer_seen",
+    "set_flag": "camp_falangies_prayer_seen",
+    "text": "Antes do amanhecer, voce encontra Farangis ajoelhada diante de um pequeno altar portatil de Mithra, seus labios movendo-se em oracao silenciosa. A sacerdotisa-arqueira parece completamente em paz — um contraste com a mulher formidavel que voce ve em batalha. Quando ela termina, ela se vira para voce sem surpresa. 'Voce tambem tem dificuldade para dormir, Alteza?'",
+    "choices": [
+      {
+        "text": "Pedir que ela ore por voce tambem",
+        "result": "Farangis consente com um aceno gracioso. Sua oracao e curta mas profunda — palavras sobre forca nao para conquistar, mas para proteger. Quando ela termina, voce sente algo que nao sentia ha muito tempo: esperanca.",
+        "reward": { "xp": 30, "hp_restore_percent": 0.25, "character_score": 4 }
+      },
+      {
+        "text": "Perguntar se ela acredita que Mithra vos guia",
+        "result": "'Mithra nao move pecas num tabuleiro, Alteza,' ela responde com cuidado. 'Ele da forca para que os justos faca o que precisa ser feito. A escolha ainda e de cada um.' Uma teologia mais sofisticada do que voce esperava de uma sacerdotisa guerreira.",
+        "reward": { "xp": 25, "character_score": 3 }
+      }
+    ]
+  }
+]

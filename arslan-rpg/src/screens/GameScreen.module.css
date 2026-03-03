@@ -98,7 +98,43 @@
   border: 1px solid var(--gold-dark);
   border-radius: var(--radius-sm);
   color: var(--gold-light);
-  animation: fadeIn 0.5s ease-out;
+  animation: slideInBadge 0.4s ease-out;
+}
+
+.questNavWrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.questBadge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--crimson-light);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  font-weight: 700;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+  pointer-events: none;
+  animation: popIn 0.3s ease-out;
+}
+
+@keyframes slideInBadge {
+  from { opacity: 0; transform: translateX(8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0); }
+  70% { transform: scale(1.2); }
+  100% { transform: scale(1); }
 }
 
 @keyframes fadeIn {
@@ -135,6 +171,62 @@
   font-size: 0.9rem;
   animation: fadeIn 0.4s ease-out;
   margin: var(--spacing-sm) 0 0;
+}
+
+/* Camp Event Modal */
+.campEventOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 150;
+  animation: fadeIn 0.3s ease;
+}
+
+.campEventPanel {
+  max-width: 520px;
+  width: 90%;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-xl);
+}
+
+.campEventHeader {
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.campEventLabel {
+  font-size: 0.75rem;
+  color: var(--gold-dark);
+  font-family: var(--font-heading);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.campEventTitle {
+  font-family: var(--font-heading);
+  color: var(--gold);
+  font-size: 1.15rem;
+  margin-top: var(--spacing-xs);
+}
+
+.campEventText {
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  line-height: 1.7;
+  font-style: italic;
+  margin: var(--spacing-md) 0;
+}
+
+.campEventChoices {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
 }
 
 @media (max-width: 600px) {

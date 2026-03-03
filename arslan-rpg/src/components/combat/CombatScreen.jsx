@@ -13,6 +13,7 @@ import Button from '../ui/Button';
 import ProgressBar from '../ui/ProgressBar';
 import { OrnamentDivider } from '../ui/Ornament';
 import styles from './CombatScreen.module.css';
+import { playSFX } from '../../engine/audioEngine';
 
 const STATUS_ICONS = {
   bleed: '🩸', poison: '☠', stunned: '💫', derrubado: '⬇',
@@ -185,6 +186,7 @@ export default function CombatScreen() {
       const xp = combat?.xp_reward || calculateXPReward(combat?.enemies || []);
       const gold = calculateGoldReward(combat?.enemies || [], combat?.gold_reward);
       setResult({ type: 'victory', xp, gold });
+      playSFX('xp');
       addLog(`\n🏆 VITORIA! +${xp} XP, +${gold} ouro`);
       // Autosave on victory
       store.saveToSlot('auto');
@@ -234,6 +236,8 @@ export default function CombatScreen() {
       const newHP = Math.max(0, target.hp - dmg.total);
       setEnemies((prev) => prev.map((e) => e.id === target.id ? { ...e, hp: newHP } : e));
       flashDamage(target.id);
+      playSFX('attack');
+      if (newHP <= 0) playSFX('death');
       addLog(`${currentAlly.name} ataca ${target.name}! (d20: ${attack.roll}+${attack.attackMod}=${attack.total} vs CA ${target.ca}) ${attack.isCrit ? '💥 CRITICO! ' : ''}Dano: ${dmg.total}`);
       if (newHP <= 0) addLog(`  ☠ ${target.name} foi derrotado!`);
       if (combat?.win_condition === 'land_N_hits') {
@@ -263,6 +267,8 @@ export default function CombatScreen() {
       const newHP = Math.max(0, target.hp - reduced);
       setEnemies((prev) => prev.map((e) => e.id === target.id ? { ...e, hp: newHP } : e));
       flashDamage(target.id);
+      playSFX('attack');
+      if (newHP <= 0) playSFX('death');
       addLog(`${currentAlly.name} faz ataque rapido em ${target.name}! (${attack.total} vs CA ${target.ca}) Dano: ${reduced}`);
       if (newHP <= 0) addLog(`  ☠ ${target.name} foi derrotado!`);
       if (combat?.win_condition === 'land_N_hits') {
@@ -307,6 +313,7 @@ export default function CombatScreen() {
       setAllies((prev) => prev.map((a) =>
         a.id === currentAlly.id ? { ...a, hp: Math.min(a.hp_max, a.hp + healAmount) } : a
       ));
+      playSFX('heal');
       addLog(`🧪 ${currentAlly.name} usa ${item.name}! Recupera ${healAmount} HP.`);
     } else if (item.effect === 'cure_poison') {
       addLog(`🧪 ${currentAlly.name} usa ${item.name}! Veneno removido.`);
@@ -440,6 +447,7 @@ export default function CombatScreen() {
               const newHP = Math.max(0, updated[idx].hp - action.damage);
               updated[idx] = { ...updated[idx], hp: newHP };
               flashDamage(updated[idx].id);
+              playSFX('hit');
               addLog(`${enemy.name} ataca ${updated[idx].name}! (d20: ${action.attack.roll}) ${action.attack.isCrit ? '💥 CRITICO! ' : ''}Dano: ${action.damage}`);
               if (newHP <= 0) addLog(`  ⚠ ${updated[idx].name} caiu!`);
 

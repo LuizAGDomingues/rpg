@@ -1,0 +1,95 @@
+{
+  "id": "ishtar_dialogue",
+  "npc": "ishtar_dancer",
+  "nodes": [
+    {
+      "id": "start",
+      "text": "Cuidado, principe. Qualquer lusitano pode estar nos observando. Sorria. Pareca um cliente comum.",
+      "mood_check": true,
+      "branches": {
+        "suspicious": { "text": "Cuidado, principe. Nao e seguro falar aqui abertamente." },
+        "neutral": { "text": "Cuidado, principe. Qualquer lusitano pode estar nos observando. Sorria. Pareca um cliente comum." },
+        "friendly": { "text": "Principe. Voce arriscou vir pessoalmente. Isso diz algo sobre voce." }
+      },
+      "options": [
+        { "id": "ask_intel", "text": "Quero informacoes sobre o palacio.", "leads_to": "ishtar_palace_intel" },
+        { "id": "ask_resistance", "text": "Como esta a resistencia em Ecbatana?", "leads_to": "ishtar_resistance" },
+        { "id": "ask_blueprint", "text": "Existe uma planta do palacio?", "leads_to": "ishtar_blueprint", "condition": "act4_started" },
+        { "id": "exit", "text": "Ate mais. Cuidado.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "ishtar_palace_intel",
+      "text": "Os lusitanos usam o palacio como quartel-general. O Mascarado de Prata tem aposentos na ala leste — os do antigo rei. Guarda pessoal de oito homens, turnos de quatro horas. O ponto fraco: a virada de turno, meia-noite.",
+      "set_flags": { "silvermask_schedule_known": true },
+      "options": [
+        { "id": "thanks", "text": "Meia-noite. Isso e o que precisava.", "leads_to": "exit", "xp_reward": 50 },
+        { "id": "ask_more", "text": "Ha mais?", "leads_to": "ishtar_more_intel" }
+      ]
+    },
+    {
+      "id": "ishtar_more_intel",
+      "text": "O Mascarado tem uma obsessao. Ele passa horas no subsolo do palacio — onde fica a Pedra de Rukhnabad. Busca algo. Nao sei o que. Mas parece desesperado.",
+      "set_flags": { "silvermask_rukhnabad_obsessed": true },
+      "options": [
+        { "id": "exit", "text": "Informacao valiosa. Obrigado, Ishtar.", "leads_to": "exit", "xp_reward": 30 }
+      ]
+    },
+    {
+      "id": "ishtar_resistance",
+      "text": "Viva. Uns trinta, quarenta homens e mulheres. Nobres, mercadores, ex-soldados. Escondidos em tres pontos da cidade. Nos comunicamos por rotas de danca — pareco ir a festas, mas levo mensagens.",
+      "options": [
+        { "id": "contact", "text": "Posso me reunir com eles?", "leads_to": "ishtar_resistance_meet" },
+        { "id": "support", "text": "O que precisam?", "leads_to": "ishtar_needs" }
+      ]
+    },
+    {
+      "id": "ishtar_resistance_meet",
+      "text": "E arriscado. Mas sim. Ha uma reuniao em dois dias, na cave de um mercador. Se o principe aparecer... mudaria o moral completamente. Eles sabem que estao sozinhos. Saber que o principe veio os buscaria...",
+      "set_flags": { "resistance_meeting_scheduled": true },
+      "options": [
+        { "id": "accept", "text": "Estarei la.", "leads_to": "ishtar_quest_resistance", "start_quest": { "id": "sq_resistance_ecbatana", "name": "A Resistencia de Ecbatana", "description": "Encontrar-se com a resistencia de Ecbatana e coordenar o ataque ao palacio.", "objectives": [{ "id": "obj_meeting", "text": "Participar da reuniao da resistencia" }, { "id": "obj_coordinate", "text": "Coordenar o plano de ataque" }], "rewards": { "xp": 200, "gold": 0 } } },
+        { "id": "decline", "text": "Ainda nao e o momento certo.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "ishtar_quest_resistance",
+      "text": "Direi que voce vira. Que Mithra o proteja, principe.",
+      "set_flags": { "resistance_contact_made": true },
+      "options": [
+        { "id": "exit", "text": "Ate dois dias.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "ishtar_needs",
+      "text": "Comida, principalmente. E informacoes sobre o exercito do principe. Se souberem que voce esta proximo... aguentarao mais tempo.",
+      "options": [
+        { "id": "supply", "text": "Arranjarei mantimentos.", "leads_to": "ishtar_supply_promise", "faction_effect": { "escravos_libertos": 8 } },
+        { "id": "exit", "text": "Farei o que puder.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "ishtar_supply_promise",
+      "text": "Obrigada. A resistencia aguarda o principe. Ecbatana nao esta morta ainda.",
+      "set_flags": { "resistance_supplied": true },
+      "options": [
+        { "id": "exit", "text": "Vamos recuperar esta cidade.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "ishtar_blueprint",
+      "text": "Uma planta? Sim. Memorizei o palacio em tres anos de acesso. Posso desenha-la para voce. Mas precisa de tempo. Volte amanha — e vira sozinho. Menos suspeito.",
+      "options": [
+        { "id": "accept", "text": "Voltarei amanha.", "leads_to": "ishtar_blueprint_quest", "start_quest": { "id": "sq_palace_blueprint", "name": "A Planta do Palacio", "description": "Obter a planta do palacio real desenhada por Ishtar.", "objectives": [{ "id": "obj_return", "text": "Retornar no dia seguinte para recolher a planta" }], "rewards": { "xp": 100, "gold": 0 } } },
+        { "id": "decline", "text": "Entendido.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "ishtar_blueprint_quest",
+      "text": "Ate amanha, principe. Cuidado na saida.",
+      "options": [
+        { "id": "exit", "text": "Ate amanha.", "leads_to": "exit" }
+      ]
+    }
+  ]
+}

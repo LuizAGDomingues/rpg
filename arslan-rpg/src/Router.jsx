@@ -10,6 +10,7 @@ import PartyScreen from './screens/PartyScreen';
 import FactionsScreen from './screens/FactionsScreen';
 import JournalScreen from './screens/JournalScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import CreditsScreen from './screens/CreditsScreen';
 
 export default function Router() {
   const gamePhase = useGameStore((s) => s.gamePhase);
@@ -23,6 +24,7 @@ export default function Router() {
       <Route path="/factions" element={<FactionsScreen />} />
       <Route path="/journal" element={<JournalScreen />} />
       <Route path="/settings" element={<SettingsScreen />} />
+      <Route path="/credits" element={<CreditsScreen />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

@@ -1,0 +1,81 @@
+{
+  "id": "daria_dialogue",
+  "npc": "daria_slave",
+  "nodes": [
+    {
+      "id": "start",
+      "text": "Principe. Os libertos queriam que eu viesse falar com voce. Ha decisoes que nos afetam e nao somos consultados.",
+      "mood_check": true,
+      "branches": {
+        "hostile": { "text": "Voce ignora os libertos. Isso nao pode continuar." },
+        "cautious": { "text": "Principe. Os libertos queriam que eu viesse falar com voce. Ha decisoes que nos afetam e nao somos consultados." },
+        "neutral": { "text": "Principe. Tenho vozes que precisam ser ouvidas." },
+        "friendly": { "text": "Principe Arslan. Os libertos estao gratos. Mas ha assuntos urgentes." }
+      },
+      "options": [
+        { "id": "listen", "text": "Fale. Estou ouvindo.", "leads_to": "daria_concerns", "character_score": 3 },
+        { "id": "dismiss", "text": "Ha prioridades militares agora. Voltarei a isso depois.", "leads_to": "daria_dismissed", "character_score": -3 },
+        { "id": "ask_manifesto", "text": "Ouvi que esta escrevendo um manifesto.", "leads_to": "daria_manifesto", "condition": "escravos_libertos >= 20" },
+        { "id": "exit", "text": "Preciso ir.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "daria_concerns",
+      "text": "Os libertos precisam de reconhecimento formal. Nao queremos so ser chamados de 'ex-escravos'. Somos cidadaos de Pars. Se voce for rei um dia, a escravidao nao pode continuar. Uma ordem. Um decreto. E o minimo.",
+      "options": [
+        { "id": "commit", "text": "Prometo: se eu chegar ao trono, a escravidao sera abolida em Pars.", "leads_to": "daria_promise_made", "faction_effect": { "escravos_libertos": 15, "nobreza_pars": -10 }, "character_score": 10 },
+        { "id": "cautious", "text": "Mudancas levam tempo. Faco o que posso dentro do possivel.", "leads_to": "daria_cautious_response", "faction_effect": { "escravos_libertos": 5 } },
+        { "id": "back", "text": "Entendo a urgencia. Preciso pensar.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "daria_promise_made",
+      "text": "...Voce disse isso de verdade? (pausa) Eu... obrigada, principe. Tenho 28 anos. Nasci escrava. Se voce cumprir essa promessa... sera a primeira vez que minha vida vale algo neste reino.",
+      "set_flags": { "promised_abolition": true },
+      "options": [
+        { "id": "ask_manifesto", "text": "Fale-me sobre o manifesto.", "leads_to": "daria_manifesto" },
+        { "id": "exit", "text": "Mantenho minha palavra.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "daria_cautious_response",
+      "text": "Mudancas graduais. E assim que a nobreza sempre disse que a escravidao terminaria. Ha dois seculos dizem isso. Mas entendo sua posicao, principe. Nao desisto de voce ainda.",
+      "options": [
+        { "id": "exit", "text": "Obrigado pela compreensao.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "daria_dismissed",
+      "text": "Claro. Prioridades militares. Sempre sao. Ha seculos os libertos ouvem isso. Nao se preocupe, principe. Aprendi a ser paciente.",
+      "faction_effect": { "escravos_libertos": -5 },
+      "options": [
+        { "id": "reconsider", "text": "Espere. Tem razao. Me conte o que precisa.", "leads_to": "daria_concerns", "character_score": 2 },
+        { "id": "exit", "text": "Entendido.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "daria_manifesto",
+      "text": "Sim. Documento com os direitos que os libertos exigem: cidadania, propriedade, protecao legal. Narsus leu e disse estar 'impressionantemente estruturado para alguem sem educacao formal'. Foi o maior elogio que recebi.",
+      "options": [
+        { "id": "endorse", "text": "Pode usar meu nome no manifesto.", "leads_to": "daria_endorsed", "condition": "escravos_libertos >= 30", "faction_effect": { "escravos_libertos": 10, "nobreza_pars": -8 }, "character_score": 8, "start_quest": { "id": "sq_daria_manifesto", "name": "O Manifesto dos Libertos", "description": "Apoiar o manifesto de Daria e garantir que seja reconhecido pelo conselho de guerra.", "objectives": [{ "id": "obj_endorse", "text": "Endossar o manifesto" }, { "id": "obj_distribute", "text": "Distribuir o manifesto no acampamento" }], "rewards": { "xp": 150, "gold": 0 } } },
+        { "id": "read", "text": "Deixe-me ler antes de decidir.", "leads_to": "daria_read_request" }
+      ]
+    },
+    {
+      "id": "daria_endorsed",
+      "text": "Isso muda tudo, principe. Os libertos vao lutar com muito mais fervor sabendo que seu nome esta por tras da causa. Obrigada.",
+      "set_flags": { "daria_manifesto_endorsed": true },
+      "options": [
+        { "id": "exit", "text": "E a causa certa.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "daria_read_request",
+      "text": "Claro. Aqui esta. Leia com cuidado. Cada linha foi escrita com suor e historia.",
+      "set_flags": { "daria_manifesto_read": true },
+      "options": [
+        { "id": "exit", "text": "Lerei com atencao.", "leads_to": "exit" }
+      ]
+    }
+  ]
+}

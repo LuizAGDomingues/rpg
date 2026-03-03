@@ -1,0 +1,189 @@
+[
+  {
+    "id": "tev_merchant",
+    "type": "merchant",
+    "weight": 15,
+    "title": "Mercador Errante",
+    "text": "Nas margens da estrada, um mercador com um camelo carregado de mercadorias acena para o grupo. 'Boas noticias para viajantes corajosos — tenho itens raros a preco justo!'",
+    "choices": [
+      {
+        "text": "Comerciar com o mercador",
+        "action": "open_shop",
+        "shop_id": "traveling_merchant"
+      },
+      {
+        "text": "Continuar sem parar",
+        "action": "dismiss"
+      }
+    ]
+  },
+  {
+    "id": "tev_ambush_bandits",
+    "type": "combat",
+    "weight": 20,
+    "title": "Emboscada de Bandidos",
+    "text": "De repente, figuras encapuzadas emergem das pedras ao lado da estrada. 'Dinheiro ou sangue!' grita o lider. Parece que nao ha como evitar este confronto.",
+    "combat": {
+      "enemies": ["desert_bandit", "desert_bandit", "bandit_leader"],
+      "victory_scene": "tev_ambush_victory",
+      "loss_scene": "tev_ambush_loss",
+      "gold_multiplier": 1.5
+    },
+    "choices": [
+      {
+        "text": "Lutar contra os bandidos",
+        "action": "start_combat"
+      },
+      {
+        "text": "[DIPLOMATICO] Tentar negociar",
+        "requires": { "class": "diplomat" },
+        "action": "skill_check",
+        "skill": "CAR",
+        "dc": 14,
+        "success_text": "Sua voz de autoridade para os bandidos no lugar. 'Nao e do nosso interesse morrer hoje,' admite o lider, recuando.",
+        "failure_action": "start_combat"
+      }
+    ]
+  },
+  {
+    "id": "tev_abandoned_camp",
+    "type": "exploration",
+    "weight": 12,
+    "title": "Acampamento Abandonado",
+    "text": "O grupo encontra os restos de um acampamento recentemente abandonado. As brasas ainda estao mornos. Haveria algo util deixado para tras?",
+    "choices": [
+      {
+        "text": "Vasculhar o acampamento",
+        "action": "skill_check",
+        "skill": "SAB",
+        "dc": 12,
+        "success_reward": { "gold": "1d8+5", "items": [{ "id": "ration", "chance": 0.7 }, { "id": "bandage", "chance": 0.5 }] },
+        "success_text": "Voce encontra mantimentos e alguns itens uteis entre os restos.",
+        "failure_text": "O acampamento foi bem vasculhado antes de ser abandonado. Nada de valor."
+      },
+      {
+        "text": "Ignorar e continuar",
+        "action": "dismiss"
+      }
+    ]
+  },
+  {
+    "id": "tev_wounded_soldier",
+    "type": "narrative_choice",
+    "weight": 10,
+    "title": "Soldado Ferido",
+    "text": "No meio da estrada, um soldado de Pars jaz ferido. Sua armadura esta danificada e ele respira com dificuldade. Ao ver Arslan, seus olhos arregalaram. 'A-Alteza...'",
+    "choices": [
+      {
+        "text": "Socorrer o soldado",
+        "action": "reward",
+        "reward": { "xp": 30, "faction_pars": 5, "character_score": 5 },
+        "next_text": "Com cuidados basicos e uma pocao, o soldado se recupera. 'Que Mithra abencoe o verdadeiro principe de Pars,' murmura ele com gratidao."
+      },
+      {
+        "text": "Perguntar sobre informacoes do inimigo antes",
+        "action": "intel_then_reward",
+        "reward": { "xp": 20, "faction_pars": 3, "intel": "lusitanian_patrol_route" },
+        "next_text": "O soldado revela as rotas de patrulha lusitanas antes de receber tratamento. Informacoes uteis."
+      },
+      {
+        "text": "Nao ha tempo — continuar a marcha",
+        "action": "dismiss",
+        "consequence": { "character_score": -3 },
+        "consequence_text": "Voce deixa o soldado para tras. Talvez alguem venha ajuda-lo."
+      }
+    ]
+  },
+  {
+    "id": "tev_scouts_intel",
+    "type": "intel",
+    "weight": 8,
+    "title": "Batedores com Noticias",
+    "text": "Batedores enviados previamente retornam com informacoes sobre a regiao a frente. Narsus estuda os relatorios com interesse.",
+    "requires_general": "narsus",
+    "choices": [
+      {
+        "text": "Ouvir o relatorio completo",
+        "action": "reward",
+        "reward": {
+          "xp": 25,
+          "flags": ["scouts_intel_received"],
+          "combat_advantage_next": true
+        },
+        "next_text": "Narsus traca os movimentos inimigos no mapa. 'Sabendo onde estao, podemos escolher quando e onde combater.' A proxima batalha comeca com vantagem tatica."
+      }
+    ]
+  },
+  {
+    "id": "tev_gieve_performance",
+    "type": "narrative_choice",
+    "weight": 6,
+    "requires_general": "gieve",
+    "title": "A Apresentacao de Gieve",
+    "text": "Gieve para diante de uma pequena aldeia pelo caminho. 'Uma apresentacao rapida, Alteza — bom para o moral, e os villageois podem ter informacoes uteis.' Ele ja esta afinando o alaude.",
+    "choices": [
+      {
+        "text": "Deixar Gieve se apresentar",
+        "action": "reward",
+        "reward": { "xp": 20, "gold": "2d6+5", "character_score": 3, "faction_pars": 2 },
+        "next_text": "A multidao adorou. Entre as moedas, um anciao compartilha noticias sobre um esconderijo de suprimentos nas colinas proximas."
+      },
+      {
+        "text": "Nao ha tempo para shows",
+        "action": "dismiss"
+      }
+    ]
+  },
+  {
+    "id": "tev_forest_shrine",
+    "type": "exploration",
+    "weight": 7,
+    "title": "Santuario da Floresta",
+    "text": "Oculto entre as arvores, o grupo avista um pequeno santuario dedicado a Mithra. Esta bem conservado — alguem ainda cuida deste lugar.",
+    "choices": [
+      {
+        "text": "Parar e fazer uma oferenda",
+        "action": "reward",
+        "reward": { "hp_restore_percent": 0.3, "character_score": 4, "xp": 15 },
+        "next_text": "A paz do santuario parece afetar todos. O grupo parte com o espirito renovado e alguns ferimentos leves curados."
+      },
+      {
+        "text": "Examinar o santuario por suprimentos",
+        "action": "skill_check",
+        "skill": "SAB",
+        "dc": 11,
+        "success_reward": { "items": [{ "id": "sacred_incense", "chance": 0.6 }, { "id": "herbal_tea", "chance": 0.8 }] },
+        "success_text": "Atras do altar, oferendas deixadas por peregrinos — incenso sagrado e ervas medicinais.",
+        "failure_text": "O santuario esta vazio alem dos emblemas religiosos."
+      },
+      {
+        "text": "Continuar sem parar",
+        "action": "dismiss"
+      }
+    ]
+  },
+  {
+    "id": "tev_daryun_story",
+    "type": "narrative_choice",
+    "weight": 5,
+    "requires_general": "daryun",
+    "title": "Historia de Cavaleiro",
+    "text": "Durante a marcha, Daryun conta ao principe uma historia de sua juventude — treinamento sob o general Vahriz, batalhas esquecidas, licoes aprendidas com sangue.",
+    "choices": [
+      {
+        "text": "Ouvir com atencao",
+        "action": "reward",
+        "reward": { "xp": 30, "character_score": 2 },
+        "next_text": "As palavras de Daryun ecoam. Ha sabedoria nessas historias — sobre lealdade, sobre o custo da guerra, sobre o que faz um rei verdadeiro."
+      },
+      {
+        "text": "Perguntar sobre o pai, o rei Andragoras",
+        "action": "skill_check",
+        "skill": "CAR",
+        "dc": 10,
+        "success_text": "Daryun hesita, depois responde com honestidade. Ele amava o rei — mas sempre soube que o amor de Andragoras era condicional.",
+        "failure_text": "Daryun muda o assunto. Algumas perguntas tem respostas que ele nao esta pronto para dar."
+      }
+    ]
+  }
+]

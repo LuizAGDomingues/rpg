@@ -1,0 +1,18 @@
+{
+  "id": "turan_horseman",
+  "name": "Cavaleiro de Turan",
+  "description": "Guerreiro a cavalo das estepes de Turan. Sua carga inicial pode derrubar ate o mais bem-armado dos soldados.",
+  "hp": 95,
+  "ca": 15,
+  "pa": 3,
+  "attributes": { "FOR": 15, "DES": 16, "CON": 14, "INT": 10, "SAB": 11, "CAR": 12 },
+  "weapon": { "name": "Lanca de Cavalaria", "damage": "2d6+6", "bonus_atk": 1 },
+  "passive": { "name": "Carga Montada", "description": "No primeiro turno, causa dano dobrado." },
+  "ai": "aggressive_fast",
+  "xp_reward": 220,
+  "gold_reward": "2d6+6",
+  "loot": [
+    { "id": "potion_minor", "chance": 0.3 },
+    { "id": "leather_armor", "chance": 0.15 }
+  ]
+}

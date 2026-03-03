@@ -12,7 +12,7 @@
   max-width: 480px;
   width: 100%;
   text-align: center;
-  animation: fadeIn 1s ease-out;
+  animation: fadeIn 1.5s ease-out;
 }
 
 .titleSection {
@@ -52,26 +52,6 @@
   gap: var(--spacing-md);
 }
 
-.credits {
-  text-align: center;
-  animation: fadeIn 0.5s ease-out;
-}
-
-.credits p {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  margin-bottom: var(--spacing-xs);
-}
-
-.credits strong {
-  color: var(--gold);
-}
-
-.creditsMuted {
-  color: var(--text-dim) !important;
-  font-size: 0.85rem !important;
-  margin-top: var(--spacing-sm) !important;
-}
 
 .footer {
   position: fixed;

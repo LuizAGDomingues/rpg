@@ -1,0 +1,88 @@
+{
+  "id": "azrael_dialogue",
+  "npc": "azrael_priest",
+  "nodes": [
+    {
+      "id": "start",
+      "text": "Mithra abencoa os que buscam a verdade. Principe Arslan. Ha muito esperava este encontro.",
+      "mood_check": true,
+      "branches": {
+        "hostile": { "text": "O templo esta fechado para os que trazem guerra. Volte quando trouxer paz." },
+        "neutral": { "text": "Mithra abencoa os que buscam a verdade. Principe Arslan. Ha muito esperava este encontro." },
+        "friendly": { "text": "Principe. Mithra ilumina seu caminho. O que posso fazer pelo herdeiro de Pars?" }
+      },
+      "options": [
+        { "id": "ask_linage", "text": "O senhor sabe algo sobre minha origem?", "leads_to": "azrael_linage" },
+        { "id": "ask_mithra", "text": "O que Mithra diz sobre esta guerra?", "leads_to": "azrael_war" },
+        { "id": "ask_treasures", "text": "Os tesouros do templo estao seguros?", "leads_to": "azrael_treasures" },
+        { "id": "exit", "text": "Obrigado pelo acolhimento.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "azrael_linage",
+      "text": "Ha segredos que protegi por duas decadas. O rei Andragoras nao e seu pai biologico, Arslan. Voce foi trazido ao palacio como filho adotivo — uma decisao de estado, para garantir a linha de sucessao.",
+      "set_flags": { "arslan_true_linage_revealed": true },
+      "options": [
+        { "id": "shocked", "text": "Isso... Quem e meu pai verdadeiro?", "leads_to": "azrael_mystery" },
+        { "id": "accept", "text": "Isso nao muda nada. Pars e minha responsabilidade de qualquer forma.", "leads_to": "azrael_respect", "character_score": 5 },
+        { "id": "angry", "text": "Por que me contar isso agora?", "leads_to": "azrael_timing" }
+      ]
+    },
+    {
+      "id": "azrael_mystery",
+      "text": "Isso... nao sei. Os arquivos do templo foram destruidos pelos lusitanos. O que sei e que a rainha Tahamine conhece a resposta. Ela sempre soube.",
+      "set_flags": { "tahamine_knows_truth": true },
+      "options": [
+        { "id": "exit", "text": "Tahamine. Preciso falar com ela.", "leads_to": "exit", "xp_reward": 50 }
+      ]
+    },
+    {
+      "id": "azrael_respect",
+      "text": "Poucos homens receberiam tal noticia com tamanha serenidade. Mithra sorri para os que colocam o dever acima do ego. Voce sera um rei justo, Arslan. Tenho certeza.",
+      "faction_effect": { "clero_mithra": 10 },
+      "options": [
+        { "id": "exit", "text": "Obrigado, Azrael.", "leads_to": "exit", "xp_reward": 50 }
+      ]
+    },
+    {
+      "id": "azrael_timing",
+      "text": "Porque o momento chegou. Um rei que nao conhece a verdade sobre si mesmo e um rei que pode ser manipulado. Preferi que soubesse de mim do que de um inimigo.",
+      "options": [
+        { "id": "understand", "text": "Entendo. Obrigado pela honestidade.", "leads_to": "azrael_respect" },
+        { "id": "exit", "text": "Preciso pensar sobre isso.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "azrael_war",
+      "text": "Mithra nao escolhe lados em guerras de homens. Mas ensina que a verdadeira batalha e interior: entre o que somos e o que queremos ser. Os lusitanos trazem seu deus a espada. Mithra se revela pela sabedoria e compaixao.",
+      "faction_effect": { "clero_mithra": 3 },
+      "options": [
+        { "id": "ask_linage", "text": "Ha algo mais que devo saber?", "leads_to": "azrael_linage" },
+        { "id": "exit", "text": "Sabedoria de que preciso, padre.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "azrael_treasures",
+      "text": "Escondi os objetos sagrados antes da invasao. Estao seguros... por enquanto. Mas os lusitanos procuram. Se encontrarem o repositorio secreto, Pars perde mais do que ouro — perde sua alma.",
+      "options": [
+        { "id": "protect", "text": "Diga-me onde estao. Posso protege-los.", "leads_to": "azrael_quest_offer" },
+        { "id": "back", "text": "Entendo a gravidade.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "azrael_quest_offer",
+      "text": "Sao reliquias sagradas: o Calice de Mithra, o Pergaminho da Criacao e o Medalhao Real. Se puder recupera-los ou torna-los inacessiveis aos lusitanos... Pars lhe sera eternamente grata.",
+      "options": [
+        { "id": "accept", "text": "Farei isso.", "leads_to": "azrael_quest_accepted", "start_quest": { "id": "sq_sacred_relics", "name": "As Reliquias Sagradas", "description": "Recuperar as tres reliquias do Templo de Mithra antes que os lusitanos as encontrem.", "objectives": [{ "id": "obj_calice", "text": "Encontrar o Calice de Mithra" }, { "id": "obj_scroll", "text": "Encontrar o Pergaminho da Criacao" }, { "id": "obj_medalion", "text": "Encontrar o Medalhao Real" }], "rewards": { "xp": 200, "gold": 100 } } },
+        { "id": "decline", "text": "Ainda nao posso assumir essa missao.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "azrael_quest_accepted",
+      "text": "Que Mithra guie seus passos, principe. O futuro de Pars depende nao apenas de seus exercitos, mas de sua alma.",
+      "options": [
+        { "id": "exit", "text": "Encontrarei as reliquias.", "leads_to": "exit" }
+      ]
+    }
+  ]
+}

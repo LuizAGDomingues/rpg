@@ -1,0 +1,18 @@
+{
+  "id": "slave_trader",
+  "name": "Traficante de Escravos",
+  "description": "Homem que se enriqueceu com o sofrimento alheio. Armado com chicote e faca, trata pessoas como mercadorias.",
+  "hp": 50,
+  "ca": 11,
+  "pa": 2,
+  "attributes": { "FOR": 13, "DES": 12, "CON": 12, "INT": 11, "SAB": 9, "CAR": 10 },
+  "weapon": { "name": "Chicote e Faca", "damage": "1d6+3" },
+  "on_hit_effect": { "name": "intimidated", "chance": 0.25, "duration": 1 },
+  "ai": "tactical_aggressive",
+  "xp_reward": 120,
+  "gold_reward": "2d6+8",
+  "loot": [
+    { "id": "potion_minor", "chance": 0.3 },
+    { "id": "smoke_bomb", "chance": 0.2 }
+  ]
+}

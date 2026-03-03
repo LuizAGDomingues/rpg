@@ -1,0 +1,17 @@
+{
+  "id": "corrupt_merchant",
+  "name": "Mercador Corrupto",
+  "description": "Comerciante que financia traficantes de escravos e colabora com os invasores lusitanos. Fraco em combate, mas rico em subornos.",
+  "hp": 25,
+  "ca": 10,
+  "pa": 1,
+  "attributes": { "FOR": 9, "DES": 11, "CON": 10, "INT": 15, "SAB": 12, "CAR": 16 },
+  "weapon": { "name": "Faca de Defesa", "damage": "1d4+1" },
+  "ai": "cowardly",
+  "xp_reward": 80,
+  "gold_reward": "3d8+15",
+  "loot": [
+    { "id": "potion_minor", "chance": 0.6 },
+    { "id": "elixir_strength", "chance": 0.2 }
+  ]
+}

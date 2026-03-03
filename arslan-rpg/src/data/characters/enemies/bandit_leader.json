@@ -1,0 +1,19 @@
+{
+  "id": "bandit_leader",
+  "name": "Lider dos Bandidos",
+  "description": "Bandido experiente que comanda um grupo de salteadores. Sua presenca impede que seus homens fujam da batalha.",
+  "hp": 80,
+  "ca": 13,
+  "pa": 3,
+  "attributes": { "FOR": 15, "DES": 13, "CON": 14, "INT": 12, "SAB": 10, "CAR": 13 },
+  "weapon": { "name": "Sabre de Combate", "damage": "2d6+4", "bonus_atk": 1 },
+  "passive": { "name": "Lideranca Brutal", "description": "Bandidos aliados nao fogem enquanto o lider estiver vivo." },
+  "ai": "tactical_boss",
+  "xp_reward": 200,
+  "gold_reward": "2d8+10",
+  "loot": [
+    { "id": "leather_armor", "chance": 0.2 },
+    { "id": "potion_minor", "chance": 0.5 },
+    { "id": "dried_meat", "chance": 0.6 }
+  ]
+}

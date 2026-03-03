@@ -1,0 +1,101 @@
+{
+  "id": "yusuf_dialogue",
+  "npc": "yusuf_scholar",
+  "nodes": [
+    {
+      "id": "start",
+      "text": "Ah, o principe! Narsus me falou de voce. Um jovem com mais cabeca do que a maioria dos generais que conheci. Sente-se — se o chao coberto de manuscritos nao for um obstaculo.",
+      "mood_check": true,
+      "branches": {
+        "neutral": { "text": "Ah, o principe! Narsus me falou de voce. O que traz voce aqui hoje?" },
+        "friendly": { "text": "Principe Arslan! Que feliz coincidencia. Tinha exatamente o que precisava te mostrar." }
+      },
+      "options": [
+        { "id": "ask_rukhnabad", "text": "O que voce sabe sobre a Pedra de Rukhnabad?", "leads_to": "yusuf_rukhnabad" },
+        { "id": "ask_arslan_past", "text": "Existe algum registro sobre minha origem?", "leads_to": "yusuf_arslan_records", "condition": "arslan_true_linage_revealed" },
+        { "id": "ask_ecbatana", "text": "Me conte sobre os aquedutos de Ecbatana.", "leads_to": "yusuf_aquedutos" },
+        { "id": "ask_manuscripts", "text": "Precisa de ajuda para recuperar manuscritos?", "leads_to": "yusuf_quest_offer" },
+        { "id": "exit", "text": "Obrigado, Yusuf.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "yusuf_rukhnabad",
+      "text": "A Pedra de Rukhnabad e ao mesmo tempo historia e lenda. Os registros mais antigos dizem que a pedra tem propriedades de purificacao — agua que passa por ela cura ferimentos menores. Narsus tem uma teoria diferente, naturalmente.",
+      "set_flags": { "yusuf_rukhnabad_lore": true },
+      "options": [
+        { "id": "ask_narsus_theory", "text": "Qual e a teoria de Narsus?", "leads_to": "yusuf_narsus_theory" },
+        { "id": "ask_location", "text": "Onde a pedra esta agora?", "leads_to": "yusuf_stone_location" }
+      ]
+    },
+    {
+      "id": "yusuf_narsus_theory",
+      "text": "Narsus diz que a pedra tem propriedades minerais raras que filtram toxinas. A 'cura' e simplesmente agua limpa numa regiao onde a maioria bebe agua contaminada. Pragmatico. Eu prefiro a versao romantica.",
+      "options": [
+        { "id": "exit", "text": "As duas perspectivas sao fascinantes.", "leads_to": "exit", "xp_reward": 20 }
+      ]
+    },
+    {
+      "id": "yusuf_stone_location",
+      "text": "Ecbatana. No subsolo do palacio. Ha um aqueduto secreto que leva direto a ela. Se os lusitanos ainda nao a encontraram... pode ser uma vantagem tatical. E estrategica.",
+      "set_flags": { "rukhnabad_location_known": true },
+      "options": [
+        { "id": "exit", "text": "Informacao valiosa. Obrigado.", "leads_to": "exit", "xp_reward": 40 }
+      ]
+    },
+    {
+      "id": "yusuf_arslan_records",
+      "text": "Hm. Encontrei algo interessante nos registros do palacio — ou melhor, no que restou deles. Ha uma entrada codificada de 20 anos atras sobre a chegada de uma crianca de origem nobre estrangeira. Sem nome. Sem origem declarada. Mas o selo... e da rainha Tahamine.",
+      "set_flags": { "yusuf_arslan_record_found": true },
+      "options": [
+        { "id": "tahamine", "text": "A rainha Tahamine. Preciso fala-la.", "leads_to": "yusuf_tahamine_hint" },
+        { "id": "exit", "text": "Obrigado, Yusuf. Isso e importante.", "leads_to": "exit", "xp_reward": 50 }
+      ]
+    },
+    {
+      "id": "yusuf_tahamine_hint",
+      "text": "Ela esta em Ecbatana, nos aposentos do palacio. Sob vigilancia lusitana, mas... se o principe chegasse la discretamente... ela falaria. Sempre teve afeto por voce, mesmo que nao demonstrasse.",
+      "options": [
+        { "id": "exit", "text": "Encontrarei uma forma.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "yusuf_aquedutos",
+      "text": "Os aquedutos de Ecbatana sao uma obra de engenharia incrivel. Construidos ha 400 anos. Ha passagens subterraneas que poucos conhecem — podem ser usadas para mover pequenos grupos dentro da cidade sem serem vistos pelos lusitanos.",
+      "set_flags": { "ecbatana_tunnels_known": true },
+      "options": [
+        { "id": "map", "text": "Voce tem um mapa dessas passagens?", "leads_to": "yusuf_map_offer" },
+        { "id": "exit", "text": "Isso pode ser a chave para retomar Ecbatana.", "leads_to": "exit", "xp_reward": 30 }
+      ]
+    },
+    {
+      "id": "yusuf_map_offer",
+      "text": "Tenho um rascunho imperfeito. Se o principe puder recuperar o mapa original do arquivo do palacio... completaria o que tenho aqui.",
+      "options": [
+        { "id": "accept", "text": "Farei isso.", "leads_to": "yusuf_quest_map", "start_quest": { "id": "sq_ecbatana_map", "name": "O Mapa dos Aquedutos", "description": "Recuperar o mapa original dos aquedutos de Ecbatana no arquivo do palacio.", "objectives": [{ "id": "obj_find_map", "text": "Encontrar o mapa no arquivo do palacio" }, { "id": "obj_return_yusuf", "text": "Entregar o mapa a Yusuf" }], "rewards": { "xp": 120, "gold": 0 } } },
+        { "id": "decline", "text": "Quando possivel.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "yusuf_quest_map",
+      "text": "Excelente! Com esse mapa, o principe pode entrar em Ecbatana pela rota dos aquedutos. Seja cuidadoso.",
+      "options": [
+        { "id": "exit", "text": "Trarei o mapa.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "yusuf_quest_offer",
+      "text": "Na verdade, sim. Ha manuscritos espalhados pelas ruinas do acampamento. Textos historicos sobre a fundacao de Pars. Se alguem os destruir antes que eu resgate... seria uma perda irreparavel.",
+      "options": [
+        { "id": "accept", "text": "Ajudarei a recuperar os manuscritos.", "leads_to": "yusuf_quest_accepted", "start_quest": { "id": "sq_lost_manuscripts", "name": "Os Manuscritos Perdidos", "description": "Ajudar Yusuf a recuperar manuscritos historicos espalhados nas ruinas.", "objectives": [{ "id": "obj_ms1", "text": "Recuperar o primeiro manuscrito" }, { "id": "obj_ms2", "text": "Recuperar o segundo manuscrito" }, { "id": "obj_ms3", "text": "Recuperar o terceiro manuscrito" }], "rewards": { "xp": 80, "gold": 20 } } },
+        { "id": "decline", "text": "Talvez depois.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "yusuf_quest_accepted",
+      "text": "Obrigado, principe! O conhecimento de Pars nao deve morrer mesmo que seus muros caiam.",
+      "options": [
+        { "id": "exit", "text": "Trarei os manuscritos.", "leads_to": "exit" }
+      ]
+    }
+  ]
+}

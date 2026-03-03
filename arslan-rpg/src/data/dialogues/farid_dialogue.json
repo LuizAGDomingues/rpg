@@ -1,0 +1,71 @@
+{
+  "id": "farid_dialogue",
+  "npc": "farid_cook",
+  "nodes": [
+    {
+      "id": "start",
+      "text": "Principe! Bom momento — acabei de fazer um caldo de galinha. Come alguma coisa? Um exercito marcha no estomago, como diz o ditado.",
+      "mood_check": true,
+      "branches": {
+        "friendly": { "text": "Principe! Bom momento — acabei de fazer um caldo de galinha. Come alguma coisa?" },
+        "neutral": { "text": "Ah, o principe. O que posso oferecer?" }
+      },
+      "options": [
+        { "id": "buy", "text": "Sim, ver o que tem.", "leads_to": "shop" },
+        { "id": "ask_palace", "text": "Como era trabalhar no palacio?", "leads_to": "farid_palace" },
+        { "id": "ask_secrets", "text": "Voce ouvia muita coisa no palacio?", "leads_to": "farid_secrets" },
+        { "id": "exit", "text": "Obrigado, Farid.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "farid_palace",
+      "text": "Cozinheiro do palacio por doze anos. Cozinhava para o rei, para os generais, para os embaixadores. As pessoas ignoram os servicos durante reunioes importantes. Foi assim que aprendi tudo o que aprendi.",
+      "options": [
+        { "id": "ask_secrets", "text": "O que voce ouviu?", "leads_to": "farid_secrets" },
+        { "id": "ask_freedom", "text": "Como foi quando foi libertado?", "leads_to": "farid_freedom" }
+      ]
+    },
+    {
+      "id": "farid_secrets",
+      "text": "Hm. Segredos... tres meses antes de Atropatene, um mensageiro de armadura preta veio ao palacio a noite. Se reuniu com Kharlan por horas. Eu estava recolhendo pratos num corredor proximo. Nao ouvi as palavras, mas vi Kharlan sorrir ao sair. Era um sorriso errado.",
+      "set_flags": { "farid_kharlan_meeting_witnessed": true },
+      "options": [
+        { "id": "armor", "text": "Armadura preta. Sabe de onde era o mensageiro?", "leads_to": "farid_armored_messenger" },
+        { "id": "thanks", "text": "Isso e importante. Obrigado, Farid.", "leads_to": "exit", "xp_reward": 35 }
+      ]
+    },
+    {
+      "id": "farid_armored_messenger",
+      "text": "O brasao no escudo dele... era uma mascara. Prateada. Nao era de nenhuma casa nobre de Pars que eu conhecia. Lusitano, talvez. Ou alguem trabalhando para eles.",
+      "set_flags": { "silvermask_linked_kharlan": true },
+      "options": [
+        { "id": "exit", "text": "Mascara de prata. O Mascarado de Prata. Obrigado, Farid.", "leads_to": "exit", "xp_reward": 40 }
+      ]
+    },
+    {
+      "id": "farid_freedom",
+      "text": "Chorei. Envergonha dizer, mas e verdade. Doze anos como escravo... quando o principe disse 'voce e livre', nao soube o que fazer com as proprias maos por uma semana. Mas aqui estou. Cozinhando para o exercito do principe. So que desta vez por escolha.",
+      "set_flags": { "farid_story_heard": true },
+      "options": [
+        { "id": "moved", "text": "E exatamente esse futuro que quero construir para Pars.", "leads_to": "farid_inspired", "faction_effect": { "escravos_libertos": 5 }, "character_score": 5 },
+        { "id": "exit", "text": "Fico feliz por voce, Farid.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "farid_inspired",
+      "text": "Se o principe precisar de algo — informacao, comida, um lugar para descansar discretamente — Farid esta aqui. Nao sou guerreiro. Mas posso ser util de outras formas.",
+      "set_flags": { "farid_loyal": true },
+      "options": [
+        { "id": "exit", "text": "Obrigado, Farid.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "shop",
+      "text": "Tenho racoes e algumas coisas que fiz hoje cedo. Frescas.",
+      "is_shop": true,
+      "options": [
+        { "id": "back", "text": "Voltar.", "leads_to": "start" }
+      ]
+    }
+  ]
+}

@@ -1,85 +1,618 @@
 [
   {
+    "id": "sq_kaveh_son",
+    "name": "A Placa de Fardad",
+    "type": "side_quest",
+    "giver_npc": "kaveh_blacksmith",
+    "act": 1,
+    "description": "Kaveh, o ferreiro de Kashan, perdeu seu filho Fardad em Atropatene. Ele pede que voce encontre a placa de identificacao de bronze do filho no campo de batalha.",
+    "objectives": [
+      { "id": "obj1", "text": "Visitar as Ruinas de Atropatene", "type": "exploration" },
+      { "id": "obj2", "text": "Encontrar a placa de identificacao de Fardad", "type": "loot" },
+      { "id": "obj3", "text": "Derrotar os saqueadores que guardam a area", "type": "combat" },
+      { "id": "obj4", "text": "Devolver a placa a Kaveh", "type": "dialogue" }
+    ],
+    "start_condition": "arrived_dahman",
+    "completion_flag": "kaveh_son_found",
+    "rewards": {
+      "xp": 200,
+      "gold": 60,
+      "items": ["kaveh_sword"],
+      "faction_effects": { "nobreza_pars": 10 }
+    }
+  },
+  {
+    "id": "sq_mina_husband",
+    "name": "A Familia Separada",
+    "type": "side_quest",
+    "giver_npc": "mina_refugee",
+    "act": 1,
+    "description": "Mina, uma refugiada de Ecbatana, perdeu o marido Tariq apos a batalha. Investigue o que aconteceu com ele nos campos ao sul.",
+    "objectives": [
+      { "id": "obj1", "text": "Falar com Mina no acampamento de refugiados", "type": "dialogue" },
+      { "id": "obj2", "text": "Investigar o posto de prisioneiros lusitano", "type": "exploration" },
+      { "id": "obj3", "text": "Libertar Tariq ou descobrir seu destino", "type": "choice" }
+    ],
+    "start_condition": "act1_complete",
+    "completion_flag": "mina_husband_resolved",
+    "rewards": {
+      "xp": 150,
+      "gold": 0,
+      "faction_effects": { "escravos_libertos": 10 }
+    }
+  },
+  {
+    "id": "sq_vahriz_sword",
+    "name": "A Espada do Ultimo Comandante",
+    "type": "side_quest",
+    "giver_npc": "commander_vahriz",
+    "act": 1,
+    "description": "O Comandante Vahriz esta morrendo de seus ferimentos. Sua ultima vontade e que sua espada de cerimonia seja encontrada — ela foi levada por um sargento lusitano como trofeu.",
+    "objectives": [
+      { "id": "obj1", "text": "Ouvir o pedido de Vahriz", "type": "dialogue" },
+      { "id": "obj2", "text": "Localizar o sargento lusitano que carrega a espada", "type": "exploration" },
+      { "id": "obj3", "text": "Recuperar a espada", "type": "combat" }
+    ],
+    "start_condition": null,
+    "completion_flag": "vahriz_sword_recovered",
+    "rewards": {
+      "xp": 300,
+      "gold": 0,
+      "items": ["vahriz_sword"],
+      "faction_effects": { "nobreza_pars": 15, "clero_mithra": 5 }
+    }
+  },
+  {
     "id": "sq_battlefield_loot",
     "name": "Despojos de Guerra",
-    "description": "Vasculhe o campo de Atropatene em busca de suprimentos.",
+    "type": "side_quest",
+    "giver_npc": null,
     "act": 1,
+    "description": "Vasculhe o campo de Atropatene em busca de suprimentos para o grupo.",
     "objectives": [
-      { "id": "obj_search_field", "text": "Explorar o campo de batalha", "type": "exploration" },
-      { "id": "obj_find_supplies", "text": "Encontrar suprimentos", "type": "loot" }
+      { "id": "obj1", "text": "Explorar o campo de batalha", "type": "exploration" },
+      { "id": "obj2", "text": "Encontrar suprimentos", "type": "loot" }
     ],
-    "rewards": { "xp": 50, "gold": 30, "items": ["potion_minor"] },
     "start_condition": null,
-    "completion_flag": "looted_battlefield"
+    "completion_flag": "looted_battlefield",
+    "rewards": {
+      "xp": 50,
+      "gold": 30,
+      "items": ["potion_minor"]
+    }
   },
   {
     "id": "sq_save_soldier",
     "name": "Soldado Caido",
-    "description": "Encontre e salve um soldado de Pars ferido no campo de batalha.",
+    "type": "side_quest",
+    "giver_npc": null,
     "act": 1,
+    "description": "Encontre e salve um soldado de Pars ferido no campo de batalha.",
     "objectives": [
-      { "id": "obj_find_soldier", "text": "Encontrar o soldado ferido", "type": "exploration" },
-      { "id": "obj_heal_soldier", "text": "Tratar seus ferimentos", "type": "skill_check" }
+      { "id": "obj1", "text": "Encontrar o soldado ferido", "type": "exploration" },
+      { "id": "obj2", "text": "Tratar seus ferimentos", "type": "skill_check" }
     ],
-    "rewards": { "xp": 75, "gold": 0 },
     "start_condition": "SAB >= 12",
-    "completion_flag": "saved_soldier"
+    "completion_flag": "saved_soldier",
+    "rewards": {
+      "xp": 75,
+      "gold": 0,
+      "faction_effects": { "escravos_libertos": 5 }
+    }
   },
   {
     "id": "sq_narsus_painting",
     "name": "A Obra-Prima de Narsus",
-    "description": "Narsus insiste que voce veja sua mais recente pintura. E... indescritivel.",
+    "type": "side_quest",
+    "giver_npc": "narsus",
     "act": 2,
+    "description": "Narsus insiste que voce aprecie sua pintura mais recente. Segundo Elam, e o pior trabalho que ele ja viu. Daryun se recusou a olhar.",
     "objectives": [
-      { "id": "obj_view_painting", "text": "Ver a pintura de Narsus", "type": "dialogue" },
-      { "id": "obj_react", "text": "Dar sua opiniao honesta", "type": "dialogue" }
+      { "id": "obj1", "text": "Ver a pintura de Narsus", "type": "dialogue" },
+      { "id": "obj2", "text": "Dar uma opiniao honesta (ou diplomatica)", "type": "dialogue" }
     ],
-    "rewards": { "xp": 30, "gold": 0 },
     "start_condition": "narsus_recruited",
     "completion_flag": "saw_painting",
-    "humor": true
+    "humor": true,
+    "rewards": {
+      "xp": 50,
+      "gold": 0,
+      "items": ["narsus_painting_gift"]
+    }
   },
   {
     "id": "sq_elam_training",
     "name": "Treino de Elam",
-    "description": "Ajude Elam a melhorar suas habilidades com o arco.",
+    "type": "side_quest",
+    "giver_npc": "elam",
     "act": 2,
+    "description": "Ajude Elam a melhorar suas habilidades com o arco.",
     "objectives": [
-      { "id": "obj_train_elam", "text": "Treinar com Elam na area de treino", "type": "training" },
-      { "id": "obj_complete_training", "text": "Completar 3 sessoes de treino", "type": "repeatable" }
+      { "id": "obj1", "text": "Treinar com Elam na area de treino", "type": "training" },
+      { "id": "obj2", "text": "Completar 3 sessoes de treino", "type": "repeatable" }
     ],
-    "rewards": { "xp": 100, "gold": 0 },
     "start_condition": "narsus_recruited",
-    "completion_flag": "elam_trained"
+    "completion_flag": "elam_trained",
+    "rewards": {
+      "xp": 100,
+      "gold": 0
+    }
+  },
+  {
+    "id": "sq_elam_past",
+    "name": "As Cicatrizes de Elam",
+    "type": "side_quest",
+    "giver_npc": "elam",
+    "act": 2,
+    "description": "Elam carrega cicatrizes visiveis de sua vida antes de Narsus. Ao se aproximar, voce descobre que ele foi escravo. Investigar seu passado pode fortalecer os lacos do grupo.",
+    "objectives": [
+      { "id": "obj1", "text": "Notar as cicatrizes de Elam durante treino", "type": "exploration" },
+      { "id": "obj2", "text": "Ganhar confianca suficiente para ele contar sua historia [SAB 12]", "type": "skill_check" },
+      { "id": "obj3", "text": "Encontrar o ex-dono de Elam no vilarejo de Dahman", "type": "exploration" }
+    ],
+    "start_condition": "narsus_recruited AND camp_established",
+    "completion_flag": "elam_past_resolved",
+    "rewards": {
+      "xp": 250,
+      "gold": 0,
+      "faction_effects": { "escravos_libertos": 15 }
+    }
+  },
+  {
+    "id": "sq_daryun_legendary",
+    "name": "A Promessa do Guerreiro Negro",
+    "type": "side_quest",
+    "giver_npc": "daryun",
+    "act": 2,
+    "description": "Daryun menciona uma promessa feita ao pai de Arslan antes da guerra. Ele precisa recuperar a Lanca Sagrada da familia, capturada em Atropatene, para honra-la.",
+    "objectives": [
+      { "id": "obj1", "text": "Conversar com Daryun sobre a promessa", "type": "dialogue" },
+      { "id": "obj2", "text": "Viajar as Ruinas de Atropatene", "type": "exploration" },
+      { "id": "obj3", "text": "Derrotar o Capitao Lusitano que guarda o deposito de armas", "type": "combat" },
+      { "id": "obj4", "text": "Recuperar a Lanca Sagrada de Pars", "type": "loot" }
+    ],
+    "start_condition": "narsus_recruited AND act2_started",
+    "completion_flag": "sacred_spear_recovered",
+    "rewards": {
+      "xp": 400,
+      "gold": 0,
+      "items": ["sacred_spear"],
+      "faction_effects": { "nobreza_pars": 10 }
+    }
+  },
+  {
+    "id": "sq_rania_herbs",
+    "name": "Ervas Medicinais",
+    "type": "side_quest",
+    "giver_npc": "rania_healer",
+    "act": 2,
+    "description": "Rania precisa de ervas raras para preparar medicamentos para os feridos do acampamento. As ervas crescem numa area perigosa alem das linhas inimigas.",
+    "objectives": [
+      { "id": "obj1", "text": "Receber a lista de Rania com as ervas necessarias", "type": "dialogue" },
+      { "id": "obj2", "text": "Coletar as ervas medicinais na floresta ao sul", "type": "exploration" },
+      { "id": "obj3", "text": "Retornar com as ervas para Rania", "type": "dialogue" }
+    ],
+    "start_condition": "camp_established",
+    "completion_flag": "rania_herbs_delivered",
+    "rewards": {
+      "xp": 120,
+      "gold": 0,
+      "items": ["potion_major", "blessed_bandage"],
+      "faction_effects": { "clero_mithra": 5 }
+    }
   },
   {
     "id": "sq_free_slaves",
     "name": "Correntes Partidas",
-    "description": "Liberte um grupo de escravos sendo transportados pelos lusitanos.",
+    "type": "side_quest",
+    "giver_npc": null,
     "act": 2,
+    "description": "Liberte um grupo de escravos sendo transportados pelos lusitanos.",
     "objectives": [
-      { "id": "obj_find_caravan", "text": "Encontrar a caravana de escravos", "type": "exploration" },
-      { "id": "obj_plan_rescue", "text": "Planejar o resgate", "type": "skill_check" },
-      { "id": "obj_free_slaves", "text": "Libertar os escravos", "type": "combat" }
+      { "id": "obj1", "text": "Encontrar a caravana de escravos", "type": "exploration" },
+      { "id": "obj2", "text": "Planejar o resgate", "type": "skill_check" },
+      { "id": "obj3", "text": "Libertar os escravos", "type": "combat" }
     ],
-    "rewards": { "xp": 200, "gold": 50 },
     "start_condition": "camp_established",
     "completion_flag": "freed_slaves",
-    "faction_effects": { "escravos_libertos": 20, "nobreza_pars": -10 }
+    "rewards": {
+      "xp": 200,
+      "gold": 50,
+      "faction_effects": { "escravos_libertos": 20, "nobreza_pars": -10 }
+    }
+  },
+  {
+    "id": "sq_free_slaves_caravan",
+    "name": "A Caravana do Norte",
+    "type": "side_quest",
+    "giver_npc": "daria_slave",
+    "act": 2,
+    "description": "Uma caravana lusitana transporta 30 escravos parsenses rumo ao norte. Daria pede que voce a intercepte antes que cruzem a fronteira.",
+    "objectives": [
+      { "id": "obj1", "text": "Localizar a rota da caravana", "type": "exploration" },
+      { "id": "obj2", "text": "Interceptar a caravana antes da fronteira", "type": "combat" },
+      { "id": "obj3", "text": "Libertar os escravos", "type": "exploration" }
+    ],
+    "start_condition": "camp_established",
+    "completion_flag": "caravan_slaves_freed",
+    "rewards": {
+      "xp": 300,
+      "gold": 80,
+      "faction_effects": { "escravos_libertos": 25, "nobreza_pars": -15 },
+      "world_flag": "escravos_libertos_founded",
+      "troop_bonus": 50
+    }
+  },
+  {
+    "id": "sq_rukhnabad_secret",
+    "name": "O Segredo de Rukhnabad",
+    "type": "side_quest",
+    "giver_npc": "yusuf_scholar",
+    "act": 2,
+    "description": "O erudito Yusuf encontrou referencias a uma camara secreta sob o Rio Rukhnabad que pode conter artefatos do primeiro Rei de Pars.",
+    "objectives": [
+      { "id": "obj1", "text": "Ouvir a teoria de Yusuf sobre Rukhnabad", "type": "dialogue" },
+      { "id": "obj2", "text": "Discutir com Narsus [revela Nota Cientifica]", "type": "dialogue" },
+      { "id": "obj3", "text": "Explorar as cavernas de Rukhnabad", "type": "exploration" },
+      { "id": "obj4", "text": "Derrotar os guardioes animais que vivem la", "type": "combat" }
+    ],
+    "start_condition": "camp_established",
+    "completion_flag": "rukhnabad_explored",
+    "rewards": {
+      "xp": 400,
+      "gold": 0,
+      "items": ["rukhnabad_stone"],
+      "faction_effects": { "clero_mithra": 20 }
+    }
+  },
+  {
+    "id": "sq_lost_manuscripts",
+    "name": "Manuscritos Perdidos",
+    "type": "side_quest",
+    "giver_npc": "yusuf_scholar",
+    "act": 2,
+    "description": "Yusuf perdeu sua colecao de manuscritos raros durante a fuga de Ecbatana. Um deles contem estrategias militares do primeiro exercito de Pars.",
+    "objectives": [
+      { "id": "obj1", "text": "Localizar onde os manuscritos foram levados", "type": "exploration" },
+      { "id": "obj2", "text": "Infiltrar o acampamento lusitano que os confiscou", "type": "exploration" },
+      { "id": "obj3", "text": "Recuperar os manuscritos", "type": "combat" }
+    ],
+    "start_condition": "camp_established",
+    "completion_flag": "manuscripts_recovered",
+    "rewards": {
+      "xp": 300,
+      "gold": 0,
+      "items": ["ancient_military_tome"]
+    }
+  },
+  {
+    "id": "sq_palace_secrets",
+    "name": "Segredos do Palacio",
+    "type": "side_quest",
+    "giver_npc": "farid_cook",
+    "act": 2,
+    "description": "Farid, que trabalhava na cozinha do palacio, ouviu conversas dos nobres sobre a origem de Arslan. O que ele sabe pode mudar tudo.",
+    "objectives": [
+      { "id": "obj1", "text": "Ganhar a confianca de Farid", "type": "dialogue" },
+      { "id": "obj2", "text": "Ouvir o que ele sabe sobre os segredos do palacio", "type": "dialogue" }
+    ],
+    "start_condition": "camp_established",
+    "completion_flag": "knows_palace_secret",
+    "rewards": {
+      "xp": 150,
+      "gold": 0,
+      "world_flag": "knows_palace_secret"
+    }
+  },
+  {
+    "id": "sq_zahras_curse",
+    "name": "A Maldicao de Zahra",
+    "type": "side_quest",
+    "giver_npc": "zahra_witch",
+    "act": 2,
+    "description": "Aldeias proximas acreditam que Zahra os amaldicoou com uma doenca misteriosa. Zahra jura que e inocente. Investigar com Narsus revela a verdade.",
+    "objectives": [
+      { "id": "obj1", "text": "Investigar as aldeias afetadas", "type": "exploration" },
+      { "id": "obj2", "text": "Consultar Narsus sobre os sintomas", "type": "dialogue" },
+      { "id": "obj3", "text": "Descobrir a fonte real da doenca", "type": "exploration" },
+      { "id": "obj4", "text": "Resolver o problema", "type": "choice" }
+    ],
+    "start_condition": "camp_established",
+    "completion_flag": "zahra_curse_solved",
+    "rewards": {
+      "xp": 350,
+      "gold": 0,
+      "items": ["zahras_elixir"],
+      "faction_effects": { "escravos_libertos": 10, "clero_mithra": 10 }
+    }
+  },
+  {
+    "id": "sq_rare_herbs",
+    "name": "Ervas Raras das Montanhas",
+    "type": "side_quest",
+    "giver_npc": "zahra_witch",
+    "act": 2,
+    "description": "Zahra precisa de ervas raras que so crescem nas encostas geladas das montanhas ao norte. Elas sao necessarias para um ritual de cura poderoso.",
+    "objectives": [
+      { "id": "obj1", "text": "Receber a descricao das ervas de Zahra", "type": "dialogue" },
+      { "id": "obj2", "text": "Coletar as ervas nas montanhas", "type": "exploration" },
+      { "id": "obj3", "text": "Retornar com as ervas para Zahra", "type": "dialogue" }
+    ],
+    "start_condition": "camp_established",
+    "completion_flag": "rare_herbs_collected",
+    "rewards": {
+      "xp": 150,
+      "gold": 30,
+      "items": ["herbal_tea", "vision_herb"],
+      "faction_effects": { "clero_mithra": 5 }
+    }
+  },
+  {
+    "id": "sq_sacred_relics",
+    "name": "Reliquias do Templo",
+    "type": "side_quest",
+    "giver_npc": "azrael_priest",
+    "act": 2,
+    "description": "O Padre Azrael precisa recuperar reliquias sagradas de Mithra que foram roubadas do templo durante a invasao lusitana.",
+    "objectives": [
+      { "id": "obj1", "text": "Ouvir o pedido de Azrael", "type": "dialogue" },
+      { "id": "obj2", "text": "Localizar as reliquias no acampamento lusitano", "type": "exploration" },
+      { "id": "obj3", "text": "Recuperar as reliquias sagradas", "type": "combat" },
+      { "id": "obj4", "text": "Devolver as reliquias ao Padre Azrael", "type": "dialogue" }
+    ],
+    "start_condition": "act2_started",
+    "completion_flag": "sacred_relics_returned",
+    "rewards": {
+      "xp": 250,
+      "gold": 0,
+      "items": ["sacred_incense", "prayer_scroll"],
+      "faction_effects": { "clero_mithra": 20 }
+    }
   },
   {
     "id": "sq_gieve_recruitment",
     "name": "O Bardo e a Sacerdotisa",
-    "description": "Encontre Gieve e Falangies e convença-os a se juntar a causa.",
+    "type": "side_quest",
+    "giver_npc": null,
     "act": 3,
+    "description": "Encontre Gieve e Farangis e convenca-os a se juntar a causa.",
     "objectives": [
-      { "id": "obj_hear_music", "text": "Seguir o som da musica", "type": "exploration" },
-      { "id": "obj_meet_gieve", "text": "Conhecer Gieve", "type": "dialogue" },
-      { "id": "obj_meet_falangies", "text": "Conhecer Falangies", "type": "dialogue" },
-      { "id": "obj_recruit_both", "text": "Convencer ambos a se juntar", "type": "dialogue" }
+      { "id": "obj1", "text": "Seguir o som da musica", "type": "exploration" },
+      { "id": "obj2", "text": "Conhecer Gieve", "type": "dialogue" },
+      { "id": "obj3", "text": "Conhecer Farangis", "type": "dialogue" },
+      { "id": "obj4", "text": "Convencer ambos a se juntar", "type": "dialogue" }
     ],
-    "rewards": { "xp": 250, "gold": 0 },
     "start_condition": "act3_started",
-    "completion_flag": "gieve_falangies_recruited"
+    "completion_flag": "gieve_farangis_recruited",
+    "rewards": {
+      "xp": 250,
+      "gold": 0
+    }
+  },
+  {
+    "id": "sq_hodir_spy",
+    "name": "O Espiao de Hodir",
+    "type": "side_quest",
+    "giver_npc": "kaveh_blacksmith",
+    "act": 3,
+    "description": "Kaveh suspeita de um espiao lusitano na corte de Lord Hodir. Investigar pode salvar a alianca com Kashan — ou destrui-la se voce errar.",
+    "objectives": [
+      { "id": "obj1", "text": "Investigar a corte de Hodir discretamente", "type": "exploration" },
+      { "id": "obj2", "text": "Identificar o espiao [SAB 15 ou Elam recrutado]", "type": "skill_check" },
+      { "id": "obj3", "text": "Capturar ou eliminar o espiao", "type": "choice" }
+    ],
+    "start_condition": "full_kashan_alliance OR partial_kashan_alliance",
+    "completion_flag": "hodir_spy_exposed",
+    "rewards": {
+      "xp": 350,
+      "gold": 0,
+      "items": ["lusitanian_plans"],
+      "faction_effects": { "nobreza_pars": 15 }
+    }
+  },
+  {
+    "id": "sq_turan_duel",
+    "name": "O Desafio das Estepes",
+    "type": "side_quest",
+    "giver_npc": "bahram_turan",
+    "act": 3,
+    "description": "Bahram, lider dos cavaleiros de Turan, so respeita quem prova valor em combate singular. Ele desafia Arslan para um duelo — nao a morte, mas ate um lado ceder.",
+    "objectives": [
+      { "id": "obj1", "text": "Aceitar o desafio de Bahram", "type": "dialogue" },
+      { "id": "obj2", "text": "Vencer o duelo contra Bahram", "type": "combat" }
+    ],
+    "start_condition": "act3_started",
+    "completion_flag": "turan_duel_won",
+    "rewards": {
+      "xp": 400,
+      "gold": 0,
+      "items": ["turan_token"],
+      "faction_effects": { "turan": 30 },
+      "troop_bonus": 150
+    }
+  },
+  {
+    "id": "sq_gieve_debt",
+    "name": "A Divida do Menestrel",
+    "type": "side_quest",
+    "giver_npc": "gieve",
+    "act": 3,
+    "description": "Gieve deve uma quantia enorme a um senhor de guerra de Sindhura por uma aposta de jogo. O credor mandou assassinos. Gieve precisa de ajuda para resolver isso.",
+    "objectives": [
+      { "id": "obj1", "text": "Ouvir o problema de Gieve", "type": "dialogue" },
+      { "id": "obj2", "text": "Localizar o agente do credor em Sindhura", "type": "exploration" },
+      { "id": "obj3", "text": "Resolver a divida de Gieve", "type": "choice" }
+    ],
+    "start_condition": "gieve_recruited",
+    "completion_flag": "gieve_debt_resolved",
+    "rewards": {
+      "xp": 300,
+      "gold": 0
+    }
+  },
+  {
+    "id": "sq_falangies_honor",
+    "name": "Honra da Cavalaria",
+    "type": "side_quest",
+    "giver_npc": "falangies",
+    "act": 3,
+    "description": "Farangis foi expulsa desonrosamente de sua unidade de cavalaria por um comandante corrupto. Ela quer provar seu valor em um torneio.",
+    "objectives": [
+      { "id": "obj1", "text": "Ouvir a historia de Farangis", "type": "dialogue" },
+      { "id": "obj2", "text": "Registrar Farangis no Torneio de Kashan", "type": "exploration" },
+      { "id": "obj3", "text": "Apoia-la durante o torneio", "type": "exploration" },
+      { "id": "obj4", "text": "Enfrentar o comandante corrupto na final", "type": "combat" }
+    ],
+    "start_condition": "falangies_recruited AND full_kashan_alliance",
+    "completion_flag": "falangies_honor_restored",
+    "rewards": {
+      "xp": 400,
+      "gold": 0,
+      "items": ["falangies_bow"],
+      "faction_effects": { "nobreza_pars": 15 }
+    }
+  },
+  {
+    "id": "sq_narsus_legendary",
+    "name": "O Preco do Genio",
+    "type": "side_quest",
+    "giver_npc": "narsus",
+    "act": 3,
+    "description": "Um vilarejo ao leste esta cercado por tres faccoes armadas que ameacam destrui-lo por um mal-entendido. Narsus aposta que consegue resolver o problema sem derramar sangue.",
+    "objectives": [
+      { "id": "obj1", "text": "Investigar a situacao no vilarejo de Khurram", "type": "exploration" },
+      { "id": "obj2", "text": "Identificar o verdadeiro conflito entre as faccoes [INT 14]", "type": "skill_check" },
+      { "id": "obj3", "text": "Implementar o plano de Narsus para dividir as faccoes sem combate", "type": "dialogue" }
+    ],
+    "start_condition": "narsus_recruited AND act3_started",
+    "completion_flag": "khurram_resolved_peacefully",
+    "rewards": {
+      "xp": 500,
+      "gold": 0,
+      "items": ["narsus_treatise"],
+      "faction_effects": { "nobreza_pars": 5, "escravos_libertos": 10 }
+    }
+  },
+  {
+    "id": "sq_daria_manifesto",
+    "name": "O Manifesto da Liberdade",
+    "type": "side_quest",
+    "giver_npc": "daria_slave",
+    "act": 3,
+    "description": "Daria escreveu um manifesto pela abolicao da escravatura em Pars. Ela quer que Arslan o assine e endosse publicamente. E uma declaracao politica de enormes consequencias.",
+    "objectives": [
+      { "id": "obj1", "text": "Ler o manifesto de Daria", "type": "dialogue" },
+      { "id": "obj2", "text": "Decidir: assinar publicamente, assinar em privado, ou recusar", "type": "choice" }
+    ],
+    "start_condition": "quest_sq_free_slaves_caravan_completed",
+    "completion_flag": "manifesto_decision_made",
+    "rewards": {
+      "xp": 250,
+      "gold": 0
+    }
+  },
+  {
+    "id": "sq_ecbatana_map",
+    "name": "Mapa de Ecbatana",
+    "type": "side_quest",
+    "giver_npc": "yusuf_scholar",
+    "act": 3,
+    "description": "Yusuf criou um mapa detalhado das ruas e passagens secretas de Ecbatana, baseado em manuscritos antigos e testemunhos de refugiados. Ele pode ser crucial para o ataque final.",
+    "objectives": [
+      { "id": "obj1", "text": "Solicitar o mapa a Yusuf", "type": "dialogue" },
+      { "id": "obj2", "text": "Verificar a precisao do mapa com refugiados de Ecbatana", "type": "exploration" },
+      { "id": "obj3", "text": "Usar o mapa para planejar a rota de infiltracao", "type": "dialogue" }
+    ],
+    "start_condition": "quest_sq_lost_manuscripts_completed",
+    "completion_flag": "ecbatana_map_obtained",
+    "rewards": {
+      "xp": 200,
+      "gold": 0,
+      "combat_bonus": "ecbatana_infiltration_easier",
+      "faction_effects": { "nobreza_pars": 5 }
+    }
+  },
+  {
+    "id": "sq_truth_of_arslan",
+    "name": "A Verdade do Principe",
+    "type": "side_quest",
+    "giver_npc": "azrael_priest",
+    "act": 3,
+    "description": "O Padre Azrael guarda um segredo sobre o nascimento de Arslan que o Rei Andragoras jurou esconder. A verdade pode legitimar — ou destruir — sua reivindicacao ao trono.",
+    "objectives": [
+      { "id": "obj1", "text": "Encontrar o Padre Azrael no Templo de Mithra", "type": "exploration" },
+      { "id": "obj2", "text": "Apresentar o Fragmento de Rukhnabad como prova de boa fe", "type": "item_check" },
+      { "id": "obj3", "text": "Ouvir a verdade sobre seu nascimento", "type": "dialogue" }
+    ],
+    "start_condition": "quest_sq_rukhnabad_secret_completed AND knows_palace_secret",
+    "completion_flag": "knows_true_origin",
+    "rewards": {
+      "xp": 600,
+      "gold": 0,
+      "faction_effects": { "clero_mithra": 25, "nobreza_pars": -10 },
+      "world_flag": "arslan_true_origin_revealed"
+    }
+  },
+  {
+    "id": "sq_resistance_ecbatana",
+    "name": "A Resistencia de Ecbatana",
+    "type": "side_quest",
+    "giver_npc": "ishtar_dancer",
+    "act": 4,
+    "description": "Ishtar lidera uma resistencia interna dentro de Ecbatana. Ela tem informacoes valiosas sobre as defesas do palacio — mas precisa de apoio para agir durante a batalha final.",
+    "objectives": [
+      { "id": "obj1", "text": "Contatar Ishtar antes do cerco", "type": "dialogue" },
+      { "id": "obj2", "text": "Passar informacoes sobre o plano de ataque", "type": "dialogue" },
+      { "id": "obj3", "text": "Ishtar sabota os portoes durante a batalha", "type": "exploration" }
+    ],
+    "start_condition": "act4_started AND chose_strategy",
+    "completion_flag": "ecbatana_resistance_activated",
+    "rewards": {
+      "xp": 500,
+      "gold": 0,
+      "combat_bonus": "portao_sabotado_reduce_enemy_count",
+      "faction_effects": { "escravos_libertos": 20 }
+    }
+  },
+  {
+    "id": "sq_palace_blueprint",
+    "name": "Planta do Palacio",
+    "type": "side_quest",
+    "giver_npc": "ishtar_dancer",
+    "act": 4,
+    "description": "Ishtar tem acesso a planta completa do palacio real de Ecbatana, incluindo passagens secretas usadas pelos guardas de Kharlan. Essencial para a missao de infiltracao.",
+    "objectives": [
+      { "id": "obj1", "text": "Ganhar a confianca de Ishtar", "type": "dialogue" },
+      { "id": "obj2", "text": "Obter a planta do palacio", "type": "dialogue" },
+      { "id": "obj3", "text": "Compartilhar com Narsus para o plano de ataque", "type": "dialogue" }
+    ],
+    "start_condition": "act4_started",
+    "completion_flag": "palace_blueprint_obtained",
+    "rewards": {
+      "xp": 300,
+      "gold": 0,
+      "combat_bonus": "palace_infiltration_accessible",
+      "faction_effects": { "escravos_libertos": 10 }
+    }
+  },
+  {
+    "id": "sq_etoile_letter",
+    "name": "A Carta de Etoile",
+    "type": "side_quest",
+    "giver_npc": "etoile_lusitana",
+    "act": 4,
+    "description": "Etoile quer mandar uma carta para sua familia em Lusitania explicando por que ela nao vai voltar. Mas a carta precisa chegar sem ser interceptada.",
+    "objectives": [
+      { "id": "obj1", "text": "Aceitar entregar a carta de Etoile", "type": "dialogue" },
+      { "id": "obj2", "text": "Encontrar um mensageiro confiavel em Sindhura", "type": "exploration" },
+      { "id": "obj3", "text": "Garantir a entrega sem interceptacao", "type": "exploration" }
+    ],
+    "start_condition": "act4_started AND lusitano_neutrality",
+    "completion_flag": "etoile_letter_sent",
+    "rewards": {
+      "xp": 300,
+      "gold": 0,
+      "faction_effects": { "lusitanos_moderados": 20 }
+    }
   }
 ]

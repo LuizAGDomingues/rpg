@@ -1,0 +1,87 @@
+{
+  "id": "zahra_dialogue",
+  "npc": "zahra_witch",
+  "nodes": [
+    {
+      "id": "start",
+      "text": "Ssss... outro visitante. A floresta guarda segredos, menino-principe. O que voce busca: cura, conhecimento, ou as duas coisas?",
+      "mood_check": true,
+      "branches": {
+        "suspicious": { "text": "Outro estranho. A floresta nao gosta de estranhos. Mas voce pode entrar. Por enquanto." },
+        "neutral": { "text": "Ssss... outro visitante. A floresta guarda segredos, menino-principe. O que voce busca?" },
+        "friendly": { "text": "Ah, o principe volta. Zahra preparou algo especial. A floresta sussurrou que voce viria." }
+      },
+      "options": [
+        { "id": "buy", "text": "Quero ver suas pocoes e ervas.", "leads_to": "shop" },
+        { "id": "ask_curse", "text": "Dizem que voce lanca maldicos.", "leads_to": "zahra_curse" },
+        { "id": "ask_vision", "text": "Voce pode me dizer o futuro?", "leads_to": "zahra_vision" },
+        { "id": "ask_herbs_quest", "text": "Precisa de ervas raras?", "leads_to": "zahra_quest_offer" },
+        { "id": "exit", "text": "Obrigado. Volto quando precisar.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "zahra_curse",
+      "text": "Maldico... (ri de uma forma estranha) Narsus diria que e intoxicacao por vapores de enxofre do solo aqui. E ele nao estaria completamente errado. Mas ha coisas que nem Narsus explica com ciencia. Coisas que eu vi.",
+      "options": [
+        { "id": "narsus_right", "text": "Narsus tem razao. E ciencia, nao magia.", "leads_to": "zahra_narsus_reaction" },
+        { "id": "believe", "text": "Acredito que ha misterios alem da logica.", "leads_to": "zahra_pleased" }
+      ]
+    },
+    {
+      "id": "zahra_narsus_reaction",
+      "text": "Ah, o discipulo do logico. Tudo bem. A ciencia de Narsus salvou vidas. O conhecimento de Zahra tambem salvou. De jeitos diferentes. Nos dois temos razao.",
+      "options": [
+        { "id": "buy", "text": "Entendido. Ver suas ervas.", "leads_to": "shop" },
+        { "id": "exit", "text": "Sabedoria interessante.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "zahra_pleased",
+      "text": "Bem dito. A floresta gosta de voce, principe. Raramente digo isso a visitantes. Voce tem uma abertura que a maioria dos nobres perdeu cedo. Guard isso — vai precisar.",
+      "set_flags": { "zahra_pleased_arslan": true },
+      "options": [
+        { "id": "buy", "text": "Obrigado. Ver suas ervas.", "leads_to": "shop" },
+        { "id": "ask_vision", "text": "E o futuro? O que ve para mim?", "leads_to": "zahra_vision" }
+      ]
+    },
+    {
+      "id": "zahra_vision",
+      "text": "O futuro e um caminho que bifurca infinitamente. Mas vejo isto: voce chegara a Ecbatana. O que encontrar la dependera do que voce trouxer consigo — bondade ou justica. Os dois nem sempre andam juntos.",
+      "options": [
+        { "id": "ask_more", "text": "O que isso significa?", "leads_to": "zahra_vision_detail" },
+        { "id": "exit", "text": "Terei isso em mente.", "leads_to": "exit", "xp_reward": 20 }
+      ]
+    },
+    {
+      "id": "zahra_vision_detail",
+      "text": "Bondade perdoa quem machucoou. Justica pune quem machucoou. Ambas sao certas em momentos diferentes. O desafio de um rei e saber qual momento requer qual resposta. Zahra nao tem mais respostas do que isso.",
+      "options": [
+        { "id": "exit", "text": "Sabedoria de que precisarei.", "leads_to": "exit", "xp_reward": 20 }
+      ]
+    },
+    {
+      "id": "zahra_quest_offer",
+      "text": "Sim. Ha tres ervas que so crescem em locais perigosos. Raiz-de-Sombra, nas grutas ao norte. Flor-de-Cinza, nas ruinas de Atropatene. Musgo-de-Lua, na margem do rio a leste. Elas juntas fazem um elixir que... digamos que seria muito util.",
+      "options": [
+        { "id": "accept", "text": "Colherei as tres ervas.", "leads_to": "zahra_quest_accepted", "start_quest": { "id": "sq_rare_herbs", "name": "As Ervas de Zahra", "description": "Coletar tres ervas raras para Zahra: Raiz-de-Sombra, Flor-de-Cinza e Musgo-de-Lua.", "objectives": [{ "id": "obj_raiz", "text": "Coletar Raiz-de-Sombra nas grutas ao norte" }, { "id": "obj_flor", "text": "Coletar Flor-de-Cinza nas ruinas de Atropatene" }, { "id": "obj_musgo", "text": "Coletar Musgo-de-Lua na margem do rio a leste" }], "rewards": { "xp": 110, "gold": 0 } } },
+        { "id": "decline", "text": "Nao agora.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "zahra_quest_accepted",
+      "text": "A floresta vai guia-lo, se voce deixar. E cuidado com as grutas ao norte — ha mais do que ervas la.",
+      "set_flags": { "zahra_herb_quest_started": true },
+      "options": [
+        { "id": "exit", "text": "Trarei as ervas.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "shop",
+      "text": "Pocoes, extratos, ervas secas. Cada frasco tem uma historia.",
+      "is_shop": true,
+      "options": [
+        { "id": "back", "text": "Voltar.", "leads_to": "start" }
+      ]
+    }
+  ]
+}

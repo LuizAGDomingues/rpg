@@ -42,3 +42,117 @@
     font-family: var(--font-heading);
     white-space: nowrap;
 }
+
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: var(--spacing-xs);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: var(--spacing-md);
+}
+
+.tab {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-muted);
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    padding: var(--spacing-xs) var(--spacing-md);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.tab:hover {
+    color: var(--text-primary);
+}
+
+.activeTab {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+}
+
+/* Narsus Notes */
+.notesList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.noteEntry {
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.noteEntry:hover {
+    border-color: var(--gold-dark);
+}
+
+.noteEntryRow {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
+}
+
+.noteEntryTitle {
+    font-family: var(--font-heading);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
+
+.noteEntryPreview {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.noteCategoryBadge {
+    font-size: 0.7rem;
+    font-family: var(--font-heading);
+    color: var(--gold-dark);
+    border: 1px solid var(--gold-dark);
+    border-radius: var(--radius-sm);
+    padding: 1px 6px;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Note Detail */
+.noteDetail {
+    padding: var(--spacing-xl);
+}
+
+.noteDetailHeader {
+    text-align: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.noteDetailTitle {
+    font-family: var(--font-heading);
+    color: var(--gold);
+    font-size: 1.2rem;
+    margin: var(--spacing-xs) 0 0;
+}
+
+.noteDetailAuthor {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.85rem;
+    margin: var(--spacing-xs) 0 0;
+}
+
+.noteDetailText {
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    line-height: 1.8;
+    margin: var(--spacing-md) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.noteDetailText p {
+    margin: 0;
+}

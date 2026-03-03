@@ -1,0 +1,17 @@
+{
+  "id": "cave_guard",
+  "name": "Guarda das Cavernas",
+  "description": "Bandido que guarda passagens secretas e esconderijos nas montanhas de Pars. Conhece cada tunel de sua fortaleza subterranea.",
+  "hp": 55,
+  "ca": 12,
+  "pa": 2,
+  "attributes": { "FOR": 13, "DES": 12, "CON": 14, "INT": 8, "SAB": 9, "CAR": 7 },
+  "weapon": { "name": "Clava Reforcada", "damage": "1d8+3" },
+  "ai": "defensive",
+  "xp_reward": 120,
+  "gold_reward": "1d6+3",
+  "loot": [
+    { "id": "bandage", "chance": 0.5 },
+    { "id": "ration", "chance": 0.4 }
+  ]
+}

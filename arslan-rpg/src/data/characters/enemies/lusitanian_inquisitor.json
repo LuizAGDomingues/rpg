@@ -1,0 +1,19 @@
+{
+  "id": "lusitanian_inquisitor",
+  "name": "Inquisidor Lusitano",
+  "description": "Sacerdote-guerreiro de Yaldabaoth. Sua presenca inspira fervor nos aliados e terror nos inimigos.",
+  "hp": 90,
+  "ca": 14,
+  "pa": 3,
+  "attributes": { "FOR": 14, "DES": 11, "CON": 13, "INT": 14, "SAB": 16, "CAR": 15 },
+  "weapon": { "name": "Maca Sagrada", "damage": "1d10+6", "bonus_atk": 1 },
+  "on_hit_effect": { "name": "intimidated", "chance": 0.4, "duration": 2 },
+  "passive": { "name": "Fervor Divino", "description": "Aliados lusitanos recebem +2 de bonus em ataques enquanto o Inquisidor estiver vivo." },
+  "ai": "support_aggressive",
+  "xp_reward": 260,
+  "gold_reward": "1d10+8",
+  "loot": [
+    { "id": "prayer_scroll", "chance": 0.3 },
+    { "id": "potion_minor", "chance": 0.5 }
+  ]
+}

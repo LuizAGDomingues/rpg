@@ -1,0 +1,78 @@
+{
+  "id": "vahriz_dialogue",
+  "npc": "commander_vahriz",
+  "nodes": [
+    {
+      "id": "start",
+      "text": "Principe Arslan. Perdoe-me por nao me levantar. O ferimento no joelho... nao cicatriza.",
+      "mood_check": true,
+      "branches": {
+        "neutral": { "text": "Principe Arslan. Perdoe-me por nao me levantar. O ferimento no joelho... nao cicatriza." },
+        "friendly": { "text": "Principe! Bom ver voce de pe. Sente-se. Temos muito a conversar." }
+      },
+      "options": [
+        { "id": "ask_atropatene", "text": "Conte-me o que viu em Atropatene.", "leads_to": "vahriz_battle" },
+        { "id": "ask_kharlan", "text": "Como Kharlan traiu o exercito?", "leads_to": "vahriz_kharlan" },
+        { "id": "ask_sword", "text": "Voce perdeu sua espada na batalha?", "leads_to": "vahriz_sword_quest", "condition": "NOT vahriz_sword_quest_started" },
+        { "id": "exit", "text": "Descanse, comandante.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "vahriz_battle",
+      "text": "Era a maior batalha que Pars travou em uma geracao. Cento e cinquenta mil homens. O rei estava confiante — talvez em excesso. Kharlan controlava a ala esquerda. Quando os lusitanos carregaram o centro... ela nao fechou. Simplesmente nao fechou.",
+      "set_flags": { "vahriz_testimony_heard": true },
+      "options": [
+        { "id": "ask_kharlan", "text": "E Kharlan? Foi erro ou traicao?", "leads_to": "vahriz_kharlan" },
+        { "id": "ask_king", "text": "E o rei? Alguma noticia?", "leads_to": "vahriz_king" }
+      ]
+    },
+    {
+      "id": "vahriz_kharlan",
+      "text": "Traicao. Vi com estes olhos. Kharlan tinha mensageiros lusitanos em seu acampamento dias antes da batalha. Eu reportei ao rei. O rei nao acreditou — Kharlan era seu general favorito. Aquele erro custou Pars.",
+      "set_flags": { "vahriz_kharlan_report_known": true },
+      "options": [
+        { "id": "ask_why", "text": "Por que Kharlan faria isso?", "leads_to": "vahriz_kharlan_motive" },
+        { "id": "honor", "text": "Voce fez o certo ao reportar. O rei e quem falhou.", "leads_to": "vahriz_absolved", "character_score": 3 }
+      ]
+    },
+    {
+      "id": "vahriz_kharlan_motive",
+      "text": "Ambicao. E ressentimento. Kharlan sempre acreditou que merecia mais do que recebeu. Talvez os lusitanos tenham prometido uma provincia, ou um titulo. Homens tragem Pars por muito menos.",
+      "options": [
+        { "id": "exit", "text": "Usarei isso. Obrigado, Vahriz.", "leads_to": "exit", "xp_reward": 40 }
+      ]
+    },
+    {
+      "id": "vahriz_absolved",
+      "text": "Obrigado, principe. Carrego culpa. Se tivesse insistido mais... forcado o rei a ouvir... Mas talvez nenhum homem possa mudar o que o destino ja decidiu.",
+      "faction_effect": { "nobreza_pars": 3 },
+      "options": [
+        { "id": "exit", "text": "Voce fez o que podia, comandante.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "vahriz_king",
+      "text": "Vivo, pelo que sei. Capturado. Os lusitanos tem interesse em mante-lo vivo — um rei prisioneiro vale mais do que um rei morto para negociacoes. Mas em que condicoes... nao sei.",
+      "set_flags": { "king_andragoras_alive": true },
+      "options": [
+        { "id": "exit", "text": "Vivo. Isso e importante.", "leads_to": "exit", "xp_reward": 30 }
+      ]
+    },
+    {
+      "id": "vahriz_sword_quest",
+      "text": "Minha espada... caiu quando me derrubaram do cavalo. Uma lamina de aco com o emblema do regimento. Se ainda estiver no campo de batalha... e o unico objeto que me conecta com os homens que perdi.",
+      "options": [
+        { "id": "accept", "text": "Recuperarei sua espada.", "leads_to": "vahriz_quest_accepted", "start_quest": { "id": "sq_vahriz_sword", "name": "A Espada do Comandante", "description": "Recuperar a espada do comandante Vahriz no campo de batalha de Atropatene.", "objectives": [{ "id": "obj_find_sword", "text": "Procurar a espada nas ruinas de Atropatene" }], "rewards": { "xp": 90, "gold": 0 } } },
+        { "id": "decline", "text": "Nao posso prometer isso agora.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "vahriz_quest_accepted",
+      "text": "Obrigado, principe. Nao e a espada que importa, no fundo. Sao os homens que ela representa. Que descansem em paz.",
+      "set_flags": { "vahriz_sword_quest_started": true },
+      "options": [
+        { "id": "exit", "text": "Nao sao esquecidos.", "leads_to": "exit" }
+      ]
+    }
+  ]
+}

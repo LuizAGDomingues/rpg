@@ -1,0 +1,17 @@
+{
+  "id": "sindhura_guard",
+  "name": "Guarda de Sindhura",
+  "description": "Soldado do reino de Sindhura. Equipado com equipamento exotico e treinado em tecnicas de combate orientais.",
+  "hp": 75,
+  "ca": 13,
+  "pa": 2,
+  "attributes": { "FOR": 13, "DES": 14, "CON": 13, "INT": 10, "SAB": 11, "CAR": 10 },
+  "weapon": { "name": "Cimitarra de Sindhura", "damage": "1d10+5" },
+  "ai": "aggressive_simple",
+  "xp_reward": 150,
+  "gold_reward": "1d8+2",
+  "loot": [
+    { "id": "herbal_tea", "chance": 0.4 },
+    { "id": "bandage", "chance": 0.3 }
+  ]
+}

@@ -2,13 +2,13 @@
   "id": "lusitanian_soldier",
   "name": "Soldado Lusitano",
   "description": "Soldado de infantaria do exercito lusitano. Fanatico e disciplinado.",
-  "hp": 18,
-  "ca": 14,
+  "hp": 35,
+  "ca": 10,
   "pa": 2,
   "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 },
-  "weapon": { "name": "Espada Longa", "damage": "1d8+2" },
+  "weapon": { "name": "Espada Longa", "damage": "1d8+3" },
   "ai": "aggressive_simple",
-  "xp_reward": 50,
+  "xp_reward": 60,
   "gold_reward": "1d6",
   "loot": []
 }

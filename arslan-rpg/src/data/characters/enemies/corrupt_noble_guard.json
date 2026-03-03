@@ -1,0 +1,17 @@
+{
+  "id": "corrupt_noble_guard",
+  "name": "Guarda Nobre Corrupto",
+  "description": "Soldado de Pars que vendeu sua lealdade. Luta pela sobrevivencia, nao por crenca.",
+  "hp": 60,
+  "ca": 13,
+  "pa": 2,
+  "attributes": { "FOR": 14, "DES": 12, "CON": 13, "INT": 10, "SAB": 9, "CAR": 9 },
+  "weapon": { "name": "Espada Longa Polida", "damage": "1d8+3" },
+  "ai": "defensive",
+  "xp_reward": 160,
+  "gold_reward": "2d6+5",
+  "loot": [
+    { "id": "potion_minor", "chance": 0.35 },
+    { "id": "bandage", "chance": 0.5 }
+  ]
+}

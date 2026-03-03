@@ -1,4 +1,5 @@
 import styles from './DialogueBox.module.css';
+import GlossaryTooltip from '../ui/GlossaryTooltip';
 
 export default function DialogueBox({ npcName, npcTitle, text, children }) {
   return (
@@ -8,7 +9,7 @@ export default function DialogueBox({ npcName, npcTitle, text, children }) {
         {npcTitle && <span className={styles.title}>{npcTitle}</span>}
       </div>
       <div className={styles.textArea}>
-        <p className={styles.text}>&ldquo;{text}&rdquo;</p>
+        <p className={styles.text}>&ldquo;<GlossaryTooltip text={text} />&rdquo;</p>
       </div>
       {children}
     </div>

@@ -1,0 +1,18 @@
+{
+  "id": "lusitanian_champion",
+  "name": "Campeao Lusitano",
+  "description": "O guerreiro mais poderoso de um batalhao lusitano. Portador do fervor religioso, seu machado parte armaduras com facilidade.",
+  "hp": 130,
+  "ca": 16,
+  "pa": 3,
+  "attributes": { "FOR": 17, "DES": 13, "CON": 16, "INT": 11, "SAB": 11, "CAR": 12 },
+  "weapon": { "name": "Machado de Guerra", "damage": "2d8+5", "bonus_atk": 2 },
+  "on_hit_effect": { "name": "stunned", "chance": 0.2, "duration": 1 },
+  "ai": "aggressive_boss",
+  "xp_reward": 350,
+  "gold_reward": "5d12+30",
+  "loot": [
+    { "id": "chain_mail", "chance": 0.25 },
+    { "id": "potion_minor", "chance": 0.4 }
+  ]
+}

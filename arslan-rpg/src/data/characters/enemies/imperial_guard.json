@@ -1,0 +1,18 @@
+{
+  "id": "imperial_guard",
+  "name": "Guarda Imperial",
+  "description": "Soldado de elite da guarda pessoal do rei Andragoras. Treinado desde a infancia para proteger o trono de Pars.",
+  "hp": 120,
+  "ca": 16,
+  "pa": 2,
+  "attributes": { "FOR": 15, "DES": 13, "CON": 15, "INT": 11, "SAB": 12, "CAR": 11 },
+  "weapon": { "name": "Espada Real", "damage": "2d8+6" },
+  "passive": { "name": "Disciplina Militar", "description": "Resistente a intimidacao. Nao sofre penalidades de moral." },
+  "ai": "defensive",
+  "xp_reward": 280,
+  "gold_reward": "1d8+4",
+  "loot": [
+    { "id": "potion_minor", "chance": 0.4 },
+    { "id": "iron_shield", "chance": 0.1 }
+  ]
+}

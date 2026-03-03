@@ -1,0 +1,89 @@
+{
+  "id": "jahan_dialogue",
+  "npc": "jahan_spy",
+  "nodes": [
+    {
+      "id": "start",
+      "text": "Interessante. Um principe sem exercito numa taberna de fronteira. Ou e muito corajoso ou muito desesperado.",
+      "mood_check": true,
+      "branches": {
+        "hostile": { "text": "Nao. Nao temos nada a discutir. Va embora." },
+        "suspicious": { "text": "Interessante. Um principe sem exercito numa taberna de fronteira. Ou e muito corajoso ou muito desesperado." },
+        "neutral": { "text": "O principe retorna. Precisa de informacoes? Tenho bastante. O preco varia." },
+        "friendly": { "text": "Ah, meu melhor cliente. O que precisa saber hoje?" }
+      },
+      "options": [
+        { "id": "buy_intel", "text": "Quero informacoes sobre movimentacao de tropas.", "leads_to": "jahan_intel_offer" },
+        { "id": "ask_who", "text": "Para quem voce realmente trabalha?", "leads_to": "jahan_identity" },
+        { "id": "buy", "text": "Ver o que tem para vender.", "leads_to": "shop" },
+        { "id": "exit", "text": "So passando.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "jahan_intel_offer",
+      "text": "Movimentacao de tropas lusitanas ao norte: 200 cavaleiros marcharam tres dias atras em direcao a passagem de Kashan. Informacao de 24 horas atras. Custo: 40 ouro.",
+      "options": [
+        { "id": "pay", "text": "Aqui estao 40 ouro.", "leads_to": "jahan_intel_paid", "condition": "gold >= 40" },
+        { "id": "haggle", "text": "[CAR 14] Muito caro. Vinte.", "leads_to": "jahan_haggle", "condition": "CAR >= 14", "roll": { "attribute": "CAR", "dc": 14 } },
+        { "id": "back", "text": "Talvez depois.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "jahan_intel_paid",
+      "text": "Transacao concluida. Ah, e um bonus: o comandante lusitano no norte tem uma fraqueza. Vinho. Muito vinho. Talvez util em algum momento.",
+      "set_flags": { "lusitanian_commander_weakness": true },
+      "options": [
+        { "id": "thanks", "text": "Informacao valiosa. Obrigado.", "leads_to": "exit", "xp_reward": 30 }
+      ]
+    },
+    {
+      "id": "jahan_haggle",
+      "text": "Hah. Voce tem jeito, principe. Trinta. Ultimo preco.",
+      "options": [
+        { "id": "accept", "text": "Trinta, entao.", "leads_to": "jahan_intel_paid" },
+        { "id": "decline", "text": "Nao desta vez.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "jahan_identity",
+      "text": "Para quem eu trabalho? Para mim mesmo, como sempre. Informacao e a unica moeda que nunca se deprecia. Hoje vendo para voce. Amanha... para quem pagar mais.",
+      "options": [
+        { "id": "threaten", "text": "[FOR 14] Isso e um problema. Voce trabalha para mim ou nao trabalha.", "leads_to": "jahan_threatened", "condition": "FOR >= 14", "roll": { "attribute": "FOR", "dc": 14 } },
+        { "id": "accept", "text": "Honesto, pelo menos. Terei isso em mente.", "leads_to": "start" },
+        { "id": "offer", "text": "E se eu pagar um retainer? Informacoes exclusivas.", "leads_to": "jahan_retainer" }
+      ]
+    },
+    {
+      "id": "jahan_threatened",
+      "text": "...(pausa longa)... Voce tem coragem, principe. Tudo bem. Por ora, minhas informacoes sao suas em exclusividade. Mas o preco dobra.",
+      "set_flags": { "jahan_exclusive": true },
+      "options": [
+        { "id": "exit", "text": "Aceitavel.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "jahan_retainer",
+      "text": "Um retainer. 100 ouro por mes. Por esse valor, qualquer informacao sobre lusitanos, Turan ou Sindhura que atravesse minhas maos chega primeiro a voce.",
+      "options": [
+        { "id": "accept", "text": "Feito.", "leads_to": "jahan_retainer_accepted", "condition": "gold >= 100" },
+        { "id": "decline", "text": "Muito caro.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "jahan_retainer_accepted",
+      "text": "Prazer fazer negocios, principe. Jahan nunca quebrou um contrato. Ainda.",
+      "set_flags": { "jahan_retainer_active": true },
+      "options": [
+        { "id": "exit", "text": "Que continue assim.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "shop",
+      "text": "Tenho algumas coisas que nao se encontram em mercados normais.",
+      "is_shop": true,
+      "options": [
+        { "id": "back", "text": "Voltar.", "leads_to": "start" }
+      ]
+    }
+  ]
+}

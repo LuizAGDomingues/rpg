@@ -1,19 +1,22 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useGameStore from '../store/useGameStore';
 import Button from '../components/ui/Button';
 import { OrnamentDivider, PersianPattern } from '../components/ui/Ornament';
+import { playTheme } from '../engine/audioEngine';
 import styles from './TitleScreen.module.css';
-
 
 export default function TitleScreen() {
   const navigate = useNavigate();
   const setGamePhase = useGameStore((s) => s.setGamePhase);
   const resetGame = useGameStore((s) => s.resetGame);
   const playerClass = useGameStore((s) => s.player.class);
-  const [showCredits, setShowCredits] = useState(false);
 
   const hasSave = !!playerClass;
+
+  useEffect(() => {
+    playTheme('exploration');
+  }, []);
 
   const handleNewGame = () => {
     resetGame();
@@ -52,21 +55,10 @@ export default function TitleScreen() {
           <Button variant="secondary" size="md" fullWidth onClick={() => navigate('/settings')}>
             ⚙ Configuracoes
           </Button>
-          <Button variant="secondary" size="md" fullWidth onClick={() => setShowCredits(!showCredits)}>
+          <Button variant="secondary" size="md" fullWidth onClick={() => navigate('/credits')}>
             Creditos
           </Button>
         </div>
-
-        {showCredits && (
-          <div className={styles.credits}>
-            <OrnamentDivider />
-            <p>Baseado no manga/anime <strong>Arslan Senki</strong></p>
-            <p>de Yoshiki Tanaka e Hiromu Arakawa</p>
-            <p className={styles.creditsMuted}>
-              Desenvolvido com React + Zustand
-            </p>
-          </div>
-        )}
       </div>
 
       <div className={styles.footer}>

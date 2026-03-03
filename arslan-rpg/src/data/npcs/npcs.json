@@ -8,7 +8,7 @@
     "base_mood": "suspicious",
     "portrait_type": "blacksmith",
     "description": "Velho ferreiro de maos calejadas. Trabalhou para o exercito de Pars por 30 anos. Perdeu o filho em Atropatene.",
-    "shop_items": ["sword_iron", "sword_steel", "spear_war", "armor_chain", "shield_iron", "bandage", "potion_minor"],
+    "shop_items": ["iron_sword", "steel_sword", "iron_spear", "chain_mail", "iron_shield", "bandage", "potion_minor"],
     "dialogue_tree": "kaveh_dialogue",
     "quest_giver": ["sq_kaveh_son"]
   },
@@ -21,7 +21,7 @@
     "base_mood": "friendly",
     "portrait_type": "healer",
     "description": "Ex-escrava liberta que aprendeu medicina com um medico persa. Cura os feridos do acampamento.",
-    "shop_items": ["potion_minor", "potion_standard", "antidote", "bandage"],
+    "shop_items": ["potion_minor", "potion_major", "antidote", "bandage", "blessed_bandage", "herbal_tea"],
     "dialogue_tree": "rania_dialogue",
     "quest_giver": ["sq_rania_herbs"]
   },
@@ -34,7 +34,7 @@
     "base_mood": "neutral",
     "portrait_type": "merchant",
     "description": "Mercador de Sindhura que percorre as rotas comerciais ha 20 anos. Sabe de tudo o que acontece nos reinos vizinhos.",
-    "shop_items": ["smoke_bomb", "fire_bomb", "potion_standard", "elixir_strength"],
+    "shop_items": ["smoke_bomb", "bomb_fire", "potion_minor", "elixir_strength", "paralysis_extract"],
     "dialogue_tree": "shapur_dialogue",
     "quest_giver": []
   },
@@ -86,7 +86,7 @@
     "base_mood": "neutral",
     "portrait_type": "priest",
     "description": "Sacerdote idoso que escondeu os tesouros do Templo de Mithra antes da invasao. Guarda segredos sobre a linhagem real de Pars.",
-    "shop_items": [],
+    "shop_items": ["sacred_incense", "blessed_bandage", "prayer_scroll"],
     "dialogue_tree": "azrael_dialogue",
     "quest_giver": []
   },
@@ -164,7 +164,7 @@
     "base_mood": "friendly",
     "portrait_type": "commoner",
     "description": "Ex-escravo que trabalhava na cozinha do palacio real. Sabe de segredos que eram ditos perto dos servicals.",
-    "shop_items": ["ration"],
+    "shop_items": ["ration", "hearty_stew", "dried_meat", "bandage"],
     "dialogue_tree": "farid_dialogue",
     "quest_giver": []
   },
@@ -203,7 +203,7 @@
     "base_mood": "neutral",
     "portrait_type": "mystic",
     "description": "Velha herbalista que vive na floresta ao sul de Dahman. Dizem que e bruxa. Vende ingredientes raros e pocoes de efeitos unicos.",
-    "shop_items": ["antidote", "elixir_strength", "potion_standard"],
+    "shop_items": ["antidote", "antidote_strong", "elixir_strength", "potion_minor", "vision_herb", "fire_oil"],
     "dialogue_tree": "zahra_dialogue",
     "quest_giver": []
   }

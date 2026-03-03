@@ -17,6 +17,17 @@ import styles from './DialogueScreen.module.css';
 // Import all NPC data
 import npcsData from '../../data/npcs/npcs.json';
 
+// Import item catalogs for shop rendering
+import consumablesData from '../../data/items/consumables.json';
+import weaponsData from '../../data/items/weapons.json';
+import armorData from '../../data/items/armor.json';
+
+// Build unified item lookup by ID (price = value || price)
+const ALL_ITEMS = [...consumablesData, ...weaponsData, ...armorData].reduce((map, item) => {
+  map[item.id] = { ...item, price: item.price ?? item.value ?? 20 };
+  return map;
+}, {});
+
 // Dynamic dialogue imports
 const dialogueModules = import.meta.glob('../../data/dialogues/*.json', { eager: true });
 
@@ -32,10 +43,12 @@ export default function DialogueScreen() {
   const dialogue = useGameStore((s) => s.dialogue);
   const gameState = useGameStore();
   const store = useGameStore();
+  const inventory = useGameStore((s) => s.inventory);
 
   const [results, setResults] = useState([]);
   const [skillResult, setSkillResult] = useState(null);
   const [nodeEffectsApplied, setNodeEffectsApplied] = useState(new Set());
+  const [buyMsg, setBuyMsg] = useState('');
 
   // Load NPC data
   const npcData = useMemo(() => {
@@ -98,7 +111,6 @@ export default function DialogueScreen() {
 
     // Shop node
     if (option.leads_to === 'shop') {
-      // For now, navigate to shop node (shop modal is a future feature)
       store.updateDialogueNode('shop');
       return;
     }
@@ -129,6 +141,33 @@ export default function DialogueScreen() {
       store.endDialogue();
     }
   }, [gameState, store]);
+
+  // Shop items for current node (when is_shop: true)
+  const shopItems = useMemo(() => {
+    if (!node?.is_shop || !npcData?.shop_items) return [];
+    return npcData.shop_items
+      .map((id) => ALL_ITEMS[id])
+      .filter(Boolean);
+  }, [node, npcData]);
+
+  // Handle buying a shop item
+  const handleBuyItem = useCallback((item) => {
+    if (inventory.gold < item.price) {
+      setBuyMsg('Ouro insuficiente.');
+      setTimeout(() => setBuyMsg(''), 2500);
+      return;
+    }
+    store.addGold(-item.price);
+    if (item.type === 'consumable' && item.effect === 'heal') {
+      store.addToInventory(item);
+    } else if (item.id === 'ration' || item.type === 'ration') {
+      store.addRations(1);
+    } else {
+      store.addToInventory(item);
+    }
+    setBuyMsg(`Comprou: ${item.name}`);
+    setTimeout(() => setBuyMsg(''), 2500);
+  }, [inventory.gold, store]);
 
   // Handle close
   const handleClose = useCallback(() => {
@@ -188,6 +227,35 @@ export default function DialogueScreen() {
           </div>
         )}
       </DialogueBox>
+
+      {/* Shop panel (when is_shop: true) */}
+      {node.is_shop && (
+        <div className={styles.shopPanel}>
+          <div className={styles.shopGold}>Ouro: {inventory.gold}</div>
+          {buyMsg && <div className={styles.buyMsg}>{buyMsg}</div>}
+          {shopItems.length === 0 && (
+            <p className={styles.shopEmpty}>Sem estoque disponivel.</p>
+          )}
+          {shopItems.map((item) => (
+            <div key={item.id} className={styles.shopRow}>
+              <div className={styles.shopItemInfo}>
+                <span className={styles.shopItemName}>{item.name}</span>
+                <span className={styles.shopItemDesc}>{item.description}</span>
+              </div>
+              <div className={styles.shopItemRight}>
+                <span className={styles.shopItemPrice}>{item.price} ouro</span>
+                <button
+                  className={styles.buyBtn}
+                  onClick={() => handleBuyItem(item)}
+                  disabled={inventory.gold < item.price}
+                >
+                  Comprar
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Dialogue options */}
       <div className={styles.options}>

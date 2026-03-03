@@ -1,0 +1,92 @@
+{
+  "id": "bahram_dialogue",
+  "npc": "bahram_turan",
+  "nodes": [
+    {
+      "id": "start",
+      "text": "Filho de Andragoras. Vim ver se o principe e real ou apenas um nome bonito em estandartes.",
+      "mood_check": true,
+      "branches": {
+        "hostile": { "text": "Principe de Pars. Turan nao e amigo de Pars. Va embora antes que minha paciencia acabe." },
+        "suspicious": { "text": "Filho de Andragoras. Vim ver se o principe e real ou apenas um nome bonito em estandartes." },
+        "neutral": { "text": "Principe. Turan observa. Ainda decidindo se voce vale o tempo que gastamos aqui." },
+        "friendly": { "text": "Arslan. Bahram respeita homens que cumprem o que prometem. O que precisa?" }
+      },
+      "options": [
+        { "id": "challenge", "text": "Se quer saber se sou real, proponha um teste.", "leads_to": "bahram_impressed", "condition": "FOR >= 13" },
+        { "id": "diplomacy", "text": "[CAR 14] Turan e Pars tem inimigos comuns. Os lusitanos nao respeitam fronteiras.", "leads_to": "bahram_diplomacy", "condition": "CAR >= 14", "roll": { "attribute": "CAR", "dc": 14 } },
+        { "id": "ask_purpose", "text": "Por que Turan esta aqui em Kashan?", "leads_to": "bahram_purpose" },
+        { "id": "exit", "text": "Ate logo.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "bahram_impressed",
+      "text": "Heh. Forca. Bom. A maioria dos principes se ofende com um desafio. Voce aceita. Isso e metade do que Turan precisa ver.",
+      "options": [
+        { "id": "ask_rest", "text": "E a outra metade?", "leads_to": "bahram_second_test" },
+        { "id": "diplomacy", "text": "Agora que tem minha atencao, falemos de alianca.", "leads_to": "bahram_alliance_talk" }
+      ]
+    },
+    {
+      "id": "bahram_second_test",
+      "text": "Coragem no campo. Qualquer homem pode ser corajoso numa conversa. Quando os lusitanos estiverem entre nos e Arslan der a ordem sem hesitar... entao Bahram sabe que vale seu peso em aco.",
+      "set_flags": { "bahram_test_explained": true },
+      "options": [
+        { "id": "accept", "text": "Quando chegar esse momento, estarei pronto.", "leads_to": "bahram_neutral_end" },
+        { "id": "exit", "text": "Ate esse dia.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "bahram_diplomacy",
+      "text": "Os lusitanos... sim. Ja cruzaram a Estepe do Norte tres vezes. Cada vez mais longe. Turan nao e Pars. Mas se eles chegarem ao nosso territorio... isso seria guerra de qualquer forma. Voce tem um ponto.",
+      "faction_effect": { "turan": 8 },
+      "options": [
+        { "id": "alliance", "text": "Uma alianca agora custaria menos do que uma guerra depois.", "leads_to": "bahram_alliance_talk" },
+        { "id": "exit", "text": "Pense nisso, Bahram.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "bahram_alliance_talk",
+      "text": "Alianca. Palavra grande. Turan nao da cavalaria por promessas. Mas... se voce recuperar Ecbatana e mostrar que Pars pode se defender... negociamos. Condicao: nenhum soldado de Turan morre por causa de ordens estupidas de generais de Pars.",
+      "faction_effect": { "turan": 5 },
+      "set_flags": { "bahram_alliance_open": true },
+      "options": [
+        { "id": "accept", "text": "Justo. Nenhuma morte desnecessaria.", "leads_to": "bahram_deal_made" },
+        { "id": "exit", "text": "Considerarei isso.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "bahram_deal_made",
+      "text": "Bom. Bahram espera pelos resultados. As palavras de um principe valem o trono que ele ocupa. Voce nao tem trono ainda. Mas Bahram e um apostador.",
+      "faction_effect": { "turan": 5 },
+      "set_flags": { "bahram_pact_formed": true },
+      "options": [
+        { "id": "exit", "text": "Nao se arrependerá.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "bahram_purpose",
+      "text": "Observamos. Turan sempre observa antes de agir. Queremos saber qual direcao Pars vai tomar. Se vai se curvar aos lusitanos ou lutar. A resposta muda tudo para nos.",
+      "options": [
+        { "id": "fight", "text": "Pars nunca se curva. Lutaremos.", "leads_to": "bahram_fight_declaration" },
+        { "id": "back", "text": "Entendido.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "bahram_fight_declaration",
+      "text": "Bem dito. Turan respeita guerreiros. Observe: Bahram nao ataca mais o acampamento de Arslan. Por ora.",
+      "faction_effect": { "turan": 10 },
+      "set_flags": { "bahram_ceasefire": true },
+      "options": [
+        { "id": "exit", "text": "Um passo de cada vez.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "bahram_neutral_end",
+      "text": "Bahram espera. Prove que nao e so conversa.",
+      "options": [
+        { "id": "exit", "text": "Ate logo, Bahram.", "leads_to": "exit" }
+      ]
+    }
+  ]
+}

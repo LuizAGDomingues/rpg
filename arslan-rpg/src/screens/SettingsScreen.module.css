@@ -155,3 +155,41 @@
     padding-top: var(--spacing-sm);
     border-top: 1px solid var(--border);
 }
+
+.musicRow {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.volumeRow {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.volumeLabel {
+    font-family: var(--font-body);
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.volumeSlider {
+    flex: 1;
+    accent-color: var(--gold);
+    cursor: pointer;
+}
+
+.volumeSlider:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.volumeValue {
+    font-family: var(--font-heading);
+    color: var(--gold);
+    font-size: 0.8rem;
+    min-width: 36px;
+    text-align: right;
+}

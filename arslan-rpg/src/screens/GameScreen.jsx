@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useRef } from 'react';
+import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useGameStore from '../store/useGameStore';
 import { checkFactionUnlocks } from '../engine/factionEngine';
@@ -17,7 +17,9 @@ import act3Data from '../data/narrative/act3_alliance.json';
 import act4Data from '../data/narrative/act4_return.json';
 import act5Data from '../data/narrative/act5_aftermath.json';
 import epiloguesData from '../data/narrative/epilogues.json';
+import campEventsData from '../data/world/camp_events.json';
 import styles from './GameScreen.module.css';
+import { playTheme, playSFX } from '../engine/audioEngine';
 
 // Determine which epilogue to show based on world flags and character_score
 const resolveEpilogueScene = (worldFlags, characterScore) => {
@@ -64,6 +66,7 @@ export default function GameScreen() {
 
   const world = useGameStore((s) => s.world);
   const factions = useGameStore((s) => s.factions);
+  const activeQuestCount = useGameStore((s) => s.quests?.active?.length || 0);
 
   // Troop count calculated from faction alliances
   const troopCount = useMemo(() => {
@@ -98,6 +101,38 @@ export default function GameScreen() {
   const [results, setResults] = useState([]);
   const [factionMilestone, setFactionMilestone] = useState(null);
   const prevFactionRef = useRef({});
+  const [activeCampEvent, setActiveCampEvent] = useState(null);
+  const [campEventChoiceResult, setCampEventChoiceResult] = useState(null);
+  const campEventCheckedScene = useRef(null);
+
+  // Switch music theme based on game phase
+  useEffect(() => {
+    if (gamePhase === 'combat') playTheme('combat');
+    else if (gamePhase === 'dialogue') playTheme('dialogue');
+    else playTheme('exploration');
+  }, [gamePhase]);
+
+  // Check for eligible camp events on scene change
+  useEffect(() => {
+    if (gamePhase !== 'playing') return;
+    if (campEventCheckedScene.current === currentScene) return;
+    campEventCheckedScene.current = currentScene;
+    if (Math.random() > 0.25) return; // 25% chance per scene
+
+    const worldFlags = store.world?.world_flags || {};
+    const recruitedGenerals = store.recruited_generals || [];
+    const eligible = campEventsData.filter((ev) => {
+      if (ev.requires_general && !recruitedGenerals.includes(ev.requires_general)) return false;
+      if (ev.trigger_flag && !worldFlags[ev.trigger_flag]) return false;
+      if (ev.not_flag && worldFlags[ev.not_flag]) return false;
+      return true;
+    });
+    if (eligible.length > 0) {
+      const picked = eligible[Math.floor(Math.random() * eligible.length)];
+      setActiveCampEvent(picked);
+      setCampEventChoiceResult(null);
+    }
+  }, [currentScene, gamePhase]);
 
   const narrativeData = useMemo(
     () => buildNarrativeData(world?.world_flags, player?.character_score),
@@ -114,6 +149,7 @@ export default function GameScreen() {
   }, [scene, store]);
 
   const handleChoice = useCallback((choice) => {
+    playSFX('ui_click');
     // Snapshot factions before choice
     const factionsBefore = { ...store.factions };
     const choiceResults = processChoice(choice, store, store);
@@ -151,10 +187,38 @@ export default function GameScreen() {
         location: dialogueResult.dialogueData.location || null,
       });
     }
+
+    if (choiceResults.some((r) => r.type === 'quest_complete')) {
+      playSFX('quest_complete');
+    }
   }, [store, factionMilestone]);
 
   const handleNarrativeComplete = useCallback(() => {
     setShowChoices(true);
+  }, []);
+
+  const handleCampEventChoice = useCallback((choice) => {
+    const reward = choice.reward;
+    if (reward) {
+      if (reward.xp) store.addXP(reward.xp);
+      if (reward.character_score) store.updateCharacterScore(reward.character_score);
+      if (reward.hp_restore_percent && store.player.hp_max > 0) {
+        store.updatePlayerHP(Math.floor(store.player.hp_max * reward.hp_restore_percent));
+      }
+      if (reward.flag) store.setWorldFlag(reward.flag, true);
+      if (reward.flags) reward.flags.forEach((f) => store.setWorldFlag(f, true));
+      Object.entries(reward).forEach(([key, val]) => {
+        if (key.startsWith('faction_')) store.updateFaction(key.replace('faction_', ''), val);
+      });
+    }
+    // Mark camp event as seen
+    if (activeCampEvent?.set_flag) store.setWorldFlag(activeCampEvent.set_flag, true);
+    setCampEventChoiceResult(choice.result || 'O momento passa.');
+  }, [activeCampEvent, store]);
+
+  const closeCampEvent = useCallback(() => {
+    setActiveCampEvent(null);
+    setCampEventChoiceResult(null);
   }, []);
 
   if (gamePhase === 'combat' && combat) {
@@ -198,7 +262,10 @@ export default function GameScreen() {
           <Button variant="secondary" size="sm" onClick={() => navigate('/map')}>Mapa</Button>
           <Button variant="secondary" size="sm" onClick={() => navigate('/inventory')}>Inventario</Button>
           <Button variant="secondary" size="sm" onClick={() => navigate('/party')}>Grupo</Button>
-          <Button variant="secondary" size="sm" onClick={() => navigate('/journal')}>Diario</Button>
+          <span className={styles.questNavWrapper}>
+            <Button variant="secondary" size="sm" onClick={() => navigate('/journal')}>Diario</Button>
+            {activeQuestCount > 0 && <span className={styles.questBadge}>{activeQuestCount}</span>}
+          </span>
           <Button variant="secondary" size="sm" onClick={() => navigate('/factions')}>Faccoes</Button>
         </div>
       </nav>
@@ -238,6 +305,35 @@ export default function GameScreen() {
           <ChoiceBox choices={choices} onChoice={handleChoice} />
         )}
       </div>
+
+      {/* Camp Event Modal */}
+      {activeCampEvent && (
+        <div className={styles.campEventOverlay}>
+          <div className={styles.campEventPanel}>
+            <div className={styles.campEventHeader}>
+              <span className={styles.campEventLabel}>Momento no Acampamento</span>
+              <h3 className={styles.campEventTitle}>{activeCampEvent.title}</h3>
+            </div>
+            <p className={styles.campEventText}>
+              {campEventChoiceResult || activeCampEvent.text}
+            </p>
+            {campEventChoiceResult ? (
+              <Button variant="primary" size="sm" onClick={closeCampEvent}>Continuar</Button>
+            ) : (
+              <div className={styles.campEventChoices}>
+                {activeCampEvent.choices?.map((choice, i) => (
+                  <Button key={i} variant={i === 0 ? 'primary' : 'secondary'} size="sm" onClick={() => handleCampEventChoice(choice)}>
+                    {choice.text}
+                  </Button>
+                ))}
+                <Button variant="ghost" size="sm" onClick={() => { if (activeCampEvent?.set_flag) store.setWorldFlag(activeCampEvent.set_flag, true); closeCampEvent(); }}>
+                  Ignorar
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

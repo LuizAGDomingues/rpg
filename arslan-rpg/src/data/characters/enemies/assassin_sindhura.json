@@ -1,0 +1,19 @@
+{
+  "id": "assassin_sindhura",
+  "name": "Assassino de Sindhura",
+  "description": "Mercenario de Sindhura treinado nas artes da morte silenciosa. Seu veneno paralisa antes que a vitima perceba o perigo.",
+  "hp": 85,
+  "ca": 15,
+  "pa": 3,
+  "attributes": { "FOR": 13, "DES": 18, "CON": 12, "INT": 14, "SAB": 13, "CAR": 11 },
+  "weapon": { "name": "Cimitarra Venenada", "damage": "2d6+5", "bonus_atk": 2 },
+  "on_hit_effect": { "name": "poison", "chance": 0.4, "damage_per_turn": "1d6", "duration": 3 },
+  "passive": { "name": "Esquiva Mortal", "description": "50% de chance de evitar o primeiro ataque de cada combate." },
+  "ai": "tactical_aggressive",
+  "xp_reward": 260,
+  "gold_reward": "2d6+8",
+  "loot": [
+    { "id": "paralysis_extract", "chance": 0.35 },
+    { "id": "antidote", "chance": 0.5 }
+  ]
+}

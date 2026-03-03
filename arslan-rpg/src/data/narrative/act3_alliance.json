@@ -23,8 +23,8 @@
               {
                 "id": "lusitanian_scout",
                 "name": "Batedor Lusitano",
-                "hp": 14,
-                "ca": 13,
+                "hp": 45,
+                "ca": 12,
                 "pa": 2,
                 "attributes": {
                   "FOR": 12,
@@ -43,8 +43,8 @@
               {
                 "id": "lusitanian_scout",
                 "name": "Batedor Lusitano",
-                "hp": 14,
-                "ca": 13,
+                "hp": 45,
+                "ca": 12,
                 "pa": 2,
                 "attributes": {
                   "FOR": 12,
@@ -63,8 +63,8 @@
               {
                 "id": "lusitanian_rider",
                 "name": "Cavaleiro Lusitano",
-                "hp": 20,
-                "ca": 15,
+                "hp": 65,
+                "ca": 13,
                 "pa": 2,
                 "attributes": {
                   "FOR": 15,
@@ -130,7 +130,8 @@
           "text": "Atacar o acampamento lusitano ao amanhecer!",
           "next_scene": "kashan_battle",
           "set_flags": {
-            "surprise_attack": true
+            "surprise_attack": true,
+            "knows_about_kashan_spy": true
           }
         }
       ]
@@ -155,8 +156,8 @@
               {
                 "id": "lusitanian_soldier",
                 "name": "Soldado Lusitano",
-                "hp": 18,
-                "ca": 14,
+                "hp": 55,
+                "ca": 12,
                 "pa": 2,
                 "attributes": {
                   "FOR": 14,
@@ -175,8 +176,8 @@
               {
                 "id": "lusitanian_soldier",
                 "name": "Soldado Lusitano",
-                "hp": 18,
-                "ca": 14,
+                "hp": 55,
+                "ca": 12,
                 "pa": 2,
                 "attributes": {
                   "FOR": 14,
@@ -195,8 +196,8 @@
               {
                 "id": "lusitanian_captain",
                 "name": "Capitao Lusitano",
-                "hp": 30,
-                "ca": 16,
+                "hp": 90,
+                "ca": 15,
                 "pa": 3,
                 "attributes": {
                   "FOR": 16,
@@ -365,7 +366,7 @@
               {
                 "id": "bandit",
                 "name": "Bandido",
-                "hp": 14,
+                "hp": 55,
                 "ca": 12,
                 "pa": 2,
                 "attributes": {
@@ -378,14 +379,14 @@
                 },
                 "weapon": {
                   "name": "Adaga Enferrujada",
-                  "damage": "1d4+2"
+                  "damage": "1d6+3"
                 },
                 "ai": "aggressive_simple"
               },
               {
                 "id": "bandit",
                 "name": "Bandido",
-                "hp": 14,
+                "hp": 55,
                 "ca": 12,
                 "pa": 2,
                 "attributes": {
@@ -398,15 +399,15 @@
                 },
                 "weapon": {
                   "name": "Clava",
-                  "damage": "1d6+1"
+                  "damage": "1d6+3"
                 },
                 "ai": "aggressive_simple"
               },
               {
                 "id": "bandit_leader",
                 "name": "Lider dos Bandidos",
-                "hp": 22,
-                "ca": 14,
+                "hp": 75,
+                "ca": 13,
                 "pa": 3,
                 "attributes": {
                   "FOR": 15,
@@ -604,8 +605,8 @@
               {
                 "id": "gadhevi_general",
                 "name": "General de Gadhevi",
-                "hp": 38,
-                "ca": 16,
+                "hp": 110,
+                "ca": 15,
                 "pa": 3,
                 "attributes": { "FOR": 16, "DES": 13, "CON": 15, "INT": 12, "SAB": 11, "CAR": 13 },
                 "weapon": { "name": "Cimitarra Cerimonial", "damage": "1d10+3", "bonus_atk": 2 },
@@ -624,8 +625,8 @@
               {
                 "id": "gadhevi_cavalry",
                 "name": "Cavaleiro de Gadhevi",
-                "hp": 22,
-                "ca": 14,
+                "hp": 70,
+                "ca": 13,
                 "pa": 3,
                 "attributes": { "FOR": 14, "DES": 13, "CON": 13, "INT": 10, "SAB": 10, "CAR": 10 },
                 "weapon": { "name": "Lanca de Cavalaria", "damage": "1d8+2" },
@@ -636,8 +637,8 @@
               {
                 "id": "gadhevi_cavalry",
                 "name": "Cavaleiro de Gadhevi",
-                "hp": 22,
-                "ca": 14,
+                "hp": 70,
+                "ca": 13,
                 "pa": 3,
                 "attributes": { "FOR": 14, "DES": 13, "CON": 13, "INT": 10, "SAB": 10, "CAR": 10 },
                 "weapon": { "name": "Lanca de Cavalaria", "damage": "1d8+2" },
@@ -647,7 +648,7 @@
               }
             ],
             "xp_reward": 350,
-            "gold_reward": "5d6"
+            "gold_reward": "5d8+20"
           }
         }
       ]
@@ -783,14 +784,14 @@
               "turn": 3,
               "text": "Mais guardas chegam pelo corredor leste.",
               "enemies": [
-                { "name": "Guarda de Kashan", "hp": 20, "ca": 15, "pa": 2, "weapon": { "damage": "1d8+2" }, "ai": "aggressive_simple" },
-                { "name": "Guarda de Kashan", "hp": 20, "ca": 15, "pa": 2, "weapon": { "damage": "1d8+2" }, "ai": "aggressive_simple" }
+                { "name": "Guarda de Kashan", "hp": 65, "ca": 13, "pa": 2, "weapon": { "damage": "1d8+3" }, "ai": "aggressive_simple" },
+                { "name": "Guarda de Kashan", "hp": 65, "ca": 13, "pa": 2, "weapon": { "damage": "1d8+3" }, "ai": "aggressive_simple" }
               ]
             },
             "enemies": [
-              { "name": "Guarda de Kashan", "hp": 20, "ca": 15, "pa": 2, "weapon": { "damage": "1d8+2" }, "ai": "aggressive_simple" },
-              { "name": "Guarda de Kashan", "hp": 20, "ca": 15, "pa": 2, "weapon": { "damage": "1d8+2" }, "ai": "aggressive_simple" },
-              { "name": "Guarda de Kashan", "hp": 20, "ca": 15, "pa": 2, "weapon": { "damage": "1d8+2" }, "ai": "aggressive_simple" }
+              { "name": "Guarda de Kashan", "hp": 65, "ca": 13, "pa": 2, "weapon": { "damage": "1d8+3" }, "ai": "aggressive_simple" },
+              { "name": "Guarda de Kashan", "hp": 65, "ca": 13, "pa": 2, "weapon": { "damage": "1d8+3" }, "ai": "aggressive_simple" },
+              { "name": "Guarda de Kashan", "hp": 65, "ca": 13, "pa": 2, "weapon": { "damage": "1d8+3" }, "ai": "aggressive_simple" }
             ],
             "xp_reward": 180
           }
@@ -869,7 +870,7 @@
             "enemies": [
               {
                 "name": "Bahram de Turan",
-                "hp": 42, "ca": 15, "pa": 3,
+                "hp": 100, "ca": 16, "pa": 3,
                 "attributes": { "FOR": 17, "DES": 16, "CON": 15, "INT": 12, "SAB": 13, "CAR": 14 },
                 "weapon": { "name": "Sabre das Estepes", "damage": "1d10+3", "bonus_atk": 2 },
                 "ai": "tactical_boss",
@@ -1013,13 +1014,13 @@
               "hp": 16
             },
             "enemies": [
-              { "name": "Guarda da Caravana", "hp": 18, "ca": 14, "pa": 2, "weapon": { "damage": "1d8+2" }, "ai": "defensive" },
-              { "name": "Guarda da Caravana", "hp": 18, "ca": 14, "pa": 2, "weapon": { "damage": "1d8+2" }, "ai": "defensive" },
-              { "name": "Guarda da Caravana", "hp": 18, "ca": 14, "pa": 2, "weapon": { "damage": "1d8+2" }, "ai": "defensive" },
-              { "name": "Guarda da Caravana", "hp": 18, "ca": 14, "pa": 2, "weapon": { "damage": "1d8+2" }, "ai": "defensive" },
+              { "name": "Guarda da Caravana", "hp": 55, "ca": 13, "pa": 2, "weapon": { "damage": "1d8+3" }, "ai": "defensive" },
+              { "name": "Guarda da Caravana", "hp": 55, "ca": 13, "pa": 2, "weapon": { "damage": "1d8+3" }, "ai": "defensive" },
+              { "name": "Guarda da Caravana", "hp": 55, "ca": 13, "pa": 2, "weapon": { "damage": "1d8+3" }, "ai": "defensive" },
+              { "name": "Guarda da Caravana", "hp": 55, "ca": 13, "pa": 2, "weapon": { "damage": "1d8+3" }, "ai": "defensive" },
               {
                 "name": "Lider da Caravana",
-                "hp": 32, "ca": 16, "pa": 3,
+                "hp": 90, "ca": 15, "pa": 3,
                 "weapon": { "damage": "1d10+3" },
                 "ai": "cowardly",
                 "passive": "Covarde: se HP < 30%, tenta fugir"

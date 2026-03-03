@@ -1,0 +1,58 @@
+{
+  "id": "shapur_dialogue",
+  "npc": "shapur_merchant",
+  "nodes": [
+    {
+      "id": "start",
+      "text": "Bom dia, bom dia! Shapur esta aqui para servir. Mercadorias raras de Sindhura, precos justos. O que o principe deseja?",
+      "mood_check": true,
+      "branches": {
+        "hostile": { "text": "Voce quer o que? Seja rapido. Nao gosto de perder tempo." },
+        "suspicious": { "text": "Principe de Pars? Hm. Shapur nao toma partido em guerras. Mas vende para qualquer um." },
+        "neutral": { "text": "Bom dia, bom dia! Shapur esta aqui para servir. Mercadorias raras de Sindhura, precos justos. O que o principe deseja?" },
+        "friendly": { "text": "Ah, o principe retorna! Recebi novas mercadorias. Especialmente para voce." }
+      },
+      "options": [
+        { "id": "buy", "text": "Quero ver suas mercadorias.", "leads_to": "shop" },
+        { "id": "ask_sindhura", "text": "O que esta acontecendo em Sindhura?", "leads_to": "shapur_sindhura_info" },
+        { "id": "ask_routes", "text": "[CAR 12] Voce conhece as rotas das tropas lusitanas?", "leads_to": "shapur_intel", "condition": "CAR >= 12", "roll": { "attribute": "CAR", "dc": 12 } },
+        { "id": "exit", "text": "Talvez depois.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "shapur_sindhura_info",
+      "text": "O rei Rajendra observa Pars com... interesse. Eles chamam isso de diplomacia. Eu chamo de espera por uma carcaca. Mas o principe Jaswant e diferente. Ele acredita em alianças de verdade.",
+      "set_flags": { "heard_sindhura_politics": true },
+      "options": [
+        { "id": "ask_jaswant", "text": "Jaswant pode ser um aliado para Pars?", "leads_to": "shapur_jaswant" },
+        { "id": "back", "text": "Interessante. Obrigado.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "shapur_jaswant",
+      "text": "Se o principe Arslan mostrar forca suficiente... talvez. Jaswant respeita guerreiros, nao politicos. Uma demonstracao de poder abriria essa porta. Isso e tudo que posso dizer. O resto custa mais.",
+      "faction_effect": { "sindhura": 3 },
+      "options": [
+        { "id": "buy", "text": "Entendido. Ver suas mercadorias.", "leads_to": "shop" },
+        { "id": "exit", "text": "Obrigado pela informacao.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "shapur_intel",
+      "text": "Hah! O principe e perspicaz. Sim, Shapur ve muito nas estradas. Os lusitanos reabasteceram um posto ao norte tres dias atras. Cavalaria pesada. Nao e uma busca — e uma barreira. Protegem algo. Ou alguem.",
+      "set_flags": { "shapur_intel_north": true },
+      "options": [
+        { "id": "thanks", "text": "Muito util. Obrigado, Shapur.", "leads_to": "exit", "xp_reward": 25 },
+        { "id": "buy_after", "text": "Obrigado. Posso ver suas mercadorias?", "leads_to": "shop" }
+      ]
+    },
+    {
+      "id": "shop",
+      "text": "Mercadorias exoticas de Sindhura. Nao encontra em mais lugar nenhum por aqui.",
+      "is_shop": true,
+      "options": [
+        { "id": "back", "text": "Voltar.", "leads_to": "start" }
+      ]
+    }
+  ]
+}

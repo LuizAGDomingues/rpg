@@ -13,7 +13,11 @@
   },
   "legendary_skills": {
     "lanca_dos_mil_exercitos": { "equippable_by": "daryun", "class": "warrior" },
-    "estrategia_perfeita": { "equippable_by": "narsus", "class": "strategist" }
+    "estrategia_perfeita": { "equippable_by": "narsus", "class": "strategist" },
+    "olhos_nas_sombras": { "equippable_by": "elam", "unlock_condition": "elam_level_3" },
+    "flecha_do_destino": { "equippable_by": "gieve", "unlock_condition": "gieve_level_3" },
+    "chuva_de_fogo": { "equippable_by": "falangies", "unlock_condition": "falangies_level_3" },
+    "emboscada_perfeita": { "equippable_by": "narsus", "unlock_condition": "sq_lost_manuscripts_complete" }
   },
   "skills": {
     "golpe_poderoso": {
@@ -259,6 +263,62 @@
       "status_applied": { "name": "marked", "duration": 1 },
       "cooldown": 0,
       "legendary": false
+    },
+    "olhos_nas_sombras": {
+      "id": "olhos_nas_sombras",
+      "name": "Olhos nas Sombras",
+      "pa_cost": 0,
+      "description": "LENDARIA — PASSIVA — Elam detecta inimigos ocultos e revela emboscadas antes de acontecerem. Em combate, aliados nunca sofrem penalidade de surprise.",
+      "target_type": "self",
+      "effect": "reveal_hidden_enemies",
+      "passive": true,
+      "uses_per_combat": null,
+      "cooldown": 0,
+      "legendary": true,
+      "equippable_by": ["elam"]
+    },
+    "flecha_do_destino": {
+      "id": "flecha_do_destino",
+      "name": "Flecha do Destino",
+      "pa_cost": 3,
+      "description": "LENDARIA — Gieve dispara uma unica flecha que nunca erra. Causa 4d10+6 de dano. Se o alvo tiver 30% HP ou menos, e morto instantaneamente.",
+      "target_type": "single_enemy",
+      "effect": "guaranteed_hit_execution",
+      "damage": "4d10+6",
+      "execution_threshold": 0.3,
+      "uses_per_combat": 1,
+      "cooldown": 0,
+      "legendary": true,
+      "equippable_by": ["gieve"]
+    },
+    "chuva_de_fogo": {
+      "id": "chuva_de_fogo",
+      "name": "Chuva de Fogo",
+      "pa_cost": 3,
+      "description": "LENDARIA — Farangis lança uma saraivada de flechas em chamas sobre todos os inimigos. Causa 3d8+4 de dano de fogo a cada inimigo. Chance de incendiar (50%).",
+      "target_type": "all_enemies",
+      "effect": "aoe_fire_damage",
+      "damage": "3d8+4",
+      "on_hit_effect": { "name": "burning", "chance": 0.5, "damage_per_turn": "1d6", "duration": 2 },
+      "uses_per_combat": 1,
+      "cooldown": 0,
+      "legendary": true,
+      "equippable_by": ["falangies"]
+    },
+    "emboscada_perfeita": {
+      "id": "emboscada_perfeita",
+      "name": "Emboscada Perfeita",
+      "pa_cost": 2,
+      "description": "LENDARIA — Narsus planeja um ataque surpresa: todos os aliados agem primeiro neste combate com +4 de bonus em ataques no turno inicial. Desbloqueia ao completar 'Manuscritos Perdidos'.",
+      "target_type": "all_allies",
+      "effect": "combat_ambush_setup",
+      "ally_buff": { "attack_bonus": 4, "duration": 1 },
+      "force_first_turn": true,
+      "uses_per_combat": 1,
+      "cooldown": 0,
+      "legendary": true,
+      "equippable_by": ["narsus"],
+      "unlock_condition": "sq_lost_manuscripts_complete"
     }
   }
 }

@@ -1,0 +1,80 @@
+{
+  "id": "sam_dialogue",
+  "npc": "sam_warrior",
+  "nodes": [
+    {
+      "id": "start",
+      "text": "Principe. Veio treinar ou so olhar? Nao tenho tempo pra quem nao sujar as maos.",
+      "mood_check": true,
+      "branches": {
+        "hostile": { "text": "Nao. Nao quero falar. Fui enviado pra treinar soldados, nao fazer conversa." },
+        "neutral": { "text": "Principe. Veio treinar ou so olhar? Nao tenho tempo pra quem nao sujar as maos." },
+        "friendly": { "text": "Principe! Bom dia. Os recrutas melhoraram esta semana. Seu exercito esta tomando forma." }
+      },
+      "options": [
+        { "id": "train", "text": "Quero treinar. Me mostre o que sabe.", "leads_to": "sam_training" },
+        { "id": "ask_wars", "text": "Em quantas guerras voce lutou?", "leads_to": "sam_wars" },
+        { "id": "ask_atropatene", "text": "Voce estava em Atropatene?", "leads_to": "sam_atropatene", "condition": "act1_complete" },
+        { "id": "exit", "text": "Continue o bom trabalho.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "sam_training",
+      "text": "Bom. Postura primeiro. Um guerreiro sem postura e carne esperando a espada. Veja seus pes. Mais largos. Isso. Agora o escudo — mais alto. Nunca proteja o torso e deixe a cabeca exposta.",
+      "set_flags": { "sam_training_started": true },
+      "options": [
+        { "id": "practice", "text": "Certo. Vamos praticar.", "leads_to": "sam_drill", "xp_reward": 30 },
+        { "id": "ask_tip", "text": "Qual e o erro mais comum dos recrutas?", "leads_to": "sam_tip" }
+      ]
+    },
+    {
+      "id": "sam_drill",
+      "text": "Melhor do que esperava. Voce tem instinto. Mas instinto sem disciplina e suicidio. Volte amanha. Treino real leva semanas, nao dias.",
+      "options": [
+        { "id": "exit", "text": "Voltarei amanha.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "sam_tip",
+      "text": "Confianca demais. Jovens que nunca sentiram o peso de uma derrota acham que coragem basta. Coragem e combustivel. Tecnica e o motor. Sem o motor, o combustivel so queima voce.",
+      "options": [
+        { "id": "practice", "text": "Entendido. Vamos praticar.", "leads_to": "sam_drill", "xp_reward": 30 },
+        { "id": "back", "text": "Sabedoria de veterano.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "sam_wars",
+      "text": "Tres. A guerra das estepes com Turan, o conflito de fronteira com Sindhura, e Atropatene. Fui o unico da minha ala que voltou da ultima. Nao sei se e sorte ou maldição.",
+      "options": [
+        { "id": "honor", "text": "Voce sobreviveu para ensinar os que vem depois. Ha dignidade nisso.", "leads_to": "sam_moved", "faction_effect": { "nobreza_pars": 2 } },
+        { "id": "ask_atropatene_now", "text": "O que aconteceu em Atropatene?", "leads_to": "sam_atropatene" },
+        { "id": "back", "text": "Obrigado por compartilhar.", "leads_to": "start" }
+      ]
+    },
+    {
+      "id": "sam_moved",
+      "text": "Hm. Voce tem mais juizo do que eu esperava de um principe. Tudo bem. Se voltar aqui para treinar de verdade... vou te ensinar o que nao esta em nenhum livro.",
+      "set_flags": { "sam_respect_gained": true },
+      "options": [
+        { "id": "train_now", "text": "Comecemos agora.", "leads_to": "sam_training" },
+        { "id": "exit", "text": "Obrigado, Sam.", "leads_to": "exit" }
+      ]
+    },
+    {
+      "id": "sam_atropatene",
+      "text": "A traicao de Kharlan. Vi com meus proprios olhos. Ele abriu a ala esquerda propositalmente. O rei e os generais ficaram cercados. Eu fugi com um grupo de sobreviventes... mas ainda ouço os gritos.",
+      "set_flags": { "sam_atropatene_testimony": true },
+      "options": [
+        { "id": "kharlan", "text": "Kharlan... Por que faria isso?", "leads_to": "sam_kharlan_theory" },
+        { "id": "thanks", "text": "Obrigado por me contar. Usarei isso.", "leads_to": "exit", "xp_reward": 40 }
+      ]
+    },
+    {
+      "id": "sam_kharlan_theory",
+      "text": "Ouro. Poder. Os lusitanos prometeram o que o rei nunca deu a ele. Kharlan sempre quis mais. A lealdade de um homem tem um preco, e o preco de Kharlan foi Pars.",
+      "options": [
+        { "id": "exit", "text": "Pagarei esse preco de volta.", "leads_to": "exit", "xp_reward": 20 }
+      ]
+    }
+  ]
+}

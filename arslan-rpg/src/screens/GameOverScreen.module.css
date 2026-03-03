@@ -27,7 +27,20 @@
   color: var(--text-muted);
   font-style: italic;
   font-size: 1rem;
+  margin-bottom: var(--spacing-sm);
+  animation: fadeIn 1.2s ease-out 0.4s both;
+}
+
+.lastBattle {
+  font-family: var(--font-body);
+  color: var(--text-dim);
+  font-size: 0.85rem;
   margin-bottom: var(--spacing-lg);
+  animation: fadeIn 1.2s ease-out 0.8s both;
+}
+
+.lastBattle strong {
+  color: var(--gold-dark);
 }
 
 .options {

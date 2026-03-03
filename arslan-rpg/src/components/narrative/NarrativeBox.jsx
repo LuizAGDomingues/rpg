@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './NarrativeBox.module.css';
+import GlossaryTooltip from '../ui/GlossaryTooltip';
+import { playSFX } from '../../engine/audioEngine';
 
 export default function NarrativeBox({ paragraphs, onComplete }) {
   const [visibleCount, setVisibleCount] = useState(0);
@@ -13,6 +15,7 @@ export default function NarrativeBox({ paragraphs, onComplete }) {
 
   useEffect(() => {
     if (visibleCount > 0 && visibleCount < paragraphs.length) {
+      playSFX('dialogue_blip');
       const timer = setTimeout(() => setVisibleCount((c) => c + 1), 600);
       return () => clearTimeout(timer);
     }
@@ -27,7 +30,7 @@ export default function NarrativeBox({ paragraphs, onComplete }) {
     <div className={styles.container}>
       {paragraphs.slice(0, visibleCount).map((p, i) => (
         <p key={i} className={styles.paragraph} style={{ animationDelay: `${i * 0.1}s` }}>
-          {p}
+          <GlossaryTooltip text={p} />
         </p>
       ))}
       {visibleCount < paragraphs.length && (

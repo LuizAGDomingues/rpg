@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { setVolume, setEnabled } from '../engine/audioEngine';
 import { useNavigate } from 'react-router-dom';
 import useGameStore from '../store/useGameStore';
 import Button from '../components/ui/Button';
@@ -15,6 +16,12 @@ export default function SettingsScreen() {
 
     const [textSpeed, setTextSpeed] = useState(
         () => localStorage.getItem('arslan_text_speed') || 'normal'
+    );
+    const [musicEnabled, setMusicEnabled] = useState(
+        () => localStorage.getItem('arslan_music_enabled') !== 'false'
+    );
+    const [musicVolume, setMusicVolume] = useState(
+        () => parseFloat(localStorage.getItem('arslan_music_volume') || '0.5')
     );
     const [showResetModal, setShowResetModal] = useState(false);
     const [saveMsg, setSaveMsg] = useState('');
@@ -44,6 +51,20 @@ export default function SettingsScreen() {
         localStorage.setItem('arslan_text_speed', speed);
     };
 
+    const handleMusicToggle = () => {
+        const next = !musicEnabled;
+        setMusicEnabled(next);
+        setEnabled(next);
+        localStorage.setItem('arslan_music_enabled', String(next));
+    };
+
+    const handleVolumeChange = (e) => {
+        const val = parseFloat(e.target.value);
+        setMusicVolume(val);
+        setVolume(val);
+        localStorage.setItem('arslan_music_volume', String(val));
+    };
+
     const handleReset = () => {
         resetGame();
         setGamePhase('title');
@@ -58,6 +79,31 @@ export default function SettingsScreen() {
                 <Button variant="secondary" size="sm" onClick={() => navigate('/')}>Voltar</Button>
             </div>
             <OrnamentDivider />
+
+            <Panel title="Musica">
+                <div className={styles.musicRow}>
+                    <button
+                        className={`${styles.speedBtn} ${musicEnabled ? styles.speedActive : ''}`}
+                        onClick={handleMusicToggle}
+                    >
+                        {musicEnabled ? 'Som: Ligado' : 'Som: Desligado'}
+                    </button>
+                </div>
+                <div className={styles.volumeRow}>
+                    <span className={styles.volumeLabel}>Volume:</span>
+                    <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.05"
+                        value={musicVolume}
+                        onChange={handleVolumeChange}
+                        className={styles.volumeSlider}
+                        disabled={!musicEnabled}
+                    />
+                    <span className={styles.volumeValue}>{Math.round(musicVolume * 100)}%</span>
+                </div>
+            </Panel>
 
             <Panel title="Velocidade do Texto">
                 <div className={styles.speedOptions}>

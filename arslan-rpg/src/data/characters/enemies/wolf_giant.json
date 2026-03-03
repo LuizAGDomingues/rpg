@@ -1,0 +1,18 @@
+{
+  "id": "wolf_giant",
+  "name": "Lobo Gigante",
+  "description": "Fera das montanhas de Pars, de porte colossal. Suas garras dilaceram e sua mordida provoca hemorragia severa.",
+  "hp": 70,
+  "ca": 12,
+  "pa": 2,
+  "attributes": { "FOR": 18, "DES": 15, "CON": 16, "INT": 4, "SAB": 12, "CAR": 5 },
+  "weapon": { "name": "Presas e Garras", "damage": "1d10+5" },
+  "on_hit_effect": { "name": "bleed", "chance": 0.35, "damage_per_turn": "1d4", "duration": 3 },
+  "ai": "aggressive_animal",
+  "xp_reward": 180,
+  "gold_reward": "0",
+  "loot": [
+    { "id": "dried_meat", "chance": 0.7 },
+    { "id": "bandage", "chance": 0.2 }
+  ]
+}

@@ -149,6 +149,18 @@ export const resolveSkill = (skill, caster, target, allAllies, allEnemies) => {
     case 'multi_target':
       result = resolveMultiTarget(skill, caster, livingEnemies);
       break;
+    case 'reveal_hidden_enemies':
+      result = resolveOlhosNasSombras(skill, caster, livingAllies);
+      break;
+    case 'guaranteed_hit_execution':
+      result = resolveFlechaDoDestino(skill, caster, target);
+      break;
+    case 'aoe_fire_damage':
+      result = resolveChuvaDeForgo(skill, caster, livingEnemies);
+      break;
+    case 'combat_ambush_setup':
+      result = resolveEmboscadaPerfeita(skill, caster, livingAllies);
+      break;
     default:
       result = makeResult({ logs: [`⚠ ${skill.name}: efeito desconhecido.`] });
   }
@@ -537,6 +549,95 @@ function resolveBattleSong(skill, caster, livingAllies) {
     result.logs.push(`  🎵 ${ally.name}: +${heal.total} HP, imune a intimidacao.`);
   }
 
+  return result;
+}
+
+// OLHOS NAS SOMBRAS (Elam) — reveal_hidden_enemies (PASSIVA/LENDARIA)
+// Ativa antes do combate: remove penalidade de surprise e revela emboscadas
+function resolveOlhosNasSombras(skill, caster, livingAllies) {
+  const result = makeResult();
+  result.logs.push(`👁 ${caster.name} usa ${skill.name}!`);
+  result.logs.push(`  🌑 Nenhum inimigo oculto pode surpreender o grupo — Elam percebeu tudo.`);
+  result.flags = { remove_surprise_penalty: true };
+  return result;
+}
+
+// FLECHA DO DESTINO (Gieve) — guaranteed_hit_execution (LENDARIA)
+function resolveFlechaDoDestino(skill, caster, target) {
+  const result = makeResult();
+  if (!target) {
+    result.logs.push(`⚠ ${skill.name}: nenhum alvo selecionado.`);
+    return result;
+  }
+  result.logs.push(`🎯 ${caster.name} usa ${skill.name}!`);
+
+  const dmg = rollSkillDamage(skill.damage);
+  const targetHPPercent = target.hp / (target.hp_max || target.hp);
+  const threshold = skill.execution_threshold || 0.3;
+  const executed = targetHPPercent <= threshold;
+  const finalDmg = executed ? target.hp : dmg.total;
+  const newHP = executed ? 0 : Math.max(0, target.hp - dmg.total);
+
+  result.enemyUpdates[target.id] = { hp: newHP };
+  if (executed) {
+    result.logs.push(`  💀 A Flecha do Destino encontrou seu alvo — ${target.name} e eliminado instantaneamente!`);
+  } else {
+    result.logs.push(`  🎯 A flecha nao erra! ${target.name}: -${finalDmg} HP${newHP <= 0 ? ' ☠ Derrotado!' : ''}`);
+  }
+  return result;
+}
+
+// CHUVA DE FOGO (Farangis) — aoe_fire_damage (LENDARIA)
+function resolveChuvaDeForgo(skill, caster, livingEnemies) {
+  const result = makeResult();
+  result.logs.push(`🔥 ${caster.name} usa ${skill.name}!`);
+
+  for (const enemy of livingEnemies) {
+    const dmg = rollSkillDamage(skill.damage);
+    const newHP = Math.max(0, enemy.hp - dmg.total);
+    const update = { hp: newHP };
+
+    let burnMsg = '';
+    const onHit = skill.on_hit_effect;
+    if (onHit && newHP > 0 && Math.random() < (onHit.chance || 0.5)) {
+      const burnFx = {
+        name: onHit.name,
+        damage_per_turn: onHit.damage_per_turn,
+        duration: onHit.duration || 2,
+        label: 'Em Chamas',
+      };
+      update.status_effects = [...(enemy.status_effects || []).filter((e) => e.name !== burnFx.name), burnFx];
+      burnMsg = `, em chamas!`;
+    }
+
+    result.enemyUpdates[enemy.id] = update;
+    result.logs.push(`  🔥 ${enemy.name}: -${dmg.total} HP${burnMsg}${newHP <= 0 ? ' ☠ Derrotado!' : ''}`);
+  }
+
+  return result;
+}
+
+// EMBOSCADA PERFEITA (Narsus) — combat_ambush_setup (LENDARIA, desbloqueavel)
+function resolveEmboscadaPerfeita(skill, caster, livingAllies) {
+  const result = makeResult();
+  result.logs.push(`⚔ ${caster.name} usa ${skill.name}!`);
+  result.logs.push(`  📜 O plano e perfeito — todos agem primeiro com forcas dobradas!`);
+
+  const buff = skill.ally_buff || {};
+  for (const ally of livingAllies) {
+    const atk_boost = {
+      name: 'emboscada_attack_boost',
+      attack_bonus: buff.attack_bonus || 4,
+      duration: buff.duration || 1,
+      label: 'Emboscada',
+    };
+    const newEffects = [...(ally.status_effects || []).filter((e) => e.name !== 'emboscada_attack_boost'), atk_boost];
+    result.allyUpdates[ally.id] = { status_effects: newEffects };
+    result.logs.push(`  ⚡ ${ally.name}: +${atk_boost.attack_bonus} em ataques no primeiro turno.`);
+  }
+
+  // Signal to CombatScreen that allies should go first
+  result.flags = { force_allies_first: true };
   return result;
 }
 

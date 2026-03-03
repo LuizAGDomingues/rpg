@@ -64,9 +64,9 @@
             "id": "tunnel_escape",
             "name": "Fuga pelos Tuneis",
             "enemies": [
-              { "id": "lusitanian_soldier", "name": "Soldado Lusitano", "hp": 14, "ca": 13, "pa": 2, "attributes": { "FOR": 13, "DES": 10, "CON": 12, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Curta", "damage": "1d6+1" }, "ai": "aggressive_simple" },
-              { "id": "lusitanian_soldier", "name": "Soldado Lusitano", "hp": 14, "ca": 13, "pa": 2, "attributes": { "FOR": 13, "DES": 10, "CON": 12, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Curta", "damage": "1d6+1" }, "ai": "aggressive_simple" },
-              { "id": "lusitanian_soldier", "name": "Soldado Lusitano", "hp": 14, "ca": 13, "pa": 2, "attributes": { "FOR": 13, "DES": 10, "CON": 12, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Curta", "damage": "1d6+1" }, "ai": "aggressive_simple" }
+              { "id": "lusitanian_soldier", "name": "Soldado Lusitano", "hp": 30, "ca": 11, "pa": 2, "attributes": { "FOR": 13, "DES": 10, "CON": 12, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Curta", "damage": "1d6+2" }, "ai": "aggressive_simple" },
+              { "id": "lusitanian_soldier", "name": "Soldado Lusitano", "hp": 30, "ca": 11, "pa": 2, "attributes": { "FOR": 13, "DES": 10, "CON": 12, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Curta", "damage": "1d6+2" }, "ai": "aggressive_simple" },
+              { "id": "lusitanian_soldier", "name": "Soldado Lusitano", "hp": 30, "ca": 11, "pa": 2, "attributes": { "FOR": 13, "DES": 10, "CON": 12, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Curta", "damage": "1d6+2" }, "ai": "aggressive_simple" }
             ],
             "xp_reward": 60,
             "gold_reward": "3d6"
@@ -159,8 +159,8 @@
             "id": "forest_patrol",
             "name": "Patrulha na Floresta",
             "enemies": [
-              { "id": "lusitanian_soldier", "name": "Patrulheiro Lusitano", "hp": 16, "ca": 14, "pa": 2, "attributes": { "FOR": 14, "DES": 11, "CON": 13, "INT": 8, "SAB": 9, "CAR": 8 }, "weapon": { "name": "Lanca", "damage": "1d8+2" }, "ai": "aggressive_simple" },
-              { "id": "lusitanian_archer", "name": "Arqueiro Lusitano", "hp": 12, "ca": 12, "pa": 2, "attributes": { "FOR": 10, "DES": 14, "CON": 10, "INT": 8, "SAB": 10, "CAR": 8 }, "weapon": { "name": "Arco Curto", "damage": "1d6+2" }, "ai": "aggressive_simple" }
+              { "id": "lusitanian_soldier", "name": "Patrulheiro Lusitano", "hp": 30, "ca": 11, "pa": 2, "attributes": { "FOR": 14, "DES": 11, "CON": 13, "INT": 8, "SAB": 9, "CAR": 8 }, "weapon": { "name": "Lanca", "damage": "1d8+2" }, "ai": "aggressive_simple" },
+              { "id": "lusitanian_archer", "name": "Arqueiro Lusitano", "hp": 25, "ca": 11, "pa": 2, "attributes": { "FOR": 10, "DES": 14, "CON": 10, "INT": 8, "SAB": 10, "CAR": 8 }, "weapon": { "name": "Arco Curto", "damage": "1d6+2" }, "ai": "aggressive_simple" }
             ],
             "xp_reward": 80,
             "gold_reward": "3d6"
@@ -231,9 +231,9 @@
             "id": "ruins_looters",
             "name": "Saqueadores de Atropatene",
             "enemies": [
-              { "id": "lusitanian_looter", "name": "Saqueador Lusitano", "hp": 12, "ca": 12, "pa": 2, "attributes": { "FOR": 12, "DES": 13, "CON": 11, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Adaga", "damage": "1d4+2" }, "ai": "aggressive_simple" },
-              { "id": "lusitanian_looter", "name": "Saqueador Lusitano", "hp": 12, "ca": 12, "pa": 2, "attributes": { "FOR": 12, "DES": 13, "CON": 11, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Adaga", "damage": "1d4+2" }, "ai": "aggressive_simple" },
-              { "id": "lusitanian_soldier", "name": "Guarda Lusitano", "hp": 18, "ca": 14, "pa": 2, "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Longa", "damage": "1d8+2" }, "ai": "aggressive_simple" }
+              { "id": "lusitanian_looter", "name": "Saqueador Lusitano", "hp": 25, "ca": 11, "pa": 2, "attributes": { "FOR": 12, "DES": 13, "CON": 11, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Adaga", "damage": "1d4+2" }, "ai": "aggressive_simple" },
+              { "id": "lusitanian_looter", "name": "Saqueador Lusitano", "hp": 25, "ca": 11, "pa": 2, "attributes": { "FOR": 12, "DES": 13, "CON": 11, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Adaga", "damage": "1d4+2" }, "ai": "aggressive_simple" },
+              { "id": "lusitanian_soldier", "name": "Guarda Lusitano", "hp": 35, "ca": 12, "pa": 2, "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Longa", "damage": "1d8+3" }, "ai": "aggressive_simple" }
             ],
             "xp_reward": 120,
             "gold_reward": "5d6"
@@ -278,9 +278,9 @@
             "name": "Guardas da Ponte",
             "combat_modifiers": { "narrow_passage": true },
             "enemies": [
-              { "id": "lusitanian_soldier", "name": "Guarda Lusitano", "hp": 16, "ca": 14, "pa": 2, "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Longa", "damage": "1d8+2" }, "ai": "defensive" },
-              { "id": "lusitanian_soldier", "name": "Guarda Lusitano", "hp": 16, "ca": 14, "pa": 2, "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Longa", "damage": "1d8+2" }, "ai": "defensive" },
-              { "id": "lusitanian_sergeant", "name": "Sargento da Ponte", "hp": 28, "ca": 16, "pa": 3, "attributes": { "FOR": 15, "DES": 10, "CON": 14, "INT": 9, "SAB": 9, "CAR": 10 }, "weapon": { "name": "Montante", "damage": "1d10+3" }, "ai": "defensive" }
+              { "id": "lusitanian_soldier", "name": "Guarda Lusitano", "hp": 30, "ca": 12, "pa": 2, "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Longa", "damage": "1d8+2" }, "ai": "defensive" },
+              { "id": "lusitanian_soldier", "name": "Guarda Lusitano", "hp": 30, "ca": 12, "pa": 2, "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Longa", "damage": "1d8+2" }, "ai": "defensive" },
+              { "id": "lusitanian_sergeant", "name": "Sargento da Ponte", "hp": 50, "ca": 14, "pa": 3, "attributes": { "FOR": 15, "DES": 10, "CON": 14, "INT": 9, "SAB": 9, "CAR": 10 }, "weapon": { "name": "Montante", "damage": "1d10+3" }, "ai": "defensive" }
             ],
             "xp_reward": 100,
             "gold_reward": "4d6"
@@ -295,8 +295,8 @@
             "name": "Guardas da Ponte (Noite)",
             "combat_modifiers": { "narrow_passage": true, "night_combat": true },
             "enemies": [
-              { "id": "lusitanian_soldier", "name": "Guarda Sonolento", "hp": 16, "ca": 12, "pa": 2, "attributes": { "FOR": 13, "DES": 9, "CON": 12, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Longa", "damage": "1d8+1" }, "ai": "defensive" },
-              { "id": "lusitanian_soldier", "name": "Guarda Sonolento", "hp": 16, "ca": 12, "pa": 2, "attributes": { "FOR": 13, "DES": 9, "CON": 12, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Longa", "damage": "1d8+1" }, "ai": "defensive" }
+              { "id": "lusitanian_soldier", "name": "Guarda Sonolento", "hp": 28, "ca": 10, "pa": 2, "attributes": { "FOR": 13, "DES": 9, "CON": 12, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Longa", "damage": "1d8+1" }, "ai": "defensive" },
+              { "id": "lusitanian_soldier", "name": "Guarda Sonolento", "hp": 28, "ca": 10, "pa": 2, "attributes": { "FOR": 13, "DES": 9, "CON": 12, "INT": 8, "SAB": 8, "CAR": 8 }, "weapon": { "name": "Espada Longa", "damage": "1d8+1" }, "ai": "defensive" }
             ],
             "xp_reward": 70,
             "gold_reward": "3d6"

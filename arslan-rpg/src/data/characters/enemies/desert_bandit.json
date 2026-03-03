@@ -1,0 +1,17 @@
+{
+  "id": "desert_bandit",
+  "name": "Bandido do Deserto",
+  "description": "Salteador oportunista que atua nas estradas de Pars. Tende a fugir quando a luta fica dificil.",
+  "hp": 55,
+  "ca": 11,
+  "pa": 2,
+  "attributes": { "FOR": 12, "DES": 13, "CON": 11, "INT": 8, "SAB": 8, "CAR": 7 },
+  "weapon": { "name": "Cimitarra Enferrujada", "damage": "1d8+4" },
+  "ai": "cowardly",
+  "xp_reward": 100,
+  "gold_reward": "1d6+1",
+  "loot": [
+    { "id": "ration", "chance": 0.4 },
+    { "id": "bandage", "chance": 0.3 }
+  ]
+}

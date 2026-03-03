@@ -182,28 +182,28 @@
                   {
                     "id": "lusitanian_soldier",
                     "name": "Soldado Lusitano",
-                    "hp": 16,
-                    "ca": 14,
+                    "hp": 50,
+                    "ca": 12,
                     "pa": 2,
                     "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 },
-                    "weapon": { "name": "Espada Longa", "damage": "1d8+2" },
+                    "weapon": { "name": "Espada Longa", "damage": "1d8+3" },
                     "ai": "aggressive_simple"
                   },
                   {
                     "id": "lusitanian_soldier",
                     "name": "Soldado Lusitano",
-                    "hp": 16,
-                    "ca": 14,
+                    "hp": 50,
+                    "ca": 12,
                     "pa": 2,
                     "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 },
-                    "weapon": { "name": "Espada Longa", "damage": "1d8+2" },
+                    "weapon": { "name": "Espada Longa", "damage": "1d8+3" },
                     "ai": "aggressive_simple"
                   },
                   {
                     "id": "lusitanian_archer",
                     "name": "Arqueiro Lusitano",
-                    "hp": 12,
-                    "ca": 12,
+                    "hp": 40,
+                    "ca": 11,
                     "pa": 2,
                     "attributes": { "FOR": 10, "DES": 14, "CON": 10, "INT": 8, "SAB": 10, "CAR": 8 },
                     "weapon": { "name": "Arco Longo", "damage": "1d8+1" },
@@ -220,8 +220,8 @@
                   {
                     "id": "lusitanian_sergeant",
                     "name": "Sargento Lusitano",
-                    "hp": 24,
-                    "ca": 15,
+                    "hp": 70,
+                    "ca": 13,
                     "pa": 3,
                     "attributes": { "FOR": 15, "DES": 12, "CON": 14, "INT": 10, "SAB": 10, "CAR": 11 },
                     "weapon": { "name": "Espada Larga", "damage": "1d10+3" },
@@ -230,11 +230,11 @@
                   {
                     "id": "lusitanian_soldier",
                     "name": "Soldado Lusitano",
-                    "hp": 16,
-                    "ca": 14,
+                    "hp": 50,
+                    "ca": 12,
                     "pa": 2,
                     "attributes": { "FOR": 14, "DES": 10, "CON": 13, "INT": 8, "SAB": 8, "CAR": 8 },
-                    "weapon": { "name": "Espada Longa", "damage": "1d8+2" },
+                    "weapon": { "name": "Espada Longa", "damage": "1d8+3" },
                     "ai": "aggressive_simple"
                   }
                 ]
@@ -309,8 +309,8 @@
               {
                 "id": "lusitanian_scout_1",
                 "name": "Soldado de Escolta",
-                "hp": 14,
-                "ca": 13,
+                "hp": 45,
+                "ca": 12,
                 "pa": 2,
                 "attributes": { "FOR": 13, "DES": 11, "CON": 12, "INT": 8, "SAB": 8, "CAR": 8 },
                 "weapon": { "name": "Espada Curta", "damage": "1d6+1" },
@@ -319,8 +319,8 @@
               {
                 "id": "lusitanian_scout_2",
                 "name": "Soldado de Escolta",
-                "hp": 14,
-                "ca": 13,
+                "hp": 45,
+                "ca": 12,
                 "pa": 2,
                 "attributes": { "FOR": 13, "DES": 11, "CON": 12, "INT": 8, "SAB": 8, "CAR": 8 },
                 "weapon": { "name": "Espada Curta", "damage": "1d6+1" },
@@ -329,8 +329,8 @@
               {
                 "id": "lusitanian_messenger",
                 "name": "Mensageiro Lusitano",
-                "hp": 10,
-                "ca": 11,
+                "hp": 20,
+                "ca": 10,
                 "pa": 2,
                 "attributes": { "FOR": 10, "DES": 13, "CON": 10, "INT": 12, "SAB": 10, "CAR": 10 },
                 "weapon": { "name": "Adaga", "damage": "1d4" },

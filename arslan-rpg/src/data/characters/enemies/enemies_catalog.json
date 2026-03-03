@@ -1,0 +1,22 @@
+{
+  "enemies": [
+    { "id": "lusitanian_soldier",   "name": "Soldado Lusitano",        "act": [1,2,4], "tier": "common" },
+    { "id": "lusitanian_scout",     "name": "Batedor Lusitano",        "act": [1,2],   "tier": "common" },
+    { "id": "lusitanian_champion",  "name": "Campeao Lusitano",        "act": [2,4],   "tier": "elite" },
+    { "id": "lusitanian_inquisitor","name": "Inquisidor Lusitano",     "act": [2,3,4], "tier": "elite" },
+    { "id": "desert_bandit",        "name": "Bandido do Deserto",      "act": [1,2,3], "tier": "common" },
+    { "id": "bandit_leader",        "name": "Lider dos Bandidos",      "act": [1,2,3], "tier": "elite" },
+    { "id": "wolf_giant",           "name": "Lobo Gigante",            "act": [1,2],   "tier": "beast" },
+    { "id": "assassin_sindhura",    "name": "Assassino de Sindhura",   "act": [3,4],   "tier": "elite" },
+    { "id": "turan_horseman",       "name": "Cavaleiro de Turan",      "act": [3],     "tier": "elite" },
+    { "id": "turan_warrior",        "name": "Guerreiro de Turan",      "act": [3],     "tier": "common" },
+    { "id": "corrupt_noble_guard",  "name": "Guarda Nobre Corrupto",   "act": [2,3,4], "tier": "common" },
+    { "id": "imperial_guard",       "name": "Guarda Imperial",         "act": [1,4],   "tier": "elite" },
+    { "id": "sindhura_guard",       "name": "Guarda de Sindhura",      "act": [3],     "tier": "common" },
+    { "id": "corrupt_merchant",     "name": "Mercador Corrupto",       "act": [2,3],   "tier": "weak" },
+    { "id": "cave_guard",           "name": "Guarda das Cavernas",     "act": [1,2],   "tier": "common" },
+    { "id": "slave_trader",         "name": "Traficante de Escravos",  "act": [2,3],   "tier": "common" },
+    { "id": "kharlan",              "name": "Kharlan",                 "act": [4],     "tier": "boss" },
+    { "id": "silvermask",           "name": "Mascara de Prata",        "act": [4,5],   "tier": "boss" }
+  ]
+}
