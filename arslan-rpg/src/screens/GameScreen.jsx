@@ -112,6 +112,13 @@ export default function GameScreen() {
     else playTheme('exploration');
   }, [gamePhase]);
 
+  // Auto-dismiss faction milestone banner after 3.5s
+  useEffect(() => {
+    if (!factionMilestone) return;
+    const t = setTimeout(() => setFactionMilestone(null), 3500);
+    return () => clearTimeout(t);
+  }, [factionMilestone]);
+
   // Check for eligible camp events on scene change
   useEffect(() => {
     if (gamePhase !== 'playing') return;
@@ -164,8 +171,6 @@ export default function GameScreen() {
       if (prev < 50 && rep >= 50) setFactionMilestone({ factionId: fid, name: MILESTONE_LABELS[fid] || fid, tier: 'Respeitoso' });
       else if (prev < 80 && rep >= 80) setFactionMilestone({ factionId: fid, name: MILESTONE_LABELS[fid] || fid, tier: 'Aliado' });
     }
-    if (factionMilestone) setTimeout(() => setFactionMilestone(null), 3500);
-
     // Autosave on scene advance
     if (choice.next_scene) store.saveToSlot('auto');
 

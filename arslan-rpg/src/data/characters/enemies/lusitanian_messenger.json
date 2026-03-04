@@ -1,0 +1,16 @@
+{
+  "id": "lusitanian_messenger",
+  "name": "Mensageiro Lusitano",
+  "description": "Portador de ordens entre os postos lusitanos. Carrega documentos militares sensiveis e se defende desesperadamente.",
+  "hp": 20,
+  "ca": 8,
+  "pa": 2,
+  "attributes": { "FOR": 9, "DES": 13, "CON": 10, "INT": 11, "SAB": 10, "CAR": 10 },
+  "weapon": { "name": "Faca de Viagem", "damage": "1d4+1", "bonus_atk": 0 },
+  "ai": "defensive",
+  "xp_reward": 40,
+  "gold_reward": "1d4+3",
+  "loot": [
+    { "id": "ration", "chance": 0.6 }
+  ]
+}

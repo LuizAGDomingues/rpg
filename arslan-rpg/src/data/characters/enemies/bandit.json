@@ -1,0 +1,16 @@
+{
+  "id": "bandit",
+  "name": "Bandido",
+  "description": "Fora-da-lei comum que ataca viajantes desavisados nas estradas. Motivado por ouro, nao por ideologia.",
+  "hp": 30,
+  "ca": 9,
+  "pa": 2,
+  "attributes": { "FOR": 12, "DES": 12, "CON": 11, "INT": 8, "SAB": 8, "CAR": 8 },
+  "weapon": { "name": "Faca", "damage": "1d4+1", "bonus_atk": 1 },
+  "ai": "aggressive",
+  "xp_reward": 50,
+  "gold_reward": "1d6+2",
+  "loot": [
+    { "id": "ration", "chance": 0.35 }
+  ]
+}

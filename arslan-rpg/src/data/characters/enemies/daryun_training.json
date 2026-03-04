@@ -1,0 +1,14 @@
+{
+  "id": "daryun_training",
+  "name": "Daryun (Treino)",
+  "description": "O Cavaleiro Negro em modo de treino. Ele nao ataca com forca total — apenas o suficiente para ensinar.",
+  "hp": 40,
+  "ca": 14,
+  "pa": 2,
+  "attributes": { "FOR": 18, "DES": 14, "CON": 16, "INT": 13, "SAB": 14, "CAR": 14 },
+  "weapon": { "name": "Lanca (Peso Reduzido)", "damage": "1d6+2", "bonus_atk": 1 },
+  "ai": "defensive",
+  "xp_reward": 80,
+  "gold_reward": "0",
+  "loot": []
+}

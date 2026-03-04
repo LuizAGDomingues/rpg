@@ -1,0 +1,16 @@
+{
+  "id": "lusitanian_scout_2",
+  "name": "Batedor Lusitano",
+  "description": "Explorador das forcas lusitanas. Usa sinais de fumo para chamar reforcos quando encurralado.",
+  "hp": 30,
+  "ca": 9,
+  "pa": 2,
+  "attributes": { "FOR": 12, "DES": 16, "CON": 12, "INT": 10, "SAB": 12, "CAR": 9 },
+  "weapon": { "name": "Adaga Curta", "damage": "1d4+3", "bonus_atk": 1 },
+  "ai": "tactical_aggressive",
+  "xp_reward": 65,
+  "gold_reward": "1d6+2",
+  "loot": [
+    { "id": "smoke_bomb", "chance": 0.25 }
+  ]
+}

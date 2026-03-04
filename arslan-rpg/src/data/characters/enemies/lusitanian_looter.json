@@ -1,0 +1,16 @@
+{
+  "id": "lusitanian_looter",
+  "name": "Saqueador Lusitano",
+  "description": "Saqueador de retaguarda que pillha aldeias abandonadas. Mal armado e sem disciplina.",
+  "hp": 25,
+  "ca": 8,
+  "pa": 2,
+  "attributes": { "FOR": 10, "DES": 11, "CON": 10, "INT": 7, "SAB": 8, "CAR": 7 },
+  "weapon": { "name": "Faca Enferrujada", "damage": "1d4+0", "bonus_atk": 0 },
+  "ai": "aggressive",
+  "xp_reward": 30,
+  "gold_reward": "1d6+1",
+  "loot": [
+    { "id": "ration", "chance": 0.4 }
+  ]
+}

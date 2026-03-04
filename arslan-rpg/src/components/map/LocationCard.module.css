@@ -37,6 +37,16 @@
   border-color: rgba(183, 28, 28, 0.3);
 }
 
+.locationImg {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  display: block;
+  margin: calc(-1 * var(--spacing-sm)) calc(-1 * var(--spacing-md)) var(--spacing-xs);
+  width: calc(100% + 2 * var(--spacing-md));
+}
+
 .header {
   display: flex;
   justify-content: space-between;

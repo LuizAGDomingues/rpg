@@ -1,0 +1,16 @@
+{
+  "id": "lusitanian_archer",
+  "name": "Arqueiro Lusitano",
+  "description": "Arqueiro das forcas de infantaria lusitanas. Ataca de longa distancia antes de recuar.",
+  "hp": 35,
+  "ca": 10,
+  "pa": 2,
+  "attributes": { "FOR": 11, "DES": 15, "CON": 11, "INT": 9, "SAB": 11, "CAR": 8 },
+  "weapon": { "name": "Arco Lusitano", "damage": "1d6+2", "bonus_atk": 1 },
+  "ai": "aggressive",
+  "xp_reward": 55,
+  "gold_reward": "1d4+2",
+  "loot": [
+    { "id": "bandage", "chance": 0.3 }
+  ]
+}

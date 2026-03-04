@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: var(--spacing-xl) var(--spacing-lg);
   min-height: 100vh;
+  background: url(/images/ui/map_bg.jpg) center/cover no-repeat fixed;
 }
 
 .header {

@@ -35,13 +35,13 @@
 
 | Area | Status | Obs |
 |------|--------|-----|
-| Fluxo Ato 1 | ⬜ Pendente | |
-| Fluxo Ato 2 | ⬜ Pendente | |
-| Fluxo Ato 3 | ⬜ Pendente | |
-| Fluxo Ato 4 | ⬜ Pendente | |
-| Fluxo Ato 5 + Epilogos | ⬜ Pendente | |
-| Sistemas transversais (mapa, camp, dialogos, quests, skills, saves, audio) | ⬜ Pendente | |
-| Integridade de dados (scenes, flags, inimigos, itens) | ✅ Completo | 0 cenas quebradas; set_flags corrigidos; flag kashan_spy adicionada |
+| Fluxo Ato 1 | ✅ Completo | Refs de cenas validadas; enemies_catalog expandido para 33 entradas |
+| Fluxo Ato 2 | ✅ Completo | wave_system, land_N_hits, messenger_capture validados |
+| Fluxo Ato 3 | ✅ Completo | kashan_betrayal, turan_duel, slave_caravan validados |
+| Fluxo Ato 4 | ✅ Completo | silvermask_awakened, kharlan_guard adicionados ao catalog |
+| Fluxo Ato 5 + Epilogos | ✅ Completo | epilogue_dynamic e-construido em runtime; sem broken refs |
+| Sistemas transversais (mapa, camp, dialogos, quests, skills, saves, audio) | ✅ Completo | 6 bugs corrigidos: completeQuest rewards, location arrival guard, dismiss consequence, faction milestone useEffect, skill flags (remove_surprise_penalty, force_allies_first) |
+| Integridade de dados (scenes, flags, inimigos, itens) | ✅ Completo | 0 cenas quebradas; 14 inimigos adicionados; sword_ceremonial adicionado; set_flags corrigidos |
 
 ---
 
@@ -54,7 +54,7 @@
 | H.3 — SFX (Web Audio API) | ✅ Completo | playSFX: attack/hit/death/heal/xp/ui_click/dialogue_blip/quest_complete |
 | H.4 — GameOverScreen melhorada | ✅ Completo | lastBattle label, subtitulo animado, "Tentar Novamente" |
 | H.5 — Indicadores visuais menores | ✅ Completo | questBadge, slideInBadge, cursor SVG estrela dourada |
-| H.6 — Revisao de imagens | ⬜ Pendente | |
+| H.6 — Revisao de imagens | ✅ Completo | Backgrounds: title, gameover, map, class_select; NPCPortrait com img+fallback SVG; LocationCard com img+fallback; 72 imagens wired |
 
 ---
 
@@ -63,5 +63,7 @@
 | Fase | Progresso |
 |------|-----------|
 | F — Balanceamento | 7 / 7 ✅ |
-| G — QA | 1 / 7 ✅ (integridade de dados) |
-| H — Polish | 5 / 6 ✅ (H.6 imagens pendente) |
+| G — QA | 7 / 7 ✅ |
+| H — Polish | 6 / 6 ✅ |
+
+## 🏁 PROJETO CONCLUÍDO — Todas as fases A–H completas

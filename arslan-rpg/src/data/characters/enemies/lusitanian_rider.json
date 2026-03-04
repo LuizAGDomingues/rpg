@@ -1,0 +1,16 @@
+{
+  "id": "lusitanian_rider",
+  "name": "Cavaleiro Lusitano",
+  "description": "Cavalaria de reconhecimento lusitana. Veloz e eficaz contra infantes desprotegidos.",
+  "hp": 70,
+  "ca": 14,
+  "pa": 3,
+  "attributes": { "FOR": 14, "DES": 14, "CON": 13, "INT": 10, "SAB": 11, "CAR": 11 },
+  "weapon": { "name": "Lanca de Cavalaria", "damage": "1d10+2", "bonus_atk": 2 },
+  "ai": "aggressive",
+  "xp_reward": 130,
+  "gold_reward": "1d8+6",
+  "loot": [
+    { "id": "bandage", "chance": 0.3 }
+  ]
+}

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styles from './NPCPortrait.module.css';
 
 const MOOD_COLORS = {
@@ -166,17 +167,28 @@ const portraits = {
   ),
 };
 
-export default function NPCPortrait({ portraitType, mood }) {
+export default function NPCPortrait({ portraitType, mood, npcId }) {
+  const [imgError, setImgError] = useState(false);
   const svg = portraits[portraitType] || portraits.commoner;
   const bgColor = MOOD_COLORS[mood] || MOOD_COLORS.neutral;
   const moodLabel = MOOD_LABELS[mood] || 'Neutro';
+  const imgSrc = npcId ? `/images/npcs/${npcId}.jpg` : null;
 
   return (
     <div className={styles.container}>
       <div className={styles.portrait} style={{ backgroundColor: bgColor }}>
-        <div className={styles.svgWrap}>
-          {svg}
-        </div>
+        {imgSrc && !imgError ? (
+          <img
+            src={imgSrc}
+            alt={npcId}
+            className={styles.portraitImg}
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <div className={styles.svgWrap}>
+            {svg}
+          </div>
+        )}
       </div>
       <div className={styles.moodIndicator} style={{ color: bgColor === '#4a4a3a' ? 'var(--text-muted)' : bgColor }}>
         <span className={styles.moodDots}>

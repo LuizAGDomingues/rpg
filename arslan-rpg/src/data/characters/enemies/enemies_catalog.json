@@ -17,6 +17,21 @@
     { "id": "cave_guard",           "name": "Guarda das Cavernas",     "act": [1,2],   "tier": "common" },
     { "id": "slave_trader",         "name": "Traficante de Escravos",  "act": [2,3],   "tier": "common" },
     { "id": "kharlan",              "name": "Kharlan",                 "act": [4],     "tier": "boss" },
-    { "id": "silvermask",           "name": "Mascara de Prata",        "act": [4,5],   "tier": "boss" }
+    { "id": "silvermask",           "name": "Mascara de Prata",        "act": [4,5],   "tier": "boss" },
+    { "id": "lusitanian_archer",    "name": "Arqueiro Lusitano",       "act": [1,2],   "tier": "common" },
+    { "id": "lusitanian_looter",    "name": "Saqueador Lusitano",      "act": [1],     "tier": "weak" },
+    { "id": "lusitanian_sergeant",  "name": "Sargento Lusitano",       "act": [1,2],   "tier": "elite" },
+    { "id": "lusitanian_scout_1",   "name": "Batedor Lusitano",        "act": [1,2],   "tier": "common" },
+    { "id": "lusitanian_scout_2",   "name": "Batedor Lusitano",        "act": [1,2],   "tier": "common" },
+    { "id": "lusitanian_messenger", "name": "Mensageiro Lusitano",     "act": [2],     "tier": "weak" },
+    { "id": "daryun_training",      "name": "Daryun (Treino)",         "act": [2],     "tier": "ally" },
+    { "id": "lusitanian_rider",     "name": "Cavaleiro Lusitano",      "act": [3],     "tier": "common" },
+    { "id": "lusitanian_captain",   "name": "Capitao Lusitano",        "act": [3],     "tier": "elite" },
+    { "id": "bandit",               "name": "Bandido",                 "act": [1,2,3], "tier": "common" },
+    { "id": "gadhevi_general",      "name": "General de Gadhevi",      "act": [3],     "tier": "boss" },
+    { "id": "gadhevi_cavalry",      "name": "Cavaleiro de Gadhevi",    "act": [3],     "tier": "elite" },
+    { "id": "lusitanian_elite",     "name": "Elite Lusitana",          "act": [4],     "tier": "elite" },
+    { "id": "silvermask_awakened",  "name": "Silvermask Desperto",     "act": [4],     "tier": "boss" },
+    { "id": "kharlan_guard",        "name": "Guarda de Kharlan",       "act": [4],     "tier": "common" }
   ]
 }

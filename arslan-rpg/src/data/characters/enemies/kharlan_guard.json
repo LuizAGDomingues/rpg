@@ -1,0 +1,16 @@
+{
+  "id": "kharlan_guard",
+  "name": "Guarda de Kharlan",
+  "description": "Soldado leal ao general traidor Kharlan. Luta por lealdade pessoal e pelo salario que recebe.",
+  "hp": 90,
+  "ca": 15,
+  "pa": 3,
+  "attributes": { "FOR": 15, "DES": 12, "CON": 14, "INT": 10, "SAB": 10, "CAR": 10 },
+  "weapon": { "name": "Espada de Guarda", "damage": "1d8+2", "bonus_atk": 2 },
+  "ai": "defensive",
+  "xp_reward": 180,
+  "gold_reward": "1d8+8",
+  "loot": [
+    { "id": "potion_minor", "chance": 0.3 }
+  ]
+}

@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import styles from './LocationCard.module.css';
 
 export default function LocationCard({ location, isCurrent, isVisited, isLocked, onClick }) {
+  const [imgError, setImgError] = useState(false);
   const hasNPCs = location.npcs && location.npcs.length > 0;
 
   return (
@@ -14,6 +16,14 @@ export default function LocationCard({ location, isCurrent, isVisited, isLocked,
       onClick={onClick}
       disabled={isLocked}
     >
+      {!imgError && (
+        <img
+          src={`/images/locations/${location.id}.jpg`}
+          alt={location.name}
+          className={styles.locationImg}
+          onError={() => setImgError(true)}
+        />
+      )}
       <div className={styles.header}>
         <h4 className={styles.name}>{location.name}</h4>
         <div className={styles.icons}>

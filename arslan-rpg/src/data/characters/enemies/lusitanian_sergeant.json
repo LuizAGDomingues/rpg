@@ -1,0 +1,17 @@
+{
+  "id": "lusitanian_sergeant",
+  "name": "Sargento Lusitano",
+  "description": "Oficial de baixo escalao com experiencia de batalha. Lidera pequenos esquadroes.",
+  "hp": 55,
+  "ca": 13,
+  "pa": 3,
+  "attributes": { "FOR": 15, "DES": 12, "CON": 14, "INT": 11, "SAB": 12, "CAR": 12 },
+  "weapon": { "name": "Espada de Aco", "damage": "1d8+2", "bonus_atk": 2 },
+  "ai": "tactical_aggressive",
+  "xp_reward": 100,
+  "gold_reward": "1d8+5",
+  "loot": [
+    { "id": "potion_minor", "chance": 0.3 },
+    { "id": "bandage", "chance": 0.4 }
+  ]
+}

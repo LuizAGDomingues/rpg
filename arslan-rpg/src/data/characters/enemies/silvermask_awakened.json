@@ -1,0 +1,14 @@
+{
+  "id": "silvermask_awakened",
+  "name": "Silvermask Desperto",
+  "description": "Hilmes revela seu poder total. A mascara de prata brilha com furia enquanto ele abandona toda contencao.",
+  "hp": 120,
+  "ca": 18,
+  "pa": 4,
+  "attributes": { "FOR": 20, "DES": 16, "CON": 18, "INT": 18, "SAB": 16, "CAR": 18 },
+  "weapon": { "name": "Espada Ancestral de Hilmes", "damage": "1d10+5", "bonus_atk": 5 },
+  "ai": "boss_berserker",
+  "xp_reward": 500,
+  "gold_reward": "5d6+40",
+  "loot": []
+}

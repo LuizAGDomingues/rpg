@@ -1,0 +1,17 @@
+{
+  "id": "lusitanian_elite",
+  "name": "Elite Lusitana",
+  "description": "Guerreiro de elite das forcas de ocupacao lusitana em Ecbatana. Veterano endurecido de dezenas de batalhas.",
+  "hp": 120,
+  "ca": 16,
+  "pa": 3,
+  "attributes": { "FOR": 17, "DES": 13, "CON": 16, "INT": 12, "SAB": 13, "CAR": 12 },
+  "weapon": { "name": "Espada Longa Lusitana", "damage": "1d8+4", "bonus_atk": 4 },
+  "ai": "tactical_aggressive",
+  "xp_reward": 250,
+  "gold_reward": "2d6+12",
+  "loot": [
+    { "id": "potion_standard", "chance": 0.3 },
+    { "id": "bandage", "chance": 0.5 }
+  ]
+}

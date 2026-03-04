@@ -47,6 +47,7 @@ export default function CombatScreen() {
   const [waveNumber, setWaveNumber] = useState(0);
   const [waveTransition, setWaveTransition] = useState(null);
   const [hitCount, setHitCount] = useState(0);
+  const [skipEnemyRound, setSkipEnemyRound] = useState(false);
   const logRef = useRef(null);
   const waveNumberRef = useRef(0);
   const roundNumberRef = useRef(1);
@@ -351,6 +352,17 @@ export default function CombatScreen() {
     }
 
     setCurrentPA((pa) => pa - res.paSpent);
+
+    if (res.flags?.remove_surprise_penalty) {
+      setAllies((prev) => prev.map((a) => ({
+        ...a,
+        status_effects: (a.status_effects || []).filter((ef) => ef.name !== 'surprised'),
+      })));
+    }
+    if (res.flags?.force_allies_first) {
+      setSkipEnemyRound(true);
+    }
+
     setShowSkillMenu(false);
     setTargetingSkill(null);
     checkEnd();
@@ -374,6 +386,27 @@ export default function CombatScreen() {
     // Ambush: skip enemy first round entirely
     if (combat?.combat_modifiers?.ambush_first_turn && roundNumber === 1) {
       addLog('⚡ EMBOSCADA! Inimigos surpresos — pulam o primeiro turno!');
+      setRoundNumber((r) => { const n = r + 1; roundNumberRef.current = n; return n; });
+      setTimeout(() => {
+        setAllies((cur) => {
+          let first = 0;
+          while (first < cur.length && cur[first].hp <= 0) first++;
+          if (first < cur.length) {
+            setActiveAllyIndex(first);
+            setCurrentPA(cur[first].pa_max || cur[first].pa || 3);
+            addLog('═══ Seu Turno ═══');
+            addLog(`--- Turno de ${cur[first].name} ---`);
+          }
+          return cur;
+        });
+      }, 400);
+      return;
+    }
+
+    // Emboscada Perfeita (Narsus skill): skip enemy turn once
+    if (skipEnemyRound) {
+      addLog('⚔ Emboscada de Narsus — inimigos pulam este turno!');
+      setSkipEnemyRound(false);
       setRoundNumber((r) => { const n = r + 1; roundNumberRef.current = n; return n; });
       setTimeout(() => {
         setAllies((cur) => {

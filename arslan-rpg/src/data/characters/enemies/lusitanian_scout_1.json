@@ -1,0 +1,16 @@
+{
+  "id": "lusitanian_scout_1",
+  "name": "Batedor Lusitano",
+  "description": "Explorador das forcas lusitanas. Rapido e evasivo, prefere emboscar do que combater abertamente.",
+  "hp": 30,
+  "ca": 9,
+  "pa": 2,
+  "attributes": { "FOR": 12, "DES": 16, "CON": 12, "INT": 10, "SAB": 12, "CAR": 9 },
+  "weapon": { "name": "Adaga de Arremesso", "damage": "1d6+3", "bonus_atk": 1 },
+  "ai": "tactical_aggressive",
+  "xp_reward": 65,
+  "gold_reward": "1d6+2",
+  "loot": [
+    { "id": "ration", "chance": 0.5 }
+  ]
+}

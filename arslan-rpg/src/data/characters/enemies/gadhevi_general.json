@@ -1,0 +1,17 @@
+{
+  "id": "gadhevi_general",
+  "name": "General de Gadhevi",
+  "description": "Comandante das forcas do principe Gadhevi de Sindhura. Lidera com arrogancia e crueldade.",
+  "hp": 120,
+  "ca": 15,
+  "pa": 3,
+  "attributes": { "FOR": 16, "DES": 12, "CON": 15, "INT": 13, "SAB": 12, "CAR": 14 },
+  "weapon": { "name": "Cimitarra Real", "damage": "1d10+3", "bonus_atk": 3 },
+  "ai": "boss_tactical",
+  "xp_reward": 300,
+  "gold_reward": "3d6+20",
+  "loot": [
+    { "id": "potion_standard", "chance": 0.5 },
+    { "id": "antidote", "chance": 0.3 }
+  ]
+}

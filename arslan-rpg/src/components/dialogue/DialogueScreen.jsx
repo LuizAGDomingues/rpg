@@ -196,7 +196,7 @@ export default function DialogueScreen() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <NPCPortrait portraitType={npcData.portrait_type} mood={mood} />
+        <NPCPortrait portraitType={npcData.portrait_type} mood={mood} npcId={npcData.id} />
         <p className={styles.description}>{npcData.description}</p>
       </div>
 

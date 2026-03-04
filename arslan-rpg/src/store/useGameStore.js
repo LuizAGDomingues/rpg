@@ -219,7 +219,44 @@ const useGameStore = create(
 
       completeQuest: (questId) => set((state) => {
         const quest = state.quests.active.find((q) => q.id === questId);
-        return { quests: { active: state.quests.active.filter((q) => q.id !== questId), completed: [...state.quests.completed, quest], failed: state.quests.failed } };
+        if (!quest) return {};
+        const rewards = quest.rewards || {};
+
+        let newGold = state.inventory.gold;
+        let newItems = [...state.inventory.items];
+        if (typeof rewards.gold === 'number' && rewards.gold > 0) newGold += rewards.gold;
+        if (rewards.items) {
+          rewards.items.forEach((itemId) => {
+            newItems.push({ id: itemId, name: itemId, uid: Date.now() + Math.random() });
+          });
+        }
+
+        let newFactions = { ...state.factions };
+        if (rewards.faction_effects) {
+          Object.entries(rewards.faction_effects).forEach(([fid, delta]) => {
+            newFactions[fid] = Math.max(-100, Math.min(100, (newFactions[fid] || 0) + delta));
+          });
+        }
+
+        let newPlayer = state.player;
+        if (rewards.xp) {
+          let newXP = state.player.xp + rewards.xp;
+          let newLevel = state.player.level;
+          let newXPNext = state.player.xp_next;
+          while (newXP >= newXPNext) { newXP -= newXPNext; newLevel += 1; newXPNext = Math.floor(newXPNext * 1.5); }
+          newPlayer = { ...state.player, xp: newXP, level: newLevel, xp_next: newXPNext };
+        }
+
+        return {
+          quests: {
+            active: state.quests.active.filter((q) => q.id !== questId),
+            completed: [...state.quests.completed, quest],
+            failed: state.quests.failed,
+          },
+          inventory: { ...state.inventory, gold: newGold, items: newItems },
+          factions: newFactions,
+          player: newPlayer,
+        };
       }),
 
       failQuest: (questId) => set((state) => {

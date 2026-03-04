@@ -46,7 +46,7 @@ export default function MapScreen() {
 
   const handleSelectLocation = (location) => {
     setCurrentLocation(location.id);
-    if (location.arrival_scene) {
+    if (location.arrival_scene && !visitedLocations.includes(location.id)) {
       useGameStore.getState().setCurrentScene(location.arrival_scene);
       navigate('/');
       return;
@@ -132,6 +132,7 @@ export default function MapScreen() {
     const { action } = choice;
 
     if (action === 'dismiss') {
+      if (choice.consequence?.character_score) updateCharacterScore(choice.consequence.character_score);
       setActiveTravelEvent(null);
       setTravelEventResult(null);
       return;

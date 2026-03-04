@@ -1,0 +1,17 @@
+{
+  "id": "lusitanian_captain",
+  "name": "Capitao Lusitano",
+  "description": "Oficial de campo lusitano. Comanda tropas com disciplina ferrea e lidera pelo exemplo.",
+  "hp": 100,
+  "ca": 15,
+  "pa": 3,
+  "attributes": { "FOR": 16, "DES": 13, "CON": 15, "INT": 13, "SAB": 13, "CAR": 14 },
+  "weapon": { "name": "Espada Militar", "damage": "1d8+3", "bonus_atk": 3 },
+  "ai": "tactical_aggressive",
+  "xp_reward": 200,
+  "gold_reward": "2d6+10",
+  "loot": [
+    { "id": "potion_standard", "chance": 0.25 },
+    { "id": "antidote", "chance": 0.2 }
+  ]
+}

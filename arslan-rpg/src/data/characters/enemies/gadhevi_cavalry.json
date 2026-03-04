@@ -1,0 +1,16 @@
+{
+  "id": "gadhevi_cavalry",
+  "name": "Cavaleiro de Gadhevi",
+  "description": "Cavalaria de elite do principe Gadhevi. Armada com espadas curvas e lanças, treinada para combate em formacao.",
+  "hp": 75,
+  "ca": 13,
+  "pa": 3,
+  "attributes": { "FOR": 15, "DES": 13, "CON": 14, "INT": 10, "SAB": 10, "CAR": 11 },
+  "weapon": { "name": "Cimitarra", "damage": "1d8+3", "bonus_atk": 2 },
+  "ai": "aggressive",
+  "xp_reward": 150,
+  "gold_reward": "1d8+8",
+  "loot": [
+    { "id": "bandage", "chance": 0.3 }
+  ]
+}
